@@ -1,0 +1,21 @@
+ApplicationCode	String	30	
+ApplicantName	String	70	
+Contractor	String	70	
+Telephone	String	25	
+Distance	Number		
+TotalAmount	Currency		
+Depth	Number		
+Area	String	30	
+Branch	String	30	
+PrintedBy	String	30	
+Date	Date		
+String1	String	30	
+String2	String	30	
+Number1	Number		
+Number2	Number		
+Date1	Date		
+Date2	Date		
+Territory	String	10	
+Location	String	50	
+Amount	Currency		
+Amount1	Currency		

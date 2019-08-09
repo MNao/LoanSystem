@@ -1,0 +1,938 @@
+using System;
+using System.Collections;
+using System.Data;
+using System.Data.Common;
+using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading;
+using InterConnect.PegPay;
+using Microsoft.Practices.EnterpriseLibrary.Data;
+
+/// <summary>
+///     Summary description for DbAccess
+/// </summary>
+public class DbAccess
+{
+    private readonly Database _smsDb;
+    private DbCommand _command;
+
+    public DbAccess()
+    {
+        try
+        {
+            _smsDb = DatabaseFactory.CreateDatabase(ReturnConString());
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    private static string ReturnConString()
+    {
+        const string conString = "jab";
+        return conString;
+    }
+
+    internal DataTable GetUserAccessibility(string username, string password)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetSystemUserByUserId", username, password);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
+    internal void ResetPassword(int user_Id, string password, bool reset)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("ResetPassword", user_Id, password, reset);
+            _smsDb.ExecuteNonQuery(_command);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetLists(string VendorCode, string listName)
+    {
+        try
+        {
+            //var areaId = int.Parse(areaCode);
+            _command = _smsDb.GetStoredProcCommand("GetLists", VendorCode, listName);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal void SaveList(int listId, string listName, bool isActive, string areaCode, string user)
+    {
+        try
+        {
+            //var areaId = int.Parse(areaCode);
+            _command = _smsDb.GetStoredProcCommand("Save_list", listId, listName, isActive, areaCode, user);
+            _smsDb.ExecuteNonQuery(_command);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable Get_list(int listId)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetList", listId);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetActiveLists(string areaCode)
+    {
+        try
+        {
+            //var areaId = int.Parse(areaCode);
+            _command = _smsDb.GetStoredProcCommand("GetActiveLists", areaCode);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetActiveList(string listId)
+    {
+        try
+        {
+            //var areaId = int.Parse(areaCode);
+            _command = _smsDb.GetStoredProcCommand("GetList", listId);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetAllListsByArea(string areaCode)
+    {
+        try
+        {
+           // var areaId = int.Parse(areaCode);
+            _command = _smsDb.GetStoredProcCommand("GetListsByArea1", areaCode);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal DataTable GetAllLists(string areaCode)
+    {
+        try
+        {
+            //var areaId = int.Parse(areaCode);
+            _command = _smsDb.GetStoredProcCommand("GetContactList", areaCode);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal ArrayList GetBlackListedNumbers()
+    {
+        throw new Exception("The method or operation is not implemented.");
+    }
+
+    internal Hashtable GetNetworkCodes()
+    {
+        var networkCodes = new Hashtable();
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetNetworkCodes");
+            var ds = _smsDb.ExecuteDataSet(_command);
+            var recordCount = ds.Tables[0].Rows.Count;
+            if (recordCount != 0)
+                for (var i = 0; i < recordCount; i++)
+                {
+                    var dr = ds.Tables[0].Rows[i];
+                    var network = dr["Network"].ToString();
+                    var code = dr["Code"].ToString();
+                    networkCodes.Add(code, network);
+                }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+
+        return networkCodes;
+    }
+
+    internal string[,] GetNetCodes()
+    {
+        var networkCodes = new string[100, 2];
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetNetworkCodes");
+            var ds = _smsDb.ExecuteDataSet(_command);
+            var recordCount = ds.Tables[0].Rows.Count;
+            if (recordCount != 0)
+                for (var i = 0; i < recordCount; i++)
+                {
+                    var dr = ds.Tables[0].Rows[i];
+                    var network = dr["Network"].ToString();
+                    var code = dr["Code"].ToString();
+
+                    for (var j = 0; j < recordCount; i++)
+                        if (j > 0)
+                            networkCodes[i, j] = network;
+                        else
+                            networkCodes[i, j] = code;
+                }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+
+        return networkCodes;
+    }
+
+    internal void SavePhoneToList(string phone, string name, int listId, string areaCode, string user)
+    {
+        try
+        {
+            //var areaId = int.Parse(areaCode);
+            _command = _smsDb.GetStoredProcCommand("SavePhoneToList", phone, name, listId, user);
+            _smsDb.ExecuteNonQuery(_command);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal DataTable GetListDetails(string VendorCode, string list_id, string phone, string name)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetListDetails",VendorCode, phone, name, list_id);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal DataTable GetTemplate(string id)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetMessageTemplateById", id);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetSystemRoles()
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("Get_SystemRoles");
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetAreas()
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetAllVendors");
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetArea()
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetVendor");
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetCurrentCredit(string user)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetCurrentCredit", user);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetUserDetails(int userid)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("Get_UserDetails", userid);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal DataTable GetUserDetailsByUserName(string userName)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetUserDetailsByUserName", userName);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal DataTable GetUsers(string vendorcode, string rolecode, string name)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("Get_Users", name, vendorcode, rolecode);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetUsersByArea(string area_id)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetUsersByArea", area_id);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetActiveListNumbers(int list_id)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetActiveListNumbers", list_id);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetAreaslist(string Vendor)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetSmsVendors", Vendor);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetVendor(string VendorCode)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetVendor", VendorCode);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetLocationslist()
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("Get_Locations");
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetEngineers(string name, string Contact, int Area)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("Get_Engineers", name, Contact, Area);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetTariffRates()
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetNetworkRates");
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal DataTable GetSmslogs(string listID, string vendorCode, string user, DateTime from_date, DateTime end_date)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetSmslogs", listID, vendorCode, user, from_date, end_date);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetSmsSent(string area_id, string user, string sent, DateTime from_date, DateTime end_date)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("Get_SmsSent", area_id, user, sent, from_date, end_date);
+            _command.CommandTimeout = 0;
+            //data_table = Sms_DB.ExecuteDataSet(procommand).Tables[0];
+            //return data_table;
+            using (var data_table1 = _smsDb.ExecuteDataSet(_command).Tables[0])
+            {
+                return data_table1;
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetCreditHistory(string area_id, DateTime from_date, DateTime end_date)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("Get_CreditHistory", area_id, from_date, end_date);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetSmsSentPR(string area_id, string user, string sent, DateTime from_date, DateTime end_date)
+    {
+        try
+        {
+
+            _command = _smsDb.GetStoredProcCommand("Get_SmsSentPR", area_id, user, sent, from_date, end_date);
+            //data_table = Sms_DB.ExecuteDataSet(procommand).Tables[0];
+            //return data_table;
+            using (var data_table1 = _smsDb.ExecuteDataSet(_command).Tables[0])
+            {
+                return data_table1;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal int GetListTotalCost(int list_id)
+    {
+        var total = 0;
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetListTotalCost", list_id);
+            var dataTable = _smsDb.ExecuteDataSet(_command).Tables[0];
+            if (dataTable.Rows.Count > 0) total = int.Parse(dataTable.Rows[0]["TotalCost"].ToString());
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+
+        return total;
+    }
+
+    internal void ChangePhoneStatus(int phoneId, bool active)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("ChangePhoneStatus", phoneId, active);
+            _smsDb.ExecuteNonQuery(_command);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal void UpdatePhoneDetails(int phone_id, string phone, string phone_name, bool active)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("UpdatePhoneDetails", phone_id, phone, phone_name, active);
+            _smsDb.ExecuteNonQuery(_command);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal void Save_user(int userId, string userName, string passwd, string fname, string lname, string phone,
+        string email, string Vendor, string RoleCode, bool active, bool reset, string createdBy)
+    {
+
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("Save_user", userId, userName, fname, lname, passwd, phone, email,
+                Vendor, RoleCode, active, createdBy);
+            _smsDb.ExecuteNonQuery(_command);
+            if (reset) ResetPassword(userId, passwd, true);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
+    internal void AddCredit(string VendorCode, int creditToadd, string CreditedBy)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("AddCredit", VendorCode, creditToadd, CreditedBy);
+            _smsDb.ExecuteNonQuery(_command);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal void InsertSmsToSend(string phone, string message, string mask, string user, string areaID)
+    {
+        try
+        {
+           // var sms = new Sms {Phone = phone, Message = message, SmsId = Generate11UniqueDigits()};
+             
+            //System.Threading.Tasks.Task.Factory.StartNew(() => SendSMS(sms));
+           // SendSMS(sms);
+
+            //We proceed to save the SMS into the database
+            _command = _smsDb.GetStoredProcCommand("PortalInsertSmsToSend", phone, message, mask, user, areaID);
+            _smsDb.ExecuteNonQuery(_command);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
+    internal void InsertUploadedSMSFile(string ListId, string filePath, string message, string mask, string user, string vendorCode, string senderId, string processType)
+    {
+        try
+        {
+
+            object[] paramaters = new object[] { ListId, filePath, message, mask, user, vendorCode, senderId, processType };
+            _command = _smsDb.GetStoredProcCommand("PortalInsertUploadedSmsFile", ListId, filePath, message, mask, user, vendorCode, senderId, processType);
+            _smsDb.ExecuteNonQuery(_command);
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    private static void SendSMS(Sms sms)
+    {
+        try
+        {
+            var api = new PegPay();
+            var trans = new TransactionRequest();
+            var qReq = new QueryRequest();
+
+            const string vendorCode = "PEGASUS_TEST";
+            const string password = "52P14GE753";
+
+            trans.PostField4 = "SMS";
+            trans.PostField5 = DateTime.Now.ToString("dd/MM/yyyy");
+            trans.PostField9 = vendorCode;
+            trans.PostField10 = password;
+            trans.PostField11 = sms.Phone;
+            trans.PostField14 = sms.Message;
+            trans.PostField20 = DateTime.Now.ToString("ddMMyyyyHHmmss");
+            trans.PostField18 = sms.Message;
+
+            var dataToSign = trans.PostField1 +
+                             trans.PostField2 +
+                             trans.PostField11 +
+                             trans.PostField20 +
+                             trans.PostField9 +
+                             trans.PostField10 +
+                             trans.PostField5 +
+                             trans.PostField14 +
+                             trans.PostField7 +
+                             trans.PostField18 +
+                             trans.PostField8;
+
+            trans.PostField16 = SignCertificate(dataToSign);
+
+            ServicePointManager.ServerCertificateValidationCallback = RemoteCertificateValidation;
+            api.PrepaidVendorPostTransactionAsync(trans);
+        }
+        catch (Exception ex)
+        {
+            //
+        }
+    }
+
+    private static bool RemoteCertificateValidation(object sender, X509Certificate certificate, X509Chain chain,
+        SslPolicyErrors sslPolicyErrors)
+    {
+        return true;
+    }
+
+    internal static string Generate11UniqueDigits()
+    {
+        var locker = new object();
+        lock (locker)
+        {
+            Thread.Sleep(100);
+            return DateTime.Now.ToString("MMddHHmmssff");
+        }
+    }
+
+    
+
+    public static string SignCertificate(string text)
+    {
+        // retrieve private key
+        var certificate =
+            @"E:\AirtelMoneyCerts\Pegpay-AirtelMoney.pfx"; //@"C:\PegPayCertificates\CRAFTSILICON\Client.pfx";
+        var cert = new X509Certificate2(certificate, "Tingate710", X509KeyStorageFlags.UserKeySet);
+        var rsa = (RSACryptoServiceProvider) cert.PrivateKey;
+
+        // Hash the data
+        var sha1 = new SHA1Managed();
+        var encoding = new ASCIIEncoding();
+        var data = encoding.GetBytes(text);
+        var hash = sha1.ComputeHash(data);
+
+        // Sign the hash
+        var digitalCert = rsa.SignHash(hash, CryptoConfig.MapNameToOID("SHA1"));
+        var strDigCert = Convert.ToBase64String(digitalCert);
+        return strDigCert;
+    }
+
+    internal void reduce_credit(int newBalance, int listId, int listTotal, string message, int areaId, string mask,
+        string user)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("Reduce_credit", listId, listTotal, newBalance, message, areaId,
+                mask, user);
+            _smsDb.ExecuteNonQuery(_command);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal Hashtable GetNetworkRates()
+    {
+        throw new Exception("The method or operation is not implemented.");
+    }
+
+    internal void Save_Tariff(string network, int rate)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("Save_Tariff", network, rate);
+            _smsDb.ExecuteNonQuery(_command);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal void Save_Area(string VendorName, string VendorCode, string VendorContact, string VendorEmail, string mask, string SenderId, bool Isactive, bool IsPrepaid, bool IsBlacklisted, string CreatedBy)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("SaveVendorDetails", VendorName, VendorCode, VendorContact, VendorEmail, mask, SenderId, Isactive, IsPrepaid, IsBlacklisted, CreatedBy);
+            _smsDb.ExecuteNonQuery(_command);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal int GetParticularTarrifWithCode(string networkCode)
+    {
+        var total = 0;
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetParticularTarrifWithCode", networkCode);
+            var dataTable = _smsDb.ExecuteDataSet(_command).Tables[0];
+            if (dataTable.Rows.Count > 0) total = int.Parse(dataTable.Rows[0]["Tarrif"].ToString());
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+
+        return total;
+    }
+
+    public void Save_Location(int locationId, string location)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("Save_Location", locationId, location);
+            _smsDb.ExecuteNonQuery(_command);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal void Save_FieldEngineer(int engineerId, string name, string phone, int locationId, bool active)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("Save_FieldEngineer", engineerId, name, phone, locationId, active);
+            _smsDb.ExecuteNonQuery(_command);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetFieldEngineersByLocation(string location)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetFieldEngineersByLocation", location);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetFieldEngineerDetailsByContact(string Contact)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetFieldEngineerDetailsByContact", Contact);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public string GetSystemParameter(int valueCode)
+    {
+        var ret = "";
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetSys_Parameter", valueCode);
+            var dataTable = _smsDb.ExecuteDataSet(_command).Tables[0];
+            if (dataTable.Rows.Count > 0) ret = dataTable.Rows[0]["ParameterValue"].ToString();
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+
+        return ret;
+    }
+
+    public DataTable EngineerNumberExists(string engineerContact)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetFieldEngineersByContact", engineerContact);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal DataTable GetDistrictTotalSmsSent(string area_code, string sent, string from_date, string end_date)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("GetDistrictTotalSmsSent", area_code, sent, from_date, end_date);
+            _command.CommandTimeout = 120;
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
+    internal DataTable GetDistrictTotalSmsSentNew(string areaCode, string fromDate, string endDate)
+    {
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("Get_SmsSentPR", areaCode,  fromDate, endDate);
+            _command.CommandTimeout = 120;
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+            
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
+    public DataTable GetMessageTemplates(string vendorCode, string user = "", string templateTitle = "")
+    {
+        try
+        {
+            //var areaId = int.Parse(areaCode);
+            _command = _smsDb.GetStoredProcCommand("PortalGetMessageTemplates1", vendorCode, templateTitle, user);
+            return _smsDb.ExecuteDataSet(_command).Tables[0];
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    internal void SaveMessageTemplate(string id, string title, string message, string VendorCode, string createdBy)
+    {
+
+        try
+        {
+            _command = _smsDb.GetStoredProcCommand("PortalInsertMessageTemplate1",id, title, message, createdBy, VendorCode);
+            //_command.CommandTimeout = 120;
+            _smsDb.ExecuteNonQuery(_command);
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+
+    }
+}

@@ -1,0 +1,27 @@
+ApplicationCode	String	30	
+InvoiceNumber	String	30	
+MapNo	String	8	
+Connection	Number		
+ApplicantName	String	50	
+Location	String	30	
+Class	String	20	
+Diameter1	String	8	
+Diameter2	String	8	
+Material1	String	8	
+Length	String	8	
+Material2	String	8	
+Cost	Currency		
+VatAmount	Currency		
+Total	Currency		
+PreparedBy	String	40	
+AuthorisedBy	String	40	
+PreparedDate	Date		
+AuthoriseDate	Date		
+Area	String	20	
+String1	String	30	
+String2	String	30	
+Number1	Number		
+Number2	Number		
+Date2	Date		
+Date1	Date		
+String3	String	30	

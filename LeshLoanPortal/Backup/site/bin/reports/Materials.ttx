@@ -1,0 +1,12 @@
+Number1	Number		
+Quantity	String	10	
+Category	String	70	
+Material	String	70	
+Size	String	10	
+Remark	String	200	
+Date	Date		
+Cost	Currency		
+Date2	Date		
+Number2	BLOB		
+String1	String	30	
+String2	String	30	

@@ -1,0 +1,25 @@
+ApplicationCode	String	40	
+ApplicantName	String	70	
+Date	Date		
+Deposit	Currency		
+Charge	Currency		
+Area	String	25	
+Branch	String	30	
+PrintBy	String	30	
+Option	String	30	
+Zone	String	5	
+Telephone	String	25	
+Location	String	50	
+Amount	Currency		
+Amount1	Currency		
+Total	Currency		
+Number1	Number		
+Number2	Number		
+String1	String	30	
+String2	String	30	
+Number3	Number		
+Date1	Date		
+ConnectionDate	Date		
+PaymentDate	Date		
+CreationDate	Date		
+PropertyRef	String	30	

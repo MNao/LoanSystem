@@ -1,0 +1,39 @@
+ApplicationCode	String	30	
+ApplicationID	Number		
+ApplicantName	String	50	
+JobNumber	String	30	
+Area	String	30	
+Location	String	50	
+Qty1	String	200	
+Qty2	String	200	
+Qty3	String	200	
+Qty4	String	200	
+Qty4	String	200	
+Qty5	String	200	
+Qty6	String	200	
+Qty7	String	200	
+Qty8	String	200	
+Qty9	String	200	
+Qty10	String	200	
+Qty11	String	200	
+Qty12	String	200	
+Qty13	String	200	
+Qty14	String	200	
+Qty15	String	200	
+Qty16	String	200	
+Qty17	String	200	
+Qty18	String	200	
+Qty19	String	200	
+Qty20	String	200	
+Qty21	String	200	
+Qty22	String	200	
+Qty23	String	200	
+Qty24	String	200	
+AssignedTo	String	30	
+String1	String	30	
+String2	String	30	
+Number1	Number		
+Number2	Number		
+Date	Date		
+Date1	Date		
+String3	String	30	

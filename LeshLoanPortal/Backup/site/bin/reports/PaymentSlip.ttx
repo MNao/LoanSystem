@@ -1,0 +1,18 @@
+ApplicantName	String	70	
+Address	String	200	
+Phone	String	30	
+email	String	50	
+PaymentType	String	30	
+PaymentAmount	Currency		
+AmountInWords	String	200	
+Area	String	20	
+Branch	String	20	
+DateIssued	Date		
+PaymentRef	String	20	
+CreatedBy	String	30	
+String1	String	30	
+String2	String	30	
+Number1	Number		
+Number2	Number		
+Amount1	Currency		
+Amount2	Currency		

@@ -1,0 +1,16 @@
+ConnectionID	Number		
+ApplicationCode	String	50	
+FullName	String	80	
+Telephone	String	30	
+Address	String	80	
+PropertyRef	String	50	
+ApplicationDate	Date		
+Territory	String	10	
+OptionName	String	30	
+string1	String	30	
+String2	String	30	
+String3	String	30	
+Number1	Number		
+Number2	Number		
+Date1	Date		
+Currency1	Currency		

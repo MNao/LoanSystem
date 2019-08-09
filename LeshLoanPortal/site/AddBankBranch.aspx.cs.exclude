@@ -1,0 +1,127 @@
+﻿using InterConnect.LeshLaonApi;
+using System;
+using InterConnect;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+
+public partial class AddBankBranch : System.Web.UI.Page
+{
+    SystemUser user;
+    BusinessLogic bll = new BusinessLogic();
+    LeshLoanAPI UbaKyc = new LeshLoanAPI();
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        Label lblmsg = (Label)Master.FindControl("lblmsg");
+        try
+        {
+            user = Session["User"] as SystemUser;
+            if (IsPostBack == false)
+            {
+                if ((Session["Username"] == null))
+                {
+                    Response.Redirect("Default.aspx");
+                }
+                bll.LoadBanksIntoDropDownALL(user, ddBank);
+                btnEdit.Visible = false;
+
+                string UserID = Request.QueryString["UserID"];
+                string BankCode = Request.QueryString["BankCode"];
+
+                if (!string.IsNullOrEmpty(UserID))
+                {
+                    //LoadEntityData(UserID, BankCode);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            bll.ShowMessage(lblmsg, ex.Message, true, Session);
+        }
+    }
+
+    protected void btnOK_Click(object sender, EventArgs e)
+    {
+        Label lblmsg = (Label)Master.FindControl("lblmsg");
+        try
+        {
+            BankBranch Branch = GetBranchDetails();
+            string check_status = validate_input(Branch.BranchName, Branch.BranchCode);
+
+
+            if (!check_status.Equals("OK"))
+            {
+                bll.ShowMessage(lblmsg, check_status, true);
+                return;
+            }
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = RemoteCertificateValidation;
+            System.Net.ServicePointManager.Expect100Continue = false;
+            Result Branch_save = UbaKyc.SaveBankBranch(Branch);
+
+            if (Branch_save.StatusCode != "0")
+            {
+                //MultiView2.ActiveViewIndex = 0;
+                bll.ShowMessage(lblmsg, Branch_save.StatusDesc, true);
+                return;
+            }
+            bll.ShowMessage(lblmsg, "BRANCH SAVED SUCCESSFULLY", false);
+            Clear_controls();
+            
+        }
+        catch (Exception ex)
+        {
+            bll.ShowMessage(lblmsg, ex.Message, true);
+        }
+    }
+
+    private bool RemoteCertificateValidation(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Clear_controls()
+    {
+        txtBranchCode.Text = "";
+        txtBranchName.Text = "";
+    }
+    public BankBranch GetBranchDetails()
+    {
+        BankBranch Details = new BankBranch();
+
+        Details.BankCode = ddBank.SelectedValue;
+        Details.BranchName = txtBranchName.Text.Trim();
+        Details.BranchCode = txtBranchCode.Text.Trim();
+        Details.isActive = chkActive.Checked.ToString();
+        Details.ModifiedBy = user.UserId;
+        return Details;
+    }
+
+    private string validate_input(string branchName, string branchCode)
+    {
+        string output = "";
+        if (branchName.Equals(""))
+        {
+            output = "Please Supply Branch Name";
+            txtBranchName.Focus();
+        }
+        else if (branchCode.Equals(""))
+        {
+            output = "Please Supply Branch Code";
+            txtBranchCode.Focus();
+        }
+        else
+        {
+            output = "OK";
+        }
+        return output;
+    }
+    protected void btnEdit_Click(object sender, EventArgs e)
+    {
+        Label lblmsg = (Label)Master.FindControl("lblmsg");
+    }
+}

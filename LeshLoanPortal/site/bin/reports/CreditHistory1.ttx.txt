@@ -1,0 +1,6 @@
+No.	Number	
+Username	String	20		
+Credit	Number	
+RecordDate	Date	
+AllocatedBy	String	15	
+Branch	String	20				

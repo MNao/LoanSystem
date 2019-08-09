@@ -1,0 +1,26 @@
+ApplicationID	Number		
+ApplicationCode	String	50	
+ApplicantName	String	70	
+Option	String	30	
+MapNumber	String	6	
+ConnectionNumber	Number		
+InvoiceID	Number		
+InvoiceCode	String	20	
+Diameter1	String	10	
+Diameter2	String	10	
+Material1	String	10	
+Material2	String	10	
+Surveyor	String	30	
+Contractor	String	50	
+Distance	Number		
+Depth	Number		
+Charge	Currency		
+Location	String	50	
+Area	String	30	
+Date	Date		
+Date1	Date		
+Date2	Date		
+String1	String	30	
+String2	String	30	
+Amount	Currency		
+String3	String	30	

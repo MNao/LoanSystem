@@ -1,0 +1,11 @@
+Category	String	20	
+Number1	Number		
+MaterialName	String	20	
+Size	String	20	
+Length	String	15	
+Quantity	Number		
+Rate	Currency		
+Number2	Number		
+String1	String	20	
+String2	String	20	
+Date	Date		

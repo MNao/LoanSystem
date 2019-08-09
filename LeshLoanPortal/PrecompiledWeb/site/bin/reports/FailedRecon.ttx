@@ -1,0 +1,11 @@
+VendorRef	String	50	
+PayDate	Date		
+Amount	Currency		
+Reason	String	100	
+PrintedBy	String	50	
+Bank	String	50	
+Str1	String	30	
+Str2	String	30	
+Date1	Date		
+Date2	Date		
+Amount2	Currency		

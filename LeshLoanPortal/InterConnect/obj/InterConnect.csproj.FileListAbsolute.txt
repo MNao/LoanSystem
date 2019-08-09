@@ -1,0 +1,63 @@
+D:\Projects\Sms_Broadcast\sms_app\InterConnect\bin\Debug\InterConnect.dll
+D:\Projects\Sms_Broadcast\sms_app\InterConnect\bin\Debug\InterConnect.pdb
+D:\Projects\Sms_Broadcast\sms_app\InterConnect\obj\Debug\ResolveAssemblyReference.cache
+D:\Projects\Sms_Broadcast\sms_app\InterConnect\obj\Debug\InterConnect.dll
+D:\Projects\Sms_Broadcast\sms_app\InterConnect\obj\Debug\InterConnect.pdb
+D:\Projects\Sms_Broadcast\sms_app\InterConnect\bin\Debug\InterConnect.dll.config
+D:\Projects\Sms_Broadcast\sms_app\InterConnect\bin\Release\InterConnect.dll.config
+D:\Projects\Sms_Broadcast\sms_app\InterConnect\bin\Release\InterConnect.dll
+D:\Projects\Sms_Broadcast\sms_app\InterConnect\bin\Release\InterConnect.XmlSerializers.dll
+D:\Projects\Sms_Broadcast\sms_app\InterConnect\bin\Release\InterConnect.pdb
+D:\Projects\Sms_Broadcast\sms_app\InterConnect\obj\Release\ResolveAssemblyReference.cache
+D:\Projects\Sms_Broadcast\sms_app\InterConnect\obj\Release\InterConnect.dll
+D:\Projects\Sms_Broadcast\sms_app\InterConnect\obj\Release\InterConnect.pdb
+D:\Projects\Sms_Broadcast\sms_app\InterConnect\obj\Release\InterConnect.XmlSerializers.dll
+D:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.dll.config
+D:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.dll
+D:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.XmlSerializers.dll
+D:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.pdb
+D:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\obj\Release\ResolveAssemblyReference.cache
+D:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.dll
+D:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.pdb
+D:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.XmlSerializers.dll
+D:\Applications\Umeme\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.dll.config
+D:\Applications\Umeme\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.dll
+D:\Applications\Umeme\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.XmlSerializers.dll
+D:\Applications\Umeme\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.pdb
+D:\Applications\Umeme\SMSApp\SmsApp\sms_app\InterConnect\obj\Release\ResolveAssemblyReference.cache
+D:\Applications\Umeme\SMSApp\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.dll
+D:\Applications\Umeme\SMSApp\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.pdb
+D:\Applications\Umeme\SMSApp\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.XmlSerializers.dll
+E:\PegPay\Applications\Umeme\SMSApp _1\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.dll.config
+E:\PegPay\Applications\Umeme\SMSApp _1\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.dll
+E:\PegPay\Applications\Umeme\SMSApp _1\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.XmlSerializers.dll
+E:\PegPay\Applications\Umeme\SMSApp _1\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.pdb
+E:\PegPay\Applications\Umeme\SMSApp _1\SmsApp\sms_app\InterConnect\obj\Release\ResolveAssemblyReference.cache
+E:\PegPay\Applications\Umeme\SMSApp _1\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.dll
+E:\PegPay\Applications\Umeme\SMSApp _1\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.pdb
+E:\PegPay\Applications\Umeme\SMSApp _1\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.XmlSerializers.dll
+E:\PegPay\Applications\Umeme\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.dll.config
+E:\PegPay\Applications\Umeme\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.dll
+E:\PegPay\Applications\Umeme\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.XmlSerializers.dll
+E:\PegPay\Applications\Umeme\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.pdb
+E:\PegPay\Applications\Umeme\SMSApp\SmsApp\sms_app\InterConnect\obj\Release\ResolveAssemblyReference.cache
+E:\PegPay\Applications\Umeme\SMSApp\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.dll
+E:\PegPay\Applications\Umeme\SMSApp\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.pdb
+E:\PegPay\Applications\Umeme\SMSApp\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.XmlSerializers.dll
+E:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.dll.config
+E:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.dll
+E:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.XmlSerializers.dll
+E:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.pdb
+E:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\bin\Release\Oracle.DataAccess.dll
+E:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\obj\Release\ResolveAssemblyReference.cache
+E:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.dll
+E:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.pdb
+E:\pegpay\Umeme1\SMSApp\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.XmlSerializers.dll
+E:\Kazana\zzalal\pegasus\UMEME Source C\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.dll.config
+E:\Kazana\zzalal\pegasus\UMEME Source C\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.dll
+E:\Kazana\zzalal\pegasus\UMEME Source C\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.XmlSerializers.dll
+E:\Kazana\zzalal\pegasus\UMEME Source C\SmsApp\sms_app\InterConnect\bin\Release\InterConnect.pdb
+E:\Kazana\zzalal\pegasus\UMEME Source C\SmsApp\sms_app\InterConnect\obj\Release\ResolveAssemblyReference.cache
+E:\Kazana\zzalal\pegasus\UMEME Source C\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.dll
+E:\Kazana\zzalal\pegasus\UMEME Source C\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.pdb
+E:\Kazana\zzalal\pegasus\UMEME Source C\SmsApp\sms_app\InterConnect\obj\Release\InterConnect.XmlSerializers.dll

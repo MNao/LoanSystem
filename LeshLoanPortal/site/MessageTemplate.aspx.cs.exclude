@@ -1,0 +1,198 @@
+using System;
+using System.Collections;
+using System.Drawing;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Collections.Generic;
+using System.Web;
+using System.IO;
+using Encryption;
+using System.Data;
+
+public partial class MessageTemplate : Page
+{
+    private readonly DbAccess _db = new DbAccess();
+    FileUpload uploadedFile;
+
+    public static string RECEIPTION_TYPE_PHONE_NO = "0";
+    public static string RECEIPTION_TYPE_LIST = "1";
+    public static string RECEIPTION_TYPE_FILE = "2";
+    public static string msgId = "";
+
+
+    private readonly Processfile _processFile = new Processfile();
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
+            if (IsPostBack) return;
+            if ((Session["Username"] == null))
+            {
+                Response.Redirect("Default.aspx");
+            }
+            else if (Request.QueryString["msgid"] != null)
+            {
+                string id = Encryption.encrypt.DecryptString(Request.QueryString["msgid"], "25011Pegsms2322");
+                LoadMessageTemplate(id);
+            }
+            //MultiView2.ActiveViewIndex = 0;
+            
+         
+
+        }
+        catch (Exception ex)
+        {
+            ShowMessage(ex.Message, true);
+        }
+    }
+
+    private void LoadMessageTemplate(string id)
+    {
+        var dataTable = _processFile.GetMessageTemplate(id);
+        var title = "";
+        var message = "";
+        foreach (DataRow row in dataTable.Rows)
+        {
+            title = row["Title"].ToString();
+            message = row["Message"].ToString();
+            //TextBox1.Text = row["ImagePath"].ToString();
+        }
+        txtTitle.Text = title;
+        txtMessage.Text = message;
+        msgId = id;
+    }
+
+    private void ShowMessage(string Message, bool Error)
+    {
+        var lblmsg = (Label) Master.FindControl("lblmsg");
+        if (Error)
+        {
+            lblmsg.ForeColor = Color.Red;
+            lblmsg.Font.Bold = false;
+        }
+        else
+        {
+            lblmsg.ForeColor = Color.Green;
+            lblmsg.Font.Bold = true;
+        }
+
+        if (Message == ".")
+            lblmsg.Text = ".";
+        else
+            lblmsg.Text = "MESSAGE: " + Message.ToUpper();
+    }
+
+    protected void btnOK_Click(object sender, EventArgs e)
+    {
+        try
+        {                 
+
+            var title = txtTitle.Text.Trim();
+            var message = txtMessage.Text.Trim();
+            //var id = txtId.Text;
+            if ( title.Equals(""))
+            {
+                ShowMessage("Please input the template message title", true);
+            }
+            
+             //Here the person has chosen to use acontact group
+            else if (message.Equals(""))
+            {
+                ShowMessage("Please input the template message body", true);
+            }
+
+            else {
+
+
+                string createdBy = Session["Username"].ToString();
+                string VendorCode = Session["VendorCode"].ToString();
+               
+                string error = "";
+
+                _processFile.SaveMessageTemplate(msgId, title, message, createdBy, VendorCode, out error);
+
+                if (error != "")
+                {
+                    ShowMessage(error, true);
+                    return;
+                }
+                else
+                {
+
+                    ShowMessage("Message template has been successul saved", false);
+                    Clear_contrls();
+                }
+            }
+
+           
+           
+        }
+        catch (Exception ex)
+        {
+            ShowMessage(ex.Message, true);
+        }
+    }
+
+    private ArrayList GetNumbers(string nums)
+    {
+        var tels = new ArrayList();
+
+        return tels;
+    }
+
+  
+
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        try
+        {
+
+            var Phones = txtTitle.Text;
+
+            var message = txtViewMessage.Text.Trim();
+            var VendorCode = Session["VendorCode"].ToString();
+
+
+        }
+        catch (Exception ex)
+        {
+            ShowMessage(ex.Message, true);
+        }
+    }
+
+    private void Clear_contrls()
+    {
+       // ddlists.SelectedIndex = ddlists.Items.IndexOf(ddlists.Items.FindByValue("0"));
+        txtMessage.Text = "";
+        txtTitle.Text = "";
+    }
+
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        MultiView1.ActiveViewIndex = 0;
+        ShowMessage(".", true);
+    }
+
+
+
+    protected void ddlReceipient_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        //var prefix = ddlReceipient.SelectedValue;
+        //if (prefix.Equals("0")){
+        //    MultiView2.ActiveViewIndex = 0;
+        //}
+        //else if (prefix.Equals("1"))
+        //{
+        //    //lblMessageLength.Text = "SMS MESSAGE LENGTH : 155";
+        //    LoadActivelists();
+        //    MultiView2.ActiveViewIndex = 1;
+        //}
+        //else if (prefix.Equals("2"))
+        //{
+        //    //lblMessageLength.Text = "SMS MESSAGE LENGTH : 154";
+        //    MultiView2.ActiveViewIndex = 2;
+        //}
+        lblMessageLength.Text = "SMS MESSAGE LENGTH : 160";
+    }
+}

@@ -1,0 +1,24 @@
+ApplicationCode	String	40	
+ApplicantName	String	50	
+Date	Date		
+Telephone	String	30	
+Address	String	100	
+Plot	String	10	
+Street	String	30	
+Village	String	30	
+Zone	String	30	
+Division	String	30	
+Connection	String	20	
+Area	String	20	
+Territory	String	4	
+CreatedBy	String	30	
+Number1	Number		
+Number2	Number		
+String1	String	30	
+String2	String	30	
+Date2	Date		
+Amount	Currency		
+Amount1	Currency		
+Amount2	Currency		
+Amount3	Currency		
+email	String	50	

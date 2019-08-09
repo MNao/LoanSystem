@@ -1,0 +1,27 @@
+E:\leontymo\SMS\sms portal\sms_app\InterConnect\bin\Debug\InterConnect.dll.config
+E:\leontymo\SMS\sms portal\sms_app\InterConnect\bin\Debug\InterConnect.dll
+E:\leontymo\SMS\sms portal\sms_app\InterConnect\bin\Debug\InterConnect.pdb
+E:\leontymo\SMS\sms portal\sms_app\InterConnect\bin\Debug\Encryption.dll
+E:\leontymo\SMS\sms portal\sms_app\InterConnect\obj\Debug\InterConnect.dll
+E:\leontymo\SMS\sms portal\sms_app\InterConnect\obj\Debug\InterConnect.pdb
+E:\PePay\UBAKYC\TestUBAKYCPortaloriginal\InterConnect\bin\Debug\InterConnect.dll.config
+E:\PePay\UBAKYC\TestUBAKYCPortaloriginal\InterConnect\bin\Debug\InterConnect.dll
+E:\PePay\UBAKYC\TestUBAKYCPortaloriginal\InterConnect\bin\Debug\InterConnect.pdb
+E:\PePay\UBAKYC\TestUBAKYCPortaloriginal\InterConnect\bin\Debug\Encryption.dll
+E:\PePay\UBAKYC\TestUBAKYCPortaloriginal\InterConnect\obj\Debug\InterConnect.csprojResolveAssemblyReference.cache
+E:\PePay\UBAKYC\TestUBAKYCPortaloriginal\InterConnect\obj\Debug\InterConnect.dll
+E:\PePay\UBAKYC\TestUBAKYCPortaloriginal\InterConnect\obj\Debug\InterConnect.pdb
+E:\Projects\Project Docs\Test Server\Downloads\UBAKYC\TestUBAKYCPortaloriginal\InterConnect\bin\Debug\InterConnect.dll.config
+E:\Projects\Project Docs\Test Server\Downloads\UBAKYC\TestUBAKYCPortaloriginal\InterConnect\bin\Debug\InterConnect.dll
+E:\Projects\Project Docs\Test Server\Downloads\UBAKYC\TestUBAKYCPortaloriginal\InterConnect\bin\Debug\InterConnect.pdb
+E:\Projects\Project Docs\Test Server\Downloads\UBAKYC\TestUBAKYCPortaloriginal\InterConnect\bin\Debug\Encryption.dll
+E:\Projects\Project Docs\Test Server\Downloads\UBAKYC\TestUBAKYCPortaloriginal\InterConnect\obj\Debug\InterConnect.csprojResolveAssemblyReference.cache
+E:\Projects\Project Docs\Test Server\Downloads\UBAKYC\TestUBAKYCPortaloriginal\InterConnect\obj\Debug\InterConnect.dll
+E:\Projects\Project Docs\Test Server\Downloads\UBAKYC\TestUBAKYCPortaloriginal\InterConnect\obj\Debug\InterConnect.pdb
+E:\Projects\LeshLoanSystem\LeshLoanPortal\InterConnect\bin\Debug\InterConnect.dll.config
+E:\Projects\LeshLoanSystem\LeshLoanPortal\InterConnect\bin\Debug\InterConnect.dll
+E:\Projects\LeshLoanSystem\LeshLoanPortal\InterConnect\bin\Debug\InterConnect.pdb
+E:\Projects\LeshLoanSystem\LeshLoanPortal\InterConnect\bin\Debug\Encryption.dll
+E:\Projects\LeshLoanSystem\LeshLoanPortal\InterConnect\obj\Debug\InterConnect.csprojResolveAssemblyReference.cache
+E:\Projects\LeshLoanSystem\LeshLoanPortal\InterConnect\obj\Debug\InterConnect.dll
+E:\Projects\LeshLoanSystem\LeshLoanPortal\InterConnect\obj\Debug\InterConnect.pdb

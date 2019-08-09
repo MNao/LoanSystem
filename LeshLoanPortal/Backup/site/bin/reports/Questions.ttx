@@ -1,0 +1,18 @@
+ApplicationID	Number		
+ApplicationCode	String	30	
+ApplicantName	String	50	
+Question	String	200	
+Surveyor	String	30	
+Date	Date		
+Location	String	30	
+Village	String	30	
+JobNumber	String	30	
+Area	String	30	
+String1	String	30	
+String2	String	30	
+Number1	Number		
+Number2	Number		
+Date1	Date		
+Date2	Date		
+Amount	Currency		
+Total	Currency		

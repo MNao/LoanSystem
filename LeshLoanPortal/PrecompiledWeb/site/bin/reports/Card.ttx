@@ -1,0 +1,7 @@
+Type	String	80	
+FullName	String	200	
+Date	Long		
+Category	String	30	
+Ref	String	30	
+String1	String	30	
+String2	String	30	

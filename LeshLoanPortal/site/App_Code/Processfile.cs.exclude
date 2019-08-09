@@ -1,0 +1,1037 @@
+using System;
+using System.Collections;
+using System.Data;
+using System.IO;
+using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
+using System.Web;
+using Encryption;
+using InterConnect.PegPay;
+using InterConnect.SMSService;
+using System.Collections.Generic;
+
+/// <summary>
+///     Summary description for Processfile
+/// </summary>
+public class Processfile
+{
+    private readonly DbAccess _db = new DbAccess();
+    private readonly DataFile _df = new DataFile();
+    private ArrayList _fileContent;
+    private PhoneValidator _phoneValidator;
+    private SMSService _smsApi;
+
+    public DataTable LoginDetails(string username, string password)
+    {
+        //string pass = Encryption.encrypt.DecryptString("ORsy4hbcqhEqC5NHlKoptw==", "25011Pegsms2322");
+        password = EncryptString(password);
+        var dataTable = _db.GetUserAccessibility(username, password);
+        return dataTable;
+    }
+
+    public string EncryptString(string clearText)
+    {
+        var ret = "";
+        ret = encrypt.EncryptString(clearText, "25011Pegsms2322");
+        return ret;
+    }
+
+    public string Reset_Passwd(string userCode, string password, bool reset)
+    {
+        var userId = int.Parse(userCode);
+        password = EncryptString(password);
+        _db.ResetPassword(userId, password, reset);
+        return "RESET";
+    }
+
+    public int GetUserCredit()
+    {
+        var credit = 0;
+        var user = HttpContext.Current.Session["VendorCode"].ToString();
+        var dataTable = _db.GetCurrentCredit(user);
+        if (dataTable.Rows.Count > 0) credit = int.Parse(dataTable.Rows[0]["Credit"].ToString());
+        return credit;
+    }
+
+    public string SaveList(string listCode, string listName, bool isActive)
+    {
+        var listId = int.Parse(listCode);
+        var areaCode = HttpContext.Current.Session["VendorCode"].ToString();
+        var user = HttpContext.Current.Session["Username"].ToString();
+        _db.SaveList(listId, listName, isActive, areaCode, user);
+        return listId.Equals(0) ? "SAVED" : "EDITED";
+    }
+
+    public DataTable GetActiveLists()
+    {
+        var areaCode = HttpContext.Current.Session["VendorCode"].ToString();
+        var dataTable = _db.GetActiveLists(areaCode);
+        return dataTable;
+    }
+
+    public DataTable GetActiveList(string listId)
+    {
+        //var areaCode = HttpContext.Current.Session["VendorCode"].ToString();
+        var dataTable = _db.GetActiveList(listId);
+        return dataTable;
+    }
+    public DataTable GetAllLists()
+    {
+        var areaCode = "";
+        if (HttpContext.Current.Session["RoleCode"].ToString() == "001")
+        {
+            areaCode = "";
+        }
+        else {
+            areaCode = HttpContext.Current.Session["VendorCode"].ToString();
+        }
+        var dataTable = _db.GetAllLists(areaCode);
+        return dataTable;
+    }
+
+    public void CheckPath(string path)
+    {
+        if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+    }
+
+    public void RemoveFile(string path)
+    {
+        if (File.Exists(path)) File.Delete(path);
+    }
+
+    public void SavePhoneNumber(string phone, string name, string list_code)
+    {
+
+        var areaCode = HttpContext.Current.Session["VendorCode"].ToString();
+        var user = HttpContext.Current.Session["Username"].ToString();
+        var listId = int.Parse(list_code);
+        phone = FormatPhone(phone);
+        _db.SavePhoneToList(phone, name.ToUpper(), listId, areaCode, user);
+
+    }
+
+    public DataTable GetListDetails(string VendorCode, string listCode, string phone, string name)
+    {
+       // var listId = int.Parse(listCode);
+        var dataTable = _db.GetListDetails(VendorCode, listCode, phone, name);
+        return dataTable;
+    }
+    public DataTable GetMessageTemplate(string id)
+    {
+        var dataTable = _db.GetTemplate(id);
+        return dataTable;
+    }
+    public void ChangePhoneStatus(string phoneCode, string status)
+    {
+        var phoneId = int.Parse(phoneCode);
+        var active = status.Equals("NO");
+        _db.ChangePhoneStatus(phoneId, active);
+    }
+
+    public void UpdatePhoneDetails(string phoneCode, string phone, string phoneName, bool active)
+    {
+        var phoneId = int.Parse(phoneCode);
+        _db.UpdatePhoneDetails(phoneId, phone, phoneName, active);
+    }
+
+    public string SaveUser(string userCode, string userName, string fname, string lname, string phone, string email,
+        string vendorCode, string userRole, bool active, bool reset)
+    {
+
+        var output = "";
+        var userId = int.Parse(userCode);
+        var createdBy = HttpContext.Current.Session["Username"].ToString();
+        userName = GetUserName(fname, lname, userName);
+
+        if (UserNameExists(userName, userCode))
+        {
+            output = userName + " USERNAME EXISTS, PLEASE ENTER A USERNAME";
+        }
+        else
+        {
+
+            var passwd = Credentials.GeneratePassword();
+            _db.Save_user(userId, userName, EncryptString(passwd), fname, lname, phone, email, vendorCode, userRole, active,
+                          reset, createdBy);            
+
+
+            //Send the user credentials to their email
+            SendMail.sendUserCredentialsToTheirEmail(userName, passwd, fname, lname, phone, email, vendorCode, userRole);
+
+
+            output = userCode.Equals("0") ? "USER SAVED SUCCESSFULLY" : "USER DETAILS UPDATED SUCCESSFULLY";
+
+
+        }
+
+        return output;
+    }
+
+
+    private bool UserNameExists(string userName, string userCode)
+    {
+        if (userCode.Equals("0"))
+        {
+            var dataTable = _db.GetUserDetailsByUserName(userName);
+            if (dataTable.Rows.Count > 0)
+                return true;
+            return false;
+        }
+
+        return false;
+    }
+
+    private string GetUserName(string fname, string sname, string userName)
+    {
+        var ret = "";
+        if (userName.Equals(""))
+        {
+            var initial = fname.Substring(0, 1);
+            ret = initial + "." + sname;
+            ret = ret.ToLower();
+        }
+        else
+        {
+            ret = userName;
+        }
+
+        return ret;
+    }
+
+    public DataTable GetUsers(string vendor_code, string role_code, string name)
+    {
+        //var areaId = int.Parse(area_code);
+        //var typeId = int.Parse(type_code);
+        var dataTable = _db.GetUsers(vendor_code, role_code, name);
+        return dataTable;
+    }
+
+    //public int GetTotalCost(string[] phones)
+    //{
+    //    int messageCost = 0;
+    //    foreach (string s in phones)
+    //    {
+    //        messageCost = messageCost + GetMessageCost(s);
+    //    }
+    //    return messageCost;
+    //}
+    //private int GetMessageCost(string phone)
+    //{
+    //    int intCost = 0;
+    //    string code = "";
+    //    string ntwk = "";
+    //    string cost = "";
+    //    if (phone.Trim().StartsWith("0") && phone.Trim().Length == 10)
+    //    {
+    //        code = phone.Substring(1, 3);
+    //        ArrayList phoneCodes = new ArrayList(nCodes.Keys);
+    //        if (phoneCodes.Contains(code))
+    //        {
+    //            ntwk = nCodes[code].ToString();
+    //            cost = rates[ntwk].ToString();
+    //            intCost = int.Parse(cost);
+    //        }
+    //        else
+    //        {
+    //            intCost = 0;
+    //        }
+    //    }
+    //    else if (phone.Trim().StartsWith("256") && phone.Trim().Length == 12)
+    //    {
+    //        code = phone.Substring(3, 3);
+    //        ArrayList phoneCodes = new ArrayList(nCodes.Keys);
+    //        if (phoneCodes.Contains(code))
+    //        {
+    //            ntwk = nCodes[code].ToString();
+    //            cost = rates[ntwk].ToString();
+    //            intCost = int.Parse(cost);
+    //        }
+    //        else
+    //        {
+    //            intCost = 0;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        intCost = 0;
+    //    }
+    //    return intCost;
+    //}
+    public string AddCredit(string VendorCode, string credit, string CreditedBy)
+    {
+        var output = "";
+        var creditToadd = int.Parse(credit);
+        if (creditToadd.Equals(0))
+        {
+            output = "Credit to add cannot be zero";
+        }
+        else if (VendorCode.Equals("0"))
+        {
+            output = "System failed to alocate Vendor details";
+        }
+        else
+        {
+
+            _db.AddCredit(VendorCode, creditToadd, CreditedBy);
+            output = "CREDIT OF " + creditToadd.ToString("#,##0") + " HAS BEEN ADDED SUCCESSFULLY TO VENDOR " + VendorCode;
+        }
+
+        return output;
+    }
+
+    public bool SufficientCredit(string listCode)
+    {
+        var listId = int.Parse(listCode);
+        var listTotal = _db.GetListTotalCost(listId);
+        var credit = GetUserCredit();
+        if (credit >= listTotal)
+            return true;
+        return false;
+    }
+
+    public string LogSMS(string listCode,  string otherPhones, string message, string VendorCode)
+    {
+        var output = "";
+        _phoneValidator = new PhoneValidator();
+        var listId = int.Parse(listCode);
+
+        var arrayPhones = otherPhones.Split(',');
+        var dt = _db.GetActiveListNumbers(listId);
+
+        if (dt.Rows.Count > 0 || arrayPhones.Length > 0)
+        {
+            var user = HttpContext.Current.Session["Username"].ToString();
+            var mask = HttpContext.Current.Session["Mask"].ToString();
+            var mail = HttpContext.Current.Session["Email"].ToString();
+            var i = 0;
+            var count = 0;
+            foreach (DataRow dr in dt.Rows)
+            {
+                var phone = _phoneValidator.Format(dr["PhoneNumber"].ToString().Trim());
+                var name = dr["PhoneName"].ToString();
+                 
+                var msg = GetformatMessage(phone, name, VendorCode, message);
+                _db.InsertSmsToSend(phone, msg, mask, user, VendorCode);
+                count++;
+
+                //Reduct_credit(listId, message, mask, user, phone);
+            }
+
+            if (count > 0) i = 1;
+
+            for (; i < arrayPhones.Length; i++, count++)
+            {
+                var phone = _phoneValidator.Format(arrayPhones[i].Trim());
+                var msg = GetformatMessage(phone, "", VendorCode, message);
+                _db.InsertSmsToSend(phone, msg, mask, user, VendorCode);
+
+                //Reduct_creditforOtherPhones(arrayPhones, message, mask, user, "YES");
+            }
+
+            output = "A message has been logged For processing, An Email will be sent to "+ mail;
+        }
+        else
+        {
+            output = "No Active Phone number(s) on list";
+        }
+
+        return output;
+    }
+
+
+    public string LogSMSCommaSeparatedList( string[] phonesArr, string message, string VendorCode)
+    {
+
+        var output = "";
+        _phoneValidator = new PhoneValidator();
+
+        var arrayPhones = phonesArr;
+
+        //List has phone numbers
+        if (arrayPhones.Length > 0)
+        {
+
+            var user = HttpContext.Current.Session["Username"].ToString();
+            var mask = HttpContext.Current.Session["Mask"].ToString();
+            var mail = HttpContext.Current.Session["Email"].ToString(); 
+            for (var i = 0; i < arrayPhones.Length; i++)
+            {
+                var phone = _phoneValidator.Format(arrayPhones[i].Trim());
+                var msg = GetformatMessage(phone, "", VendorCode, message);
+                _db.InsertSmsToSend(phone, msg, mask, user, VendorCode);
+
+                //Reduct_creditforOtherPhones(arrayPhones, message, mask, user, "YES");
+            }
+
+            output = "Message been logged Successfully, an email will be sent to " + mail +" After Processing";
+        }
+        else
+        {
+            output = "No Active Phone number(s) on list";
+        }
+
+        return output;
+    }
+
+    public string LogSMSContactGroup(string listCode, string otherPhones, string message, string VendorCode)
+    {
+        var output = "";
+        _phoneValidator = new PhoneValidator();
+        var listId = int.Parse(listCode);
+
+        var arrayPhones = otherPhones.Split(',');
+        var dt = _db.GetActiveListNumbers(listId);
+
+        if (dt.Rows.Count > 0 || arrayPhones.Length > 0)
+        {
+            var user = HttpContext.Current.Session["Username"].ToString();
+            var mask = HttpContext.Current.Session["Mask"].ToString();
+            var i = 0;
+            var count = 0;
+            foreach (DataRow dr in dt.Rows)
+            {
+                var phone = _phoneValidator.Format(dr["PhoneNumber"].ToString().Trim());
+                var name = dr["PhoneName"].ToString();
+                var msg = GetformatMessage(phone, name, VendorCode, message);
+                _db.InsertSmsToSend(phone, msg, mask, user, VendorCode);
+                count++;
+
+                //Reduct_credit(listId, message, mask, user, phone);
+            }
+
+            if (count > 0) i = 1;
+
+            for (; i < arrayPhones.Length; i++, count++)
+            {
+                var phone = _phoneValidator.Format(arrayPhones[i].Trim());
+                var msg = GetformatMessage(phone, "", VendorCode, message);
+                _db.InsertSmsToSend(phone, msg, mask, user, VendorCode);
+
+                //Reduct_creditforOtherPhones(arrayPhones, message, mask, user, "YES");
+            }
+
+            output = "A list of " + count + " has been logged Successfully";
+        }
+        else
+        {
+            output = "No Active Phone number(s) on list";
+        }
+
+        return output;
+    }
+
+    public string LogSMSFileUpload(string listId, string pathToFIle, string message, string VendorCode, string user,string mask, string senderId, string processType)
+    {
+
+        var output = ""; 
+
+        try
+        {
+
+            new DbAccess().InsertUploadedSMSFile(listId, pathToFIle, message, mask, user, VendorCode, senderId, processType);
+
+           output = "Successfully saved file for processing";
+
+        }
+        catch (Exception ex)
+        {
+            output = "Failed to upload file with error "+ex.Message;
+        }
+           
+
+        return output;
+
+    }
+
+
+    public List<String> getContactListForSelectedContactGroup(string listCode)
+    {
+
+        List<String> phoneNumbers = new List<String>();
+
+        //Get the ID of the contact group
+        var listId = int.Parse(listCode);
+        var dt = _db.GetActiveListNumbers(listId);
+
+        if (dt.Rows.Count > 0 )
+        {
+            _phoneValidator = new PhoneValidator();
+            foreach (DataRow dr in dt.Rows)
+            {
+                var phone = _phoneValidator.Format(dr["PhoneNumber"].ToString().Trim());
+                phoneNumbers.Add(phone);
+            }
+
+        }
+
+        return phoneNumbers;
+    }
+
+    private static void SendSMS(Sms sms)
+    {
+        try
+        {
+            var api = new PegPay();
+            var trans = new TransactionRequest();
+            var qReq = new QueryRequest();
+
+            const string vendorCode = "PEGASUS_TEST";
+            const string password = "52P14GE753";
+
+            trans.PostField4 = "SMS";
+            trans.PostField5 = DateTime.Now.ToString("dd/MM/yyyy");
+            trans.PostField9 = vendorCode;
+            trans.PostField10 = password;
+            trans.PostField11 = sms.Phone;
+            trans.PostField14 = sms.Message;
+            trans.PostField20 = DateTime.Now.ToString("ddMMyyyyHHmmss");
+            trans.PostField18 = sms.Message;
+
+            var dataToSign = trans.PostField1 +
+                             trans.PostField2 +
+                             trans.PostField11 +
+                             trans.PostField20 +
+                             trans.PostField9 +
+                             trans.PostField10 +
+                             trans.PostField5 +
+                             trans.PostField14 +
+                             trans.PostField7 +
+                             trans.PostField18 +
+                             trans.PostField8;
+
+            trans.PostField16 = DbAccess.SignCertificate(dataToSign);
+
+            ServicePointManager.ServerCertificateValidationCallback = RemoteCertificateValidation;
+            api.PrepaidVendorPostTransactionAsync(trans);
+        }
+        catch (Exception ex)
+        {
+            //
+        }
+    }
+
+    private static bool RemoteCertificateValidation(object sender, X509Certificate certificate, X509Chain chain,
+        SslPolicyErrors sslPolicyErrors)
+    {
+        return true;
+    }
+
+    private void Reduct_creditforOtherPhones(string[] otherPhones, string message, string mask, string user,
+        string indicator)
+    {
+        var listTotal = GetOtherPhonesinDetails(otherPhones, indicator);
+        var credit = GetUserCredit();
+        var newBalance = credit - listTotal;
+        var areaCode = HttpContext.Current.Session["AreaID"].ToString();
+        var areaId = int.Parse(areaCode);
+
+        _db.reduce_credit(newBalance, 0, listTotal, message, areaId, mask, user);
+    }
+
+    private int GetOtherPhonesinDetails(string[] otherPhones, string indicator)
+    {
+        var x = 0;
+        if (indicator.Equals("YES")) x = 1;
+        var totalCost = 0;
+
+        for (; x < otherPhones.Length; x++)
+        {
+            var phone = _phoneValidator.Format(otherPhones[x]);
+            var networkCode = phone.Substring(1, 3);
+            var tarrif = _db.GetParticularTarrifWithCode(networkCode);
+            totalCost += tarrif;
+        }
+
+        return totalCost;
+    }
+
+    private void Reduct_credit(int listId, string message, string mask, string user, string element)
+    {
+        //int list_total = data_file.GetListTotalCost(list_id);
+
+        var networkCode = element.Substring(3, 3);
+        var listTotal = _db.GetParticularTarrifWithCode(networkCode);
+
+        var credit = GetUserCredit();
+        var newBalance = credit - listTotal;
+        var areaCode = HttpContext.Current.Session["AreaID"].ToString();
+        var areaId = int.Parse(areaCode);
+
+        _db.reduce_credit(newBalance, listId, listTotal, message, areaId, mask, user);
+    }
+
+    public void ProcessSMS(string message, ArrayList csv)
+    {
+        var user = HttpContext.Current.Session["Username"].ToString();
+        var mask = HttpContext.Current.Session["Mask"].ToString();
+        var areaid = HttpContext.Current.Session["AreaID"].ToString();
+
+        var smsToSend = new Hashtable();
+        var smsWords = Regex.Split(message, "%S");
+        var p = 0;
+        var noOfCol = smsWords.Length;
+        char[] delimiter = {','};
+
+        foreach (string line in csv)
+            try
+            {
+                var words = line.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
+                if (noOfCol >= words.Length)
+                {
+                    var phone = words[0];
+                    if (phone != null)
+                    {
+                        phone = FormatPhone(phone);
+                        var sms = "";
+
+                        _phoneValidator = new PhoneValidator();
+                        if (_phoneValidator.PhoneNumbersOk(phone))
+                        {
+                            if (words.Length == 1)
+                                sms = sms = sms + smsWords[0].Trim();
+                            else
+                                for (var i = 1; i < words.Length; i++)
+                                {
+                                    sms = sms + smsWords[i - 1].Trim() + " " + words[i].Trim() + " ";
+                                    if (i == words.Length - 1) sms = sms = sms + smsWords[i].Trim();
+                                }
+
+                            smsToSend.Add(phone, sms);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+
+        if (smsToSend.Count > 0)
+        {
+            var tels = new ArrayList(smsToSend.Keys);
+            foreach (string tel in tels)
+            {
+                var telephone = tel;
+                telephone = FormatPhone(telephone);
+
+                if ((telephone.StartsWith("07") || telephone.StartsWith("03")) && telephone.Trim().Length == 10)
+                {
+                    telephone = telephone.Remove(0, 1);
+                    telephone = "256" + telephone;
+                }
+
+                _db.InsertSmsToSend(telephone, smsToSend[tel].ToString(), mask, user, areaid);
+                //SendSms(telephone, smsToSend[tel].ToString(), "UMEME", username);
+            }
+        }
+    }
+
+    public string FormatPhone(string phone)
+    {
+        if (phone.Trim().StartsWith("256") && phone.Trim().Length == 12)
+        {
+            phone = phone.Remove(0, 3);
+            phone = "0" + phone;
+        }
+        else if (phone.Trim().StartsWith("+256") && phone.Trim().Length == 13)
+        {
+            phone = phone.Remove(0, 4);
+            phone = "0" + phone;
+        }
+        else if ((phone.Trim().StartsWith("7") || phone.Trim().StartsWith("3")) && phone.Trim().Length == 9)
+        {
+            phone = "0" + phone;
+        }
+        else if ((phone.StartsWith("07") || phone.StartsWith("03")) && phone.Trim().Length == 10)
+        {
+            phone = phone.Remove(0, 1);
+            phone = "256" + phone;
+        }
+
+        return phone;
+    }
+
+    private string GetformatMessage(string phone, string name, string prefix, string message)
+    {
+
+        return message;
+
+        var output = "";
+        if (prefix.Equals("NONE"))
+        {
+            output = message;
+        }
+        else
+        {
+            if (name.Equals("NONE"))
+                output = message;
+            else
+                output = "Hello! \n" + " " + name + " " + message;
+        }
+
+        return output;
+    }
+
+    public string Change_Passwd(string oldPasswd, string newPasswd, string confirm)
+    {
+        var output = "";
+        if (newPasswd == confirm)
+        {
+            var userId = HttpContext.Current.Session["Username"].ToString();
+            //oldPasswd = EncryptString(oldPasswd);
+            var dataTable = LoginDetails(userId, oldPasswd);
+            if (dataTable.Rows.Count > 0)
+            {
+                newPasswd = EncryptString(newPasswd);
+                var usercode = HttpContext.Current.Session["UserID"].ToString();
+                var user_id = int.Parse(usercode);
+                _db.ResetPassword(user_id, newPasswd, false);
+                output = "Password Changed Successfully";
+            }
+            else
+            {
+                output = "Invalid Old Password";
+            }
+        }
+        else
+        {
+            output = "Passwords do not match";
+        }
+
+        return output;
+    }
+
+    public string Save_Tariff(string network, string rate)
+    {
+        var tariff = int.Parse(rate);
+        _db.Save_Tariff(network, tariff);
+        return "SAVED";
+    }
+
+    public string Save_Area(string VendorName, string VendorCode, string VendorContact, string VendorEmail, string mask, string SenderId, bool Isactive, bool IsPrepaid, bool IsBlacklisted, string CreatedBy)
+    {
+        //var area_id = int.Parse(area_code);
+        _db.Save_Area(VendorName, VendorCode, VendorContact, VendorEmail, mask, SenderId, Isactive, IsPrepaid, IsBlacklisted, CreatedBy);
+        return "SAVED";
+    }
+
+    public DateTime ReturnDate(string date, int type)
+    {
+        DateTime dates;
+
+        if (type == 1)
+        {
+            if (date == "")
+                dates = DateTime.Parse("January 1, 2012");
+            else
+                dates = DateTime.Parse(date);
+        }
+        else
+        {
+            if (date == "")
+                dates = DateTime.Now;
+            else
+                dates = DateTime.Parse(date);
+        }
+
+        return dates;
+    }
+
+    public DataTable GetSmslogs(string listID, string vendorCode, string user, string from, string end)
+    {
+        var from_date = ReturnDate(from, 1);
+        var end_date = ReturnDate(end, 2);
+        var dataTable = _db.GetSmslogs(listID, vendorCode, user, from_date, end_date);
+        return dataTable;
+
+    }
+
+    public DataTable GetSmsSent(string area_code, string user, string sent, string from, string end)
+    {
+        // int listid = int.Parse(list_code);
+        //int area_id = area_code;
+        var from_date = ReturnDate(from, 1);
+        var end_date = ReturnDate(end, 2);
+        //data_table = data_file.GetSmsSent(area_code, user,sent, from_date, end_date);
+        //return data_table;
+        using (var data_table1 = _db.GetSmsSent(area_code, user, sent, from_date, end_date))
+        {
+            return data_table1;
+        }
+    }
+
+    public DataTable GetCreditHistory(string area_code,  string from, string end)
+    {
+        // int listid = int.Parse(list_code);
+        //int area_id = area_code;
+        var from_date = ReturnDate(from, 1);
+        var end_date = ReturnDate(end, 2);
+        var dataTable = _db.GetCreditHistory(area_code, from_date, end_date);
+        return dataTable;
+    }
+
+    public DataTable GetSmsSentPR(string area_code, string user, string sent, string from, string end)
+    {
+        // int listid = int.Parse(list_code);
+        //int area_id = area_code;
+        var from_date = ReturnDate(from, 1);
+        var end_date = ReturnDate(end, 2);
+        //data_table = data_file.GetSmsSentPR(area_code, user, sent, from_date, end_date);
+        //return data_table;
+        using (var data_table1 = _db.GetSmsSentPR(area_code, user, sent, from_date, end_date))
+        {
+            return data_table1;
+        }
+    }
+
+    public void SendSms(string phone, string message, string mask, string smsSender)
+    {
+        try
+        {
+            _smsApi = new SMSService();
+            _smsApi.SendSms(phone, message, mask, smsSender, "EMEMU", "T3rr1613");
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public void UpdateUserCredit(string username, int newCredit)
+    {
+        try
+        {
+            _smsApi = new SMSService();
+            _smsApi.UpdateUserCredit(username, newCredit);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public NetworkRate[] GetNetworkRates()
+    {
+        try
+        {
+            _smsApi = new SMSService();
+            var nrates = _smsApi.GetNetworkRates();
+            return nrates;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public NetworkCode[] GetNetworkCodes()
+    {
+        try
+        {
+            _smsApi = new SMSService();
+            var ncodes = _smsApi.GetNetworkCodes();
+            return ncodes;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public Hashtable SetNetworkRates()
+    {
+        var rates = new Hashtable();
+        var nrates = GetNetworkRates();
+        var networkRates = new DataTable();
+        networkRates.Columns.Add("Network", typeof(string));
+        networkRates.Columns.Add("Rate(UShs.)", typeof(string));
+        foreach (var rate in nrates) networkRates.Rows.Add(rate.Network, rate.Rate);
+        rates.Clear();
+        for (var i = 0; i < networkRates.Rows.Count; i++)
+        {
+            var network = networkRates.Rows[i]["Network"].ToString();
+            var nRate = networkRates.Rows[i]["Rate(UShs.)"].ToString();
+            rates.Add(network, nRate);
+        }
+
+        return rates;
+    }
+
+
+    public string Save_Location(string location_code, string location)
+    {
+        var location_id = int.Parse(location_code);
+        _db.Save_Location(location_id, location);
+        return "SAVED";
+    }
+
+    public string Save_FieldEngineer(string RecordId, string Name, string Phone, string location, bool Active)
+    {
+        var EngineerId = int.Parse(RecordId);
+        var location_id = int.Parse(location);
+        _db.Save_FieldEngineer(EngineerId, Name, Phone, location_id, Active);
+        return "SAVED";
+    }
+
+    public string UploadEngineerList(string NewfilePath, string location)
+    {
+        var output = "";
+        try
+        {
+            var res = ValidateEngineerList(NewfilePath);
+            if (res.Equals("NONE"))
+            {
+                var fileData = new DataFile();
+                _fileContent = _df.ReadFile(NewfilePath);
+                for (var i = 1; i < _fileContent.Count; i++)
+                {
+                    var fileLine = _fileContent[i].ToString();
+                    var fLine = fileLine.Split(',');
+                    var EngineerName = fLine[0];
+                    var EngineerContact = fLine[1];
+                    var Active = true;
+                    if (EngineerContact.Length.Equals(9)) EngineerContact = "0" + EngineerContact;
+                    var RecordId = 0;
+                    var location_id = int.Parse(location);
+                    _db.Save_FieldEngineer(RecordId, EngineerName, EngineerContact, location_id, Active);
+                }
+
+                output = "ENGINEERS LIST HAS BEEN SUCCESSFULLY SAVED ";
+            }
+            else
+            {
+                output = res;
+            }
+
+            return output;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public string ValidateEngineerList(string filepath)
+    {
+        var output = "";
+        try
+        {
+            if (File.Exists(filepath))
+            {
+                var fileData = new DataFile();
+                _fileContent = _df.ReadFile(filepath);
+                int count;
+                for (var i = 1; i < _fileContent.Count; i++)
+                {
+                    count = i + 1;
+                    var fileLine = _fileContent[i].ToString();
+                    var fLine = fileLine.Split(',');
+                    if (fLine.Length == 2)
+                    {
+                        var engineerName = fLine[0];
+                        var engineerContact = fLine[1];
+                        if (engineerContact.Length.Equals(9)) engineerContact = "0" + engineerContact;
+                        var dataTable = _db.EngineerNumberExists(engineerContact);
+                        if (dataTable.Rows.Count < 1)
+                        {
+                            if (engineerName.Equals(""))
+                            {
+                                output = "The Engineer Name at Line " + count + " is Incorrect";
+                                return output;
+                            }
+
+                            if (engineerContact.Equals(""))
+                            {
+                                output = "The Engineer Contact can not be empty at Line " + count;
+                                return output;
+                            }
+                        }
+                        else
+                        {
+                            output = "The Engineer Contact at Line " + count + " Already Exists";
+                            return output;
+                        }
+                    }
+                    else
+                    {
+                        output = "Invalid Number of Columns on line count All the file line Should have 2 Columns";
+                        return output;
+                    }
+                }
+
+                output = "NONE";
+                return output;
+            }
+
+            output = "The File Name Does Not Exist";
+            return output;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public DataTable GetDistrictTotalSmsSent(string area_code, string Sent, string from, string end)
+    {
+        var from_date = ReturnDate(from, 1);
+        var end_date = ReturnDate(end, 2);
+        var from_date1 = formatDate(from_date);
+        var end_date1 = formatDate(end_date);
+        var dataTable = _db.GetDistrictTotalSmsSent(area_code, Sent, from_date1, end_date1);
+        return dataTable;
+    }
+
+    public void SaveMessageTemplate(string id, string title, string message, string createdBy, string VendorCode, out string error)
+    {
+        error = "";
+        try
+        {
+
+            _db.SaveMessageTemplate(id, title, message, VendorCode, createdBy);
+
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+        }
+    }
+
+    public DataTable GetMessageTemplates()
+    {
+        var vendorCode = HttpContext.Current.Session["VendorCode"].ToString();
+        var dataTable = _db.GetMessageTemplates(vendorCode);
+        return dataTable;
+    }
+
+
+    public DataTable GetMessageTemplates(string templateTitle, string user)
+    {
+        var vendorCode = HttpContext.Current.Session["VendorCode"].ToString();
+        var dataTable = _db.GetMessageTemplates(vendorCode, user, templateTitle);
+        return dataTable;
+    }
+
+    public DataTable GetDistrictTotalSmsSentNew(string areaCode, string from, string end)
+    {
+        var fromDate = ReturnDate(from, 1);
+        var endDate = ReturnDate(end, 2);
+        var fromDate1 = formatDate(fromDate);
+        var endDate1 = formatDate(endDate);
+        var dataTable = _db.GetDistrictTotalSmsSentNew(areaCode, fromDate1, endDate1);
+        return dataTable;
+    }
+
+    public string formatDate(DateTime Date)
+    {
+        var newDate = Date.ToString().Split(' ');
+        var dateOnly = newDate[0];
+        var dateParts = dateOnly.Split('/');
+        var month = dateParts[0];
+        var day = dateParts[1];
+        var year = dateParts[2];
+        var fulldate = year + '-' + month + '-' + day;
+        return fulldate;
+    }
+}

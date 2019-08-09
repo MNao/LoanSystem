@@ -1,0 +1,33 @@
+FullName	String	50	
+Location	String	30	
+PropertyRef	String	20	
+Date	Date		
+InstruDate	Date		
+JobNo	String	20	
+Authoriser	String	30	
+TeamLeader	String	30	
+ItemName	String	30	
+ItemName1	String	30
+ItemName2	String	30		
+Size	String	15	
+Size1	String	15
+Size3	String	15
+Length	String	15
+Length1	String	15		
+Length2	String	15	
+RecieptNumber	String	15	
+RecieptDate	Date		
+String1	String	50	
+Remark	String	80	
+BranchName	String	30	
+AreaName	String	20	
+CreatedBy	String	30	
+Option	String	30	
+Suplus	Currency		
+Amount	Currency
+Amount2	Currency	
+Amount3	Currency		
+Number1	Number		
+Number2	Number		
+Date2	Date		
+String2	String	30	

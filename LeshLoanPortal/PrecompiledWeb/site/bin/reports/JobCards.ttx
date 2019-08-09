@@ -1,0 +1,15 @@
+JobNumber	String	30	
+FullName	String	50	
+Telephone	String	40	
+Division	String	30	
+Zone	String	30	
+Cleared	String	10	
+Village	String	20	
+ApplicationDate	Date		
+CreatedBy	String	35	
+String1	String	30	
+String2	String	30	
+Number1	Number		
+Number2	Number		
+Date1	Date		
+ApplicationCode	String	35	
