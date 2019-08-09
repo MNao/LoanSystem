@@ -233,8 +233,33 @@ namespace LeshLoanMngt.ControlClasses
                 return result;
             }
 
-            
-            public ClientDetails[] GetClientDetails(string BankCode, string UserID, string ClientID)
+        public Result SaveReceipt(Receipt recpt)
+        {
+            Result result = new Result();
+
+            if (!recpt.IsValid())
+            {
+                result.StatusCode = Globals.FAILURE_STATUS_CODE;
+                result.StatusDesc = recpt.StatusDesc;
+                return result;
+            }
+
+            DataTable dt = dh.ExecuteDataSet("SaveReceipt", new string[] { recpt.CompanyCode, recpt.ClientID, recpt.ReceiptNumber, recpt.LoanNumber, recpt.PaymentType, recpt.PaymentDate, recpt.ReceiptAmount, recpt.CurrencyCode, recpt.ModifiedBy }).Tables[0];
+            if (dt.Rows.Count <= 0)
+            {
+                result.StatusCode = Globals.FAILURE_STATUS_CODE;
+                result.StatusDesc = "FAILED: PAYMENT RECEIPT NOT SAVED";
+                return result;
+            }
+
+            result.StatusCode = Globals.SUCCESS_STATUS_CODE;
+            result.StatusDesc = Globals.SUCCESS_STATUS_TEXT;
+            result.LoanID = dt.Rows[0][0].ToString();
+            return result;
+        }
+
+
+        public ClientDetails[] GetClientDetails(string BankCode, string UserID, string ClientID)
             {
             ClientDetails[] ClientDetails = new ClientDetails[0];
                 List<ClientDetails> ClientDet = new List<ClientDetails>();

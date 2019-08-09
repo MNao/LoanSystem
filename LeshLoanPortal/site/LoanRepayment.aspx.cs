@@ -170,10 +170,10 @@ public partial class LoanRepayment : System.Web.UI.Page
             }
             else
             {   
-                if(Payment.LoanAmount < AmountPerMonth)
-                {
-
-                }
+                //if(Payment.LoanAmount < AmountPerMonth)
+                //{
+                //    Payment.
+                //}
                 //save Payment details
                 Result user_save = bll.SavePaymentDetails(Payment);
 

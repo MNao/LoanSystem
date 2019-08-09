@@ -53,6 +53,8 @@ namespace InterConnect.LeshLaonApi {
         
         private System.Threading.SendOrPostCallback ResetPasswordOperationCompleted;
         
+        private System.Threading.SendOrPostCallback SaveReceiptOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -123,6 +125,9 @@ namespace InterConnect.LeshLaonApi {
         
         /// <remarks/>
         public event ResetPasswordCompletedEventHandler ResetPasswordCompleted;
+        
+        /// <remarks/>
+        public event SaveReceiptCompletedEventHandler SaveReceiptCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ExecuteDataSet", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -456,6 +461,35 @@ namespace InterConnect.LeshLaonApi {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/SaveReceipt", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Result SaveReceipt(Receipt recp) {
+            object[] results = this.Invoke("SaveReceipt", new object[] {
+                        recp});
+            return ((Result)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void SaveReceiptAsync(Receipt recp) {
+            this.SaveReceiptAsync(recp, null);
+        }
+        
+        /// <remarks/>
+        public void SaveReceiptAsync(Receipt recp, object userState) {
+            if ((this.SaveReceiptOperationCompleted == null)) {
+                this.SaveReceiptOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSaveReceiptOperationCompleted);
+            }
+            this.InvokeAsync("SaveReceipt", new object[] {
+                        recp}, this.SaveReceiptOperationCompleted, userState);
+        }
+        
+        private void OnSaveReceiptOperationCompleted(object arg) {
+            if ((this.SaveReceiptCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SaveReceiptCompleted(this, new SaveReceiptCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -568,6 +602,7 @@ namespace InterConnect.LeshLaonApi {
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Receipt))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LoanDetails))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SystemSetting))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ClientDetails))]
@@ -655,6 +690,7 @@ namespace InterConnect.LeshLaonApi {
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Result))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Entity))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Receipt))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LoanDetails))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SystemSetting))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ClientDetails))]
@@ -732,6 +768,99 @@ namespace InterConnect.LeshLaonApi {
             }
             set {
                 this.thirdPartYIDField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1064.2")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Receipt : Entity {
+        
+        private string receiptNumberField;
+        
+        private string loanNumberField;
+        
+        private string clientIDField;
+        
+        private string paymentTypeField;
+        
+        private string paymentDateField;
+        
+        private string currencyCodeField;
+        
+        private string receiptAmountField;
+        
+        /// <remarks/>
+        public string ReceiptNumber {
+            get {
+                return this.receiptNumberField;
+            }
+            set {
+                this.receiptNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string LoanNumber {
+            get {
+                return this.loanNumberField;
+            }
+            set {
+                this.loanNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ClientID {
+            get {
+                return this.clientIDField;
+            }
+            set {
+                this.clientIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PaymentType {
+            get {
+                return this.paymentTypeField;
+            }
+            set {
+                this.paymentTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PaymentDate {
+            get {
+                return this.paymentDateField;
+            }
+            set {
+                this.paymentDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string CurrencyCode {
+            get {
+                return this.currencyCodeField;
+            }
+            set {
+                this.currencyCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ReceiptAmount {
+            get {
+                return this.receiptAmountField;
+            }
+            set {
+                this.receiptAmountField = value;
             }
         }
     }
@@ -1552,6 +1681,32 @@ namespace InterConnect.LeshLaonApi {
         private object[] results;
         
         internal ResetPasswordCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Result Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Result)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void SaveReceiptCompletedEventHandler(object sender, SaveReceiptCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class SaveReceiptCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal SaveReceiptCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

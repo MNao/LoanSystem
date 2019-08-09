@@ -57,6 +57,7 @@
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Globals.cs" />
     <Compile Include="Entities\LoanDetails.cs" />
+    <Compile Include="Entities\Receipt.cs" />
     <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\SharedCommons.cs" />
     <Compile Include="Entities\Status.cs" />

@@ -2067,6 +2067,33 @@ public string SendMailMessageWithAttachment(SystemUser user)
         return Det;
     }
 
+    public Receipt GetReceiptDetails(SystemUser user, string ReceiptNo, string ClientID)
+    {
+        Receipt Rcpt = new Receipt();
+        string[] Params = { user.CompanyCode, ReceiptNo, ClientID };
+        DataTable dt = Client.ExecuteDataSet("GetReceiptDetails", Params).Tables[0];
+        if (dt.Rows.Count > 0)
+        {
+            //Det.CompanyCode = dt.Rows[0]["CompanyCode"].ToString();
+            Rcpt.ClientID = dt.Rows[0]["ClientCode"].ToString();
+            Rcpt.LoanNumber = dt.Rows[0]["LoanNumber"].ToString();
+            Rcpt.ReceiptNumber = dt.Rows[0]["ReceiptNumber"].ToString();
+            Rcpt.ReceiptAmount = dt.Rows[0]["ReceiptAmount"].ToString();
+            Rcpt.PaymentDate = dt.Rows[0]["PaymentDate"].ToString();
+            Rcpt.PaymentType = dt.Rows[0]["PaymentType"].ToString();
+            Rcpt.ModifiedBy = dt.Rows[0]["CreatedBy"].ToString();
+            Rcpt.ModifiedOn = dt.Rows[0]["CreatedOn"].ToString();
+            Rcpt.CurrencyCode = dt.Rows[0]["CurrencyCode"].ToString();
+            //return Det;
+        }
+        else
+        {
+            Rcpt.StatusCode = "100";
+            Rcpt.StatusDesc = "NO RECORDS FOUND";
+        }
+        return Rcpt;
+    }
+
     public ListItemCollection GetClientSearchDetails(string ClientDet)
     {
         ListItemCollection Cli = new ListItemCollection();

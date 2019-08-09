@@ -70,6 +70,13 @@ namespace LeshLoanMngt
             return Res;
         }
 
+        public Result SaveReceipt(Receipt rcpt)
+        {
+            Result Res = new Result();
+            Res = bll.SaveReceipt(rcpt);
+            return Res;
+        }
+
 
 
         public ClientDetails[] GetClientDetails(string BankCode, string UserId, string KYCID)

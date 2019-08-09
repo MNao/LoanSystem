@@ -233,20 +233,20 @@ public class LeshLoanAPI : System.Web.Services.WebService
     //    return result;
     //}
 
-    //[WebMethod]
-    //public Result SaveIncome(Income req)
-    //{
-    //    Result result = new Result();
-    //    try
-    //    {
-    //        result = LeshLoanSystem.SaveBankBranch(req);
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        LeshLoanSystem.LogError(req.BranchName + "-" + req.BranchCode, ex.StackTrace, req.BranchCode, ex.Message, "EXCEPTION");
-    //        result.StatusCode = Globals.HIDE_FAILURE_STATUS_CODE;
-    //        result.StatusDesc = "EXCEPTION: " + ex.Message;
-    //    }
-    //    return result;
-    //}
+    [WebMethod]
+    public Result SaveReceipt(Receipt recp)
+    {
+        Result result = new Result();
+        try
+        {
+            result = LeshLoanSystem.SaveReceipt(recp);
+        }
+        catch (Exception ex)
+        {
+            LeshLoanSystem.LogError(recp.ReceiptNumber + "-" + recp.CompanyCode, ex.StackTrace, recp.LoanNumber, ex.Message, "EXCEPTION");
+            result.StatusCode = Globals.HIDE_FAILURE_STATUS_CODE;
+            result.StatusDesc = "EXCEPTION: " + ex.Message;
+        }
+        return result;
+    }
 }
