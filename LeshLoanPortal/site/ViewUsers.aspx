@@ -37,7 +37,7 @@
                     <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control"></asp:TextBox>
                 </div>
                 <div class="col-md-2">
-                    <label></label><br/>
+                    <label>.</label><br/>
                     <asp:Button ID="btnOK" runat="server" CssClass="btn btn-success" OnClick="btnOK_Click" Text="Search" />
                 </div>
                 </div>
@@ -66,51 +66,6 @@
                         </div>
                         <div class="col-md-1"></div>
                         </div>
-                <%--<asp:DataGrid ID="DataGrid1" runat="server" AllowPaging="True" AutoGenerateColumns="False"
-                    HorizontalAlign="Justify" OnItemCommand="DataGrid1_ItemCommand"
-                    UseAccessibleHeader="true" GridLines="None" CssClass="table table-striped table-hover" 
-                    OnPageIndexChanged="DataGrid1_PageIndexChanged" PageSize="50" ShowFooter="True" style="white-space:nowrap;">
-                   <FooterStyle BackColor="InactiveCaption"   ForeColor="White" />
-                    <PagerStyle  ForeColor="#4380B8"  HorizontalAlign="Center" Mode="NumericPages"  Font-Size="16"/>
-                    <Columns>
-
-                        <asp:BoundColumn DataField="UserId" HeaderText="Code" Visible="False"></asp:BoundColumn>
-                        <asp:BoundColumn DataField="Username" HeaderText="Username" Visible="False"></asp:BoundColumn>
-                      
-                        <asp:ButtonColumn CommandName="btnCredit" HeaderText="Credit" Text="Username" DataTextField="Username" Visible="false">
-                            <HeaderStyle Width="15%" />
-                            <ItemStyle Font-Bold="True" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
-                                Font-Underline="False" ForeColor="Blue" />
-                        </asp:ButtonColumn>
-
-
-                        <asp:ButtonColumn DataTextField="Username" HeaderText="Edit" Text="Username" CommandName="btnEdit">
-                            <HeaderStyle Width="15%" />
-                            <ItemStyle Font-Bold="True" Font-Italic="False" Font-Overline="False" Font-Strikeout="False"
-                                Font-Underline="False" ForeColor="Blue" />
-                        </asp:ButtonColumn>
-                        <asp:BoundColumn DataField="fullName" HeaderText="Name">
-                            <HeaderStyle Width="25%" />
-                            <ItemStyle Width="120px" />
-                        </asp:BoundColumn>
-                        <asp:BoundColumn HeaderText="Phone" Visible="False">
-                            <HeaderStyle Width="10%" />
-                        </asp:BoundColumn>
-                        <asp:BoundColumn DataField="UserRole" HeaderText="Role">
-                            <HeaderStyle Width="10%" />
-                        </asp:BoundColumn>
-                        <asp:BoundColumn DataField="VendorCode" HeaderText="Vendor">
-                            <HeaderStyle Width="10%" />
-                        </asp:BoundColumn>
-                        <asp:BoundColumn DataField="Active" HeaderText="Active">
-                            <HeaderStyle Width="10%" />
-                        </asp:BoundColumn>
-                        <asp:BoundColumn DataField="CreationDate" HeaderText="Date" Visible="False">
-                            <HeaderStyle Width="10%" />
-                        </asp:BoundColumn>
-                    </Columns>
-                    
-                </asp:DataGrid>--%>
 
                 </asp:View>
 

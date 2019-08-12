@@ -36,7 +36,7 @@ public partial class AddUser : System.Web.UI.Page
                 MultiView2.ActiveViewIndex = -1;
 
                 string UserID = Request.QueryString["UserID"];
-                string BankCode = Request.QueryString["BankCode"];
+                string CompanyCode = Request.QueryString["CompanyCode"];
                 string UserType = Request.QueryString["UserType"];
                 string Type = Request.QueryString["Type"];
                 string Status = Request.QueryString["Status"];
@@ -48,7 +48,7 @@ public partial class AddUser : System.Web.UI.Page
                 }
                 else if (!string.IsNullOrEmpty(UserID))
                 {
-                    LoadEntityData(UserID, BankCode, UserType, Type, Status);
+                    LoadEntityData(UserID, CompanyCode, UserType, Type, Status);
                 }
             }
         }
@@ -81,10 +81,10 @@ public partial class AddUser : System.Web.UI.Page
         string [] name = Edituser.Name.Split(' ');
         txtfname.Text = name[0];
         txtlname.Text = name[1];
-        txtemail.Text = UserId;
+        txtemail.Text = Edituser.Email;//UserId;
         ddlUserType.SelectedItem.Text = UserType;
-        string UserRole = bll.GetUserRoleName(UserType);
-        ddlUserType.SelectedItem.Value = UserRole;
+        //string UserRole = bll.GetUserRoleName(UserType);
+        ddlUserType.SelectedItem.Value = UserType;
 
         if (Status == "True")
         {
@@ -132,39 +132,7 @@ public partial class AddUser : System.Web.UI.Page
         //    IsActive = false;
         //}
     }
-
-    //private void LoadControls(string user_code)
-    //{
-    //    int user_id = int.Parse(user_code);
-    //    data_table = data_file.GetUserDetails(user_id);
-    //    if (data_table.Rows.Count > 0)
-    //    {
-    //        lblCode.Text = data_table.Rows[0]["UserId"].ToString();
-    //        txtlname.Text = data_table.Rows[0]["FirstName"].ToString();
-    //        txtfname.Text = data_table.Rows[0]["LastName"].ToString();
-    //        txtphone.Text = data_table.Rows[0]["Phone"].ToString();
-    //        txtemail.Text = data_table.Rows[0]["Email"].ToString();
-    //        string area_code = data_table.Rows[0]["Vendor"].ToString();
-    //        string type_code = data_table.Rows[0]["UserRole"].ToString();
-
-    //        bool isactive = bool.Parse(data_table.Rows[0]["Active"].ToString());
-    //        //ddlAreas.SelectedIndex = ddlAreas.Items.IndexOf(ddlAreas.Items.FindByValue(area_code));
-    //        ddlUserType.SelectedIndex = ddlUserType.Items.IndexOf(ddlUserType.Items.FindByValue(type_code));
-    //        chkActive.Checked = isactive;
-
-    //        MultiView2.ActiveViewIndex = 1;
-    //    }
-    //}
-
-
-    //private void LoadAreas()
-    //{
-    //    data_table = data_file.GetAreas();
-    //    ddlAreas.DataSource = data_table;
-    //    ddlAreas.DataValueField = "VendorCode";
-    //    ddlAreas.DataTextField = "Name";
-    //    ddlAreas.DataBind();
-    //}
+    
     private void ShowMessage(string Message, bool Error)
     {
         Label lblmsg = (Label)Master.FindControl("lblmsg");

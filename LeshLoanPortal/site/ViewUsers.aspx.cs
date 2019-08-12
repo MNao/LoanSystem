@@ -163,11 +163,11 @@ public partial class ViewUsers : System.Web.UI.Page
         GridView grid = sender as GridView;
         index = Convert.ToInt32(e.CommandArgument);
         row = grid.Rows[index];
-        string BankCode = row.Cells[1].Text;
+        string CompanyCode = row.Cells[1].Text;
         string UserID = row.Cells[2].Text;
         string UserType = row.Cells[4].Text;
         string IsActive;
-        CheckBox chbx = row.Cells[10].FindControl("chkbx") as CheckBox;
+        CheckBox chbx = row.Cells[7].FindControl("chkbx") as CheckBox;
             if (chbx.Checked)
             {
                 IsActive = true.ToString();
@@ -179,7 +179,7 @@ public partial class ViewUsers : System.Web.UI.Page
             Label lblmsg = (Label)Master.FindControl("lblmsg");
         if (e.CommandName == "EditUser")
         {
-            Server.Transfer("AddUser.aspx?BankCode=" + BankCode + "&UserID=" + UserID + "&UserType=" + UserType + "&Type=" + "Reset" + "&Status=" + IsActive);
+            Server.Transfer("AddUser.aspx?CompanyCode=" + CompanyCode + "&UserID=" + UserID + "&UserType=" + UserType + "&Type=" + "Reset" + "&Status=" + IsActive);
             //string user_code = encrypt.EncryptString(e.Item.Cells[0].Text, "25011Pegsms2322"); 
             //Response.Redirect("./AddUser.aspx?transferid=" + user_code, false);                
         }
@@ -204,6 +204,6 @@ public partial class ViewUsers : System.Web.UI.Page
 
         // Add cells
         row.Cells.AddRange(columns.ToArray());
-        e.Row.Cells[10].Visible = false;
+        e.Row.Cells[6].Visible = false;
     }
 }
