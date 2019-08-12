@@ -77,6 +77,27 @@ namespace LeshLoanMngt
             return Res;
         }
 
+        public Result SaveInjection(Injection Inj)
+        {
+            Result Res = new Result();
+            Res = bll.SaveInjection(Inj);
+            return Res;
+        }
+
+        public Result SaveIncome(Income Inco)
+        {
+            Result Res = new Result();
+            Res = bll.SaveIncome(Inco);
+            return Res;
+        }
+
+        public Result SaveExpense(Expense Exp)
+        {
+            Result Res = new Result();
+            Res = bll.SaveExpense(Exp);
+            return Res;
+        }
+
 
 
         public ClientDetails[] GetClientDetails(string BankCode, string UserId, string KYCID)

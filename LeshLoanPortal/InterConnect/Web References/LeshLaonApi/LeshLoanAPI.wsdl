@@ -310,6 +310,7 @@
               <s:element minOccurs="0" maxOccurs="1" name="PaymentDate" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="CurrencyCode" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ReceiptAmount" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Remarks" type="s:string" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -318,6 +319,93 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="SaveReceiptResult" type="tns:Result" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveInjection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Inj" type="tns:Injection" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Injection">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Entity">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="InjectionNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="InjectorName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Amount" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="InjectionDate" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PhoneNo" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="RepaymentDate" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="RepaymentAmount" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="InjectionDesc" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="InjectionType" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="SaveInjectionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SaveInjectionResult" type="tns:Result" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveExpense">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Exp" type="tns:Expense" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Expense">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Entity">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ExpenseID" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Amount" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ExpenseDate" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ReceiptNumber" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="SaveExpenseResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SaveExpenseResult" type="tns:Result" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaveIncome">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Inco" type="tns:Income" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Income">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Entity">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="IncomeID" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Amount" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="IncomeDate" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="SaveIncomeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SaveIncomeResult" type="tns:Result" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -395,6 +483,24 @@
   <wsdl:message name="SaveReceiptSoapOut">
     <wsdl:part name="parameters" element="tns:SaveReceiptResponse" />
   </wsdl:message>
+  <wsdl:message name="SaveInjectionSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveInjection" />
+  </wsdl:message>
+  <wsdl:message name="SaveInjectionSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveInjectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveExpenseSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveExpense" />
+  </wsdl:message>
+  <wsdl:message name="SaveExpenseSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveExpenseResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveIncomeSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveIncome" />
+  </wsdl:message>
+  <wsdl:message name="SaveIncomeSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveIncomeResponse" />
+  </wsdl:message>
   <wsdl:portType name="LeshLoanAPISoap">
     <wsdl:operation name="ExecuteDataSet">
       <wsdl:input message="tns:ExecuteDataSetSoapIn" />
@@ -443,6 +549,18 @@
     <wsdl:operation name="SaveReceipt">
       <wsdl:input message="tns:SaveReceiptSoapIn" />
       <wsdl:output message="tns:SaveReceiptSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveInjection">
+      <wsdl:input message="tns:SaveInjectionSoapIn" />
+      <wsdl:output message="tns:SaveInjectionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveExpense">
+      <wsdl:input message="tns:SaveExpenseSoapIn" />
+      <wsdl:output message="tns:SaveExpenseSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveIncome">
+      <wsdl:input message="tns:SaveIncomeSoapIn" />
+      <wsdl:output message="tns:SaveIncomeSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="LeshLoanAPISoap" type="tns:LeshLoanAPISoap">
@@ -555,6 +673,33 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SaveInjection">
+      <soap:operation soapAction="http://tempuri.org/SaveInjection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveExpense">
+      <soap:operation soapAction="http://tempuri.org/SaveExpense" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveIncome">
+      <soap:operation soapAction="http://tempuri.org/SaveIncome" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="LeshLoanAPISoap12" type="tns:LeshLoanAPISoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -659,6 +804,33 @@
     </wsdl:operation>
     <wsdl:operation name="SaveReceipt">
       <soap12:operation soapAction="http://tempuri.org/SaveReceipt" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveInjection">
+      <soap12:operation soapAction="http://tempuri.org/SaveInjection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveExpense">
+      <soap12:operation soapAction="http://tempuri.org/SaveExpense" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveIncome">
+      <soap12:operation soapAction="http://tempuri.org/SaveIncome" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

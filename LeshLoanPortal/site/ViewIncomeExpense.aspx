@@ -1,4 +1,4 @@
-﻿<%@ Page Title="View KYC Reports" Language="C#" MasterPageFile="~/MasterMain.master" AutoEventWireup="true" CodeFile="ViewKYCReports.aspx.cs" Inherits="ViewKYCReports" %>
+﻿<%@ Page Title="View Reports" Language="C#" MasterPageFile="~/MasterMain.master" AutoEventWireup="true" CodeFile="ViewIncomeExpense.aspx.cs" Inherits="ViewIncomeExpense" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
@@ -10,45 +10,29 @@
         <%-------------------------------------------- Message Label ----------------------------------%>
                <!---------------------------------------------- Search Options --------------------------------->
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <label>
-                    Bank
+                    Company
                 </label>
-                <asp:DropDownList ID="ddBank" runat="server" CssClass="form-control">
-                    <asp:ListItem>True</asp:ListItem>
-                    <asp:ListItem>False</asp:ListItem>
-                </asp:DropDownList>
-            </div>
-            <div class="col-lg-3">
-                <label>
-                    Branch
-                </label>
-                <asp:DropDownList ID="ddBranch" runat="server" CssClass="form-control">
-                    <asp:ListItem>True</asp:ListItem>
-                    <asp:ListItem>False</asp:ListItem>
+                <asp:DropDownList ID="ddCompany" runat="server" CssClass="form-control">
+                    <asp:ListItem Value="Lesh">LENSH</asp:ListItem>
                 </asp:DropDownList>
             </div>
             <div class="col-lg-2">
                 <label>
-                    Agent
+                    Type
                 </label>
-                <asp:DropDownList ID="ddAgents" runat="server" CssClass="form-control">
-                    <asp:ListItem>True</asp:ListItem>
-                    <asp:ListItem>False</asp:ListItem>
+                <asp:DropDownList ID="ddType" runat="server" CssClass="form-control">
+                    <asp:ListItem Value="">--Select Type--</asp:ListItem>
+                    <asp:ListItem Value="Income">INCOME</asp:ListItem>
+                     <asp:ListItem Value="Expense">EXPENSE</asp:ListItem>
                 </asp:DropDownList>
-                <%--<asp:TextBox ID="txtName" runat="server" CssClass="form-control" placeholder="Enter text" />--%>
             </div>
             <div class="col-lg-2">
                 <label>
-                    Status
+                    Search No
                 </label>
-                <asp:DropDownList ID="ddStatus" runat="server" CssClass="form-control">
-                    <asp:ListItem Value="">ALL</asp:ListItem>
-                    <asp:ListItem Value="PENDING">PENDING</asp:ListItem>
-                     <asp:ListItem Value="VERIFIED">VERIFIED</asp:ListItem>
-                    <asp:ListItem Value="APPROVED">APPROVED</asp:ListItem>
-                     <asp:ListItem Value="REJECTED">REJECTED</asp:ListItem>
-                </asp:DropDownList>
+                <asp:TextBox ID="txtSearchNo" runat="server" CssClass="form-control" placeholder="Enter text" />
             </div>
             <div class="col-lg-2">
                 <label>
@@ -64,7 +48,7 @@
             </div>
             <div class="col-lg-2" style="padding-top: 15px;">
             
-                <asp:Button ID="btnSubmit" runat="server" Text="Search DB" CssClass="btn btn-success btn-lg"
+                <asp:Button ID="btnSubmit" runat="server" Text="Search" CssClass="btn btn-success btn-lg"
                     OnClick="btnSubmit_Click" />
             </div>
             <div class="col-lg-2" style="padding-top: 15px;">

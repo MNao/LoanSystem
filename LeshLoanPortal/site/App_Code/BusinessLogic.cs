@@ -1425,9 +1425,9 @@ public string SendMailMessageWithAttachment(SystemUser user)
         return dt;
     }
 
-    public DataTable SearchKYCDetailsForreport(string[] searchParams)
+    public DataTable SearchIncomeExpenseDetailsForreport(string[] searchParams)
     {
-        DataTable dt = Client.ExecuteDataSet("SearchKYCDetailsForReport", searchParams).Tables[0];
+        DataTable dt = Client.ExecuteDataSet("SearchIncomeExpenseDetailsForreport", searchParams).Tables[0];
 
         return dt;
     }
@@ -1456,40 +1456,30 @@ public string SendMailMessageWithAttachment(SystemUser user)
 
     public DataTable SearchClientsorSuppliersTable(string[] searchParams)
     {
-        //DataSet ds = Client.ExecuteDataSet("SearchClientsTable", searchParams);
-        //DataTable dt = ds.Tables[0];
         DataTable dt = Client.ExecuteDataSet("SearchClientsorSuppliersTable", searchParams).Tables[0];
         return dt;
     }
 
-    public DataTable SearchPurchasesTable(string[] searchParams)
+    public DataTable SearchInjectionDetailsTable(string[] searchParams)
     {
-        //DataSet ds = Client.ExecuteDataSet("SearchPurchasesTable", searchParams);
-        //DataTable dt = ds.Tables[0];
-        DataTable dt = Client.ExecuteDataSet("SearchPurchasesTable", searchParams).Tables[0];
+        DataTable dt = Client.ExecuteDataSet("SearchInjectionsTable", searchParams).Tables[0];
         return dt;
     }
 
     public DataTable SearchPaymentVouchersTable(string[] searchParams)
     {
-        //DataSet ds = Client.ExecuteDataSet("SearchPaymentVouchersTable", searchParams);
-        //DataTable dt = ds.Tables[0];
         DataTable dt = Client.ExecuteDataSet("SearchPaymentVouchersTable", searchParams).Tables[0];
         return dt;
     }
 
     public DataTable SearchInvoicesTable(string[] searchParams)
     {
-        //DataSet ds = Client.ExecuteDataSet("SearchInvoicesTable", searchParams);
-        //DataTable dt = ds.Tables[0];
         DataTable dt = Client.ExecuteDataSet("SearchInvoicesTable", searchParams).Tables[0];
         return dt;
     }
 
     public DataTable SearchInvoices(string[] searchParams)
     {
-        //DataSet ds = Client.ExecuteDataSet("SearchInvoicesTable", searchParams);
-        //DataTable dt = ds.Tables[0];
         DataTable dt = Client.ExecuteDataSet("SearchInvoices", searchParams).Tables[0];
         return dt;
     }
@@ -2081,9 +2071,11 @@ public string SendMailMessageWithAttachment(SystemUser user)
             Rcpt.ReceiptAmount = dt.Rows[0]["ReceiptAmount"].ToString();
             Rcpt.PaymentDate = dt.Rows[0]["PaymentDate"].ToString();
             Rcpt.PaymentType = dt.Rows[0]["PaymentType"].ToString();
-            Rcpt.ModifiedBy = dt.Rows[0]["CreatedBy"].ToString();
-            Rcpt.ModifiedOn = dt.Rows[0]["CreatedOn"].ToString();
-            Rcpt.CurrencyCode = dt.Rows[0]["CurrencyCode"].ToString();
+            Rcpt.ModifiedBy = dt.Rows[0]["AddedBy"].ToString();
+            Rcpt.ModifiedOn = dt.Rows[0]["AddedOn"].ToString();
+            Rcpt.CurrencyCode = dt.Rows[0]["Currency"].ToString();
+            Rcpt.StatusCode = Globals.SUCCESS_STATUS_CODE;
+            Rcpt.StatusDesc = Globals.SUCCESS_STATUS_TEXT;
             //return Det;
         }
         else

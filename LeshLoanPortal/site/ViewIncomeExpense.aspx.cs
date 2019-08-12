@@ -7,10 +7,10 @@ using System.Web.UI.WebControls;
 using System.Collections.Generic;
 using System.Web;
 using System.IO;
-using InterConnect.UBAApi;
 using OfficeOpenXml;
+using InterConnect.LeshLaonApi;
 
-public partial class ViewKYCReports : System.Web.UI.Page
+public partial class ViewIncomeExpense : System.Web.UI.Page
 {
 
     FileUpload uploadedFile;
@@ -41,12 +41,7 @@ public partial class ViewKYCReports : System.Web.UI.Page
 
     protected void LoadData()
     {
-        bll.LoadBanksIntoDropDownALL(user, ddBank);
-        bll.LoadAgentsIntopDropDown(user, ddAgents);
-        user.BranchCode = "";
-        bll.LoadBranchesForSearchIntoDropDown(ddBank.SelectedValue, user, ddBranch);
-
-        SearchDB();
+        //SearchDB();
     }
 
     private void ShowMessage(string Message, bool Error)
@@ -85,7 +80,7 @@ public partial class ViewKYCReports : System.Web.UI.Page
     public void SearchDB()
     {
         string[] Params = GetSearchParameters();
-        DataTable dt = bll.SearchKYCDetailsForreport(Params);
+        DataTable dt = bll.SearchIncomeExpenseDetailsForreport(Params);
         if (dt.Rows.Count > 0)
         {
             dataGridResults.DataSource = dt;
@@ -108,20 +103,17 @@ public partial class ViewKYCReports : System.Web.UI.Page
     private string[] GetSearchParameters()
     {
         List<string> searchCriteria = new List<string>();
-        string BankCode = ddBank.SelectedValue.ToString();
-        string BranchCode = ddBranch.SelectedValue.ToString();
-        string AgentID = ddAgents.SelectedValue.ToString();
-        //string UserId = txtSearch.Text.Trim();
+        string CompanyCode = ddCompany.SelectedValue.ToString();
+        string Type = ddType.SelectedValue;
+        string SearchNo = txtSearchNo.Text;
         string UserId = user.UserId;
-        string Status = ddStatus.SelectedValue;
         string StartDate = txtStartDate.Text;
         string EndDate = txtEndDate.Text;
 
-        searchCriteria.Add(BankCode);
-        searchCriteria.Add(BranchCode);
-        searchCriteria.Add(AgentID);
+        searchCriteria.Add(CompanyCode);
+        searchCriteria.Add(Type);
+        searchCriteria.Add(SearchNo);
         searchCriteria.Add(UserId);
-        searchCriteria.Add(Status);
         searchCriteria.Add(StartDate);
         searchCriteria.Add(EndDate);
         return searchCriteria.ToArray();
@@ -162,7 +154,7 @@ public partial class ViewKYCReports : System.Web.UI.Page
 protected void btnExport_Click(object sender, EventArgs e)
     {
         string[] searchParams = GetSearchParameters();
-        DataTable dt = bll.SearchKYCDetailsForreport(searchParams);
+        DataTable dt = bll.SearchIncomeExpenseDetailsForreport(searchParams);
         if (dt.Rows.Count > 0)
         {
             ExcelPackage package = new ExcelPackage();
@@ -197,7 +189,7 @@ protected void btnExport_Click(object sender, EventArgs e)
             Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             Response.AddHeader(
                       "content-disposition",
-                      string.Format("attachment;  filename={0}", "UBA KYC Report.xlsx"));
+                      string.Format("attachment;  filename={0}", "Report.xlsx"));
             Response.BinaryWrite(package.GetAsByteArray());
         }
     }

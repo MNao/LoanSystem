@@ -27,8 +27,17 @@
     <!-- Morris Charts CSS -->
     <link href="css/plugins/morris.css" rel="stylesheet" />
 
-    <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Plugin CSS -->
+    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin.css" rel="stylesheet" type="text/css"/>
     <style type="text/css">
         .container12 {
             width: 320px;
@@ -105,10 +114,10 @@
             <div class="row" style="padding: 10px;">
                 <div class="text-center">
                     <input id="Button3" accesskey="P" class="btn btn-success" onclick="printDocument()"
-                        value="Print Receipt" />
-                    <a href="Receipts.aspx">
+                        Value="Print Receipt" />
+                    <a href="LoanRepayment.aspx">
                         <input id="Button4" accesskey="P" class="btn btn-primary"
-                            value="Return" /></a>
+                            Value="Return" /></a>
                 </div>
             </div>
 

@@ -33,6 +33,6 @@ namespace LeshLoanMngt.Entities
 
         public string ReceiptAmount;
 
-        //private string paymentReferenceField;
+        public string Remarks;
     }
 }

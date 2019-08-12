@@ -15,7 +15,7 @@
 <div class="col-lg-12">
     <div class="card mb-3">
         <div class="card-header">
-        <i class="fa fa fa-cog"></i> Loans <i class='fa fa-arrow-right'></i> RePay Loan
+        <i class="fa fa fa-cog"></i> Expense <i class='fa fa-arrow-right'></i> Add Expense
         </div>
         <div class="card-body">
             <div class="row clearfix">
@@ -25,42 +25,36 @@
                    
 		            <div class="modal-body">
 
-                        Client Number
-                      <asp:TextBox ID="txtClientNo" runat="server" CssClass="form-control"  placeholder="Client Number"></asp:TextBox>
-
-                      Client Name
-                      <asp:TextBox ID="txtfname" runat="server" CssClass="form-control"  placeholder="Client Name"></asp:TextBox>
-                       
-                        Loan Number
-                      <asp:TextBox ID="txtLoanNo" runat="server" CssClass="form-control"  placeholder="Loan Number"></asp:TextBox>
+                        Expense Number
+                      <asp:TextBox ID="txtExpNo" runat="server" CssClass="form-control"  placeholder="Expense Number"></asp:TextBox>
 
                         Amount Paid
-                      <asp:TextBox ID="txtBusLoc" runat="server" CssClass="form-control"  placeholder="Loan Amount Paid"></asp:TextBox>
+                      <asp:TextBox ID="txtAmount" runat="server" CssClass="form-control"  placeholder="Expense Amount Paid"></asp:TextBox>
 
-                      Repayment Date
-                      <asp:TextBox ID="txtRepaymentDate" runat="server" CssClass="form-control" placeholder="Repayment Date"></asp:TextBox>
+                      Expense Date
+                      <asp:TextBox ID="txtExpDate" runat="server" CssClass="form-control" placeholder="Expense Date"></asp:TextBox>
                         
-                      Mobile No. Own
-                      <asp:TextBox ID="txtMobileNo" runat="server" CssClass="form-control"  placeholder="Client's Own Mobile Number"></asp:TextBox>
+                      Expense Description
+                      <asp:TextBox ID="txtExpDesc" runat="server" CssClass="form-control"  placeholder="Expense Description"></asp:TextBox>
 
-                      Email
-                      <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control"  placeholder="Client's Email"></asp:TextBox>
-                        
-                      <%--Vendor
-                      <asp:DropDownList ID="ddlAreas" runat="server" OnDataBound="ddlAreas_DataBound" CssClass="form-control">
-                      </asp:DropDownList>--%>
+                      Expense Type
+                      <asp:TextBox ID="txtExpType" runat="server" CssClass="form-control"></asp:TextBox>
+                       
+                        Expense Receipt
+                      <asp:TextBox ID="txtReceipt" runat="server" CssClass="form-control"></asp:TextBox>
 
 
                       <%--<br/><asp:CheckBox ID="chkActive" runat="server" Text=" Is Active" /><br/>--%>
 
                     </div>
                     <div class="modal-footer">
-                        <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="SUBMIT DETAILS" />
+                        <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="SUBMIT DETAILS" OnClick="btnSubmit_Click"/>
+                        <asp:Button ID="btnEdit" runat="server" CssClass="btn btn-success" Text="UPDATE DETAILS" OnClick="btnEdit_Click"/>
                     </div>
                 </div>
                     
                     <ajaxToolkit:CalendarExtender ID="CalendarExtender2" runat="server" CssClass="cal_Theme1"
-            Format="yyyy-MM-dd" PopupPosition="BottomRight" TargetControlID="txtRepaymentDate">
+            Format="yyyy-MM-dd" PopupPosition="BottomRight" TargetControlID="txtExpDate">
         </ajaxToolkit:CalendarExtender>
             </asp:View>
 

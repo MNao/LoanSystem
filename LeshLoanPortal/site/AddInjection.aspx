@@ -15,7 +15,7 @@
 <div class="col-lg-12">
     <div class="card mb-3">
         <div class="card-header">
-        <i class="fa fa fa-cog"></i> Loans <i class='fa fa-arrow-right'></i> RePay Loan
+        <i class="fa fa fa-cog"></i> Injection <i class='fa fa-arrow-right'></i> Add Injection
         </div>
         <div class="card-body">
             <div class="row clearfix">
@@ -25,42 +25,42 @@
                    
 		            <div class="modal-body">
 
-                        Client Number
-                      <asp:TextBox ID="txtClientNo" runat="server" CssClass="form-control"  placeholder="Client Number"></asp:TextBox>
+                        Injection Number
+                      <asp:TextBox ID="txtInjectionNo" runat="server" CssClass="form-control"  placeholder="Injection Number"></asp:TextBox>
 
-                      Client Name
-                      <asp:TextBox ID="txtfname" runat="server" CssClass="form-control"  placeholder="Client Name"></asp:TextBox>
+                      Name
+                      <asp:TextBox ID="txtname" runat="server" CssClass="form-control"  placeholder="Injector Name"></asp:TextBox>
                        
-                        Loan Number
-                      <asp:TextBox ID="txtLoanNo" runat="server" CssClass="form-control"  placeholder="Loan Number"></asp:TextBox>
+                        Amount Injected
+                      <asp:TextBox ID="txtInjectedAmount" runat="server" CssClass="form-control"  placeholder="Injected Amount"></asp:TextBox>
 
-                        Amount Paid
-                      <asp:TextBox ID="txtBusLoc" runat="server" CssClass="form-control"  placeholder="Loan Amount Paid"></asp:TextBox>
-
-                      Repayment Date
-                      <asp:TextBox ID="txtRepaymentDate" runat="server" CssClass="form-control" placeholder="Repayment Date"></asp:TextBox>
+                      Injection Date
+                      <asp:TextBox ID="txtInjectionDate" runat="server" CssClass="form-control" placeholder="Injection Date"></asp:TextBox>
                         
-                      Mobile No. Own
-                      <asp:TextBox ID="txtMobileNo" runat="server" CssClass="form-control"  placeholder="Client's Own Mobile Number"></asp:TextBox>
+                      Injector's Phone Number
+                      <asp:TextBox ID="txtPhoneNo" runat="server" CssClass="form-control"  placeholder="Injector's Phone Number"></asp:TextBox>
 
-                      Email
-                      <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control"  placeholder="Client's Email"></asp:TextBox>
+                      Injector's Email
+                      <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control"  placeholder="Injector's Email"></asp:TextBox>
                         
-                      <%--Vendor
-                      <asp:DropDownList ID="ddlAreas" runat="server" OnDataBound="ddlAreas_DataBound" CssClass="form-control">
-                      </asp:DropDownList>--%>
+                        Repayment Date
+                      <asp:TextBox ID="txtInjRepayDate" runat="server" CssClass="form-control"  placeholder="Expected Repayment Date"></asp:TextBox>
+
+                        Repayment Amount
+                      <asp:TextBox ID="txtInjRepayAmnt" runat="server" CssClass="form-control"  placeholder="Expected Repayment Amount"></asp:TextBox>
 
 
                       <%--<br/><asp:CheckBox ID="chkActive" runat="server" Text=" Is Active" /><br/>--%>
 
                     </div>
                     <div class="modal-footer">
-                        <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="SUBMIT DETAILS" />
+                        <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="SUBMIT DETAILS" onclick="btnSubmit_Click"/>
+                        <asp:Button ID="btnEdit" runat="server" CssClass="btn btn-success" Text="EDIT" OnClick="btnEdit_Click"/>
                     </div>
                 </div>
                     
                     <ajaxToolkit:CalendarExtender ID="CalendarExtender2" runat="server" CssClass="cal_Theme1"
-            Format="yyyy-MM-dd" PopupPosition="BottomRight" TargetControlID="txtRepaymentDate">
+            Format="yyyy-MM-dd" PopupPosition="BottomRight" TargetControlID="txtInjectionDate">
         </ajaxToolkit:CalendarExtender>
             </asp:View>
 

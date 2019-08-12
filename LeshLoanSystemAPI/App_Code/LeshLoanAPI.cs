@@ -249,4 +249,55 @@ public class LeshLoanAPI : System.Web.Services.WebService
         }
         return result;
     }
+
+    [WebMethod]
+    public Result SaveInjection(Injection Inj)
+    {
+        Result result = new Result();
+        try
+        {
+            result = LeshLoanSystem.SaveInjection(Inj);
+        }
+        catch (Exception ex)
+        {
+            LeshLoanSystem.LogError(Inj.InjectionNumber + "-" + Inj.CompanyCode, ex.StackTrace, Inj.InjectionNumber, ex.Message, "EXCEPTION");
+            result.StatusCode = Globals.HIDE_FAILURE_STATUS_CODE;
+            result.StatusDesc = "EXCEPTION: " + ex.Message;
+        }
+        return result;
+    }
+
+    [WebMethod]
+    public Result SaveExpense(Expense Exp)
+    {
+        Result result = new Result();
+        try
+        {
+            result = LeshLoanSystem.SaveExpense(Exp);
+        }
+        catch (Exception ex)
+        {
+            LeshLoanSystem.LogError(Exp.ReceiptNumber + "-" + Exp.CompanyCode, ex.StackTrace, Exp.ExpenseID, ex.Message, "EXCEPTION");
+            result.StatusCode = Globals.HIDE_FAILURE_STATUS_CODE;
+            result.StatusDesc = "EXCEPTION: " + ex.Message;
+        }
+        return result;
+    }
+
+    [WebMethod]
+    public Result SaveIncome(Income Inco)
+    {
+        Result result = new Result();
+        try
+        {
+            result = LeshLoanSystem.SaveIncome(Inco);
+        }
+        catch (Exception ex)
+        {
+            LeshLoanSystem.LogError(Inco.IncomeID + "-" + Inco.CompanyCode, ex.StackTrace, Inco.IncomeID, ex.Message, "EXCEPTION");
+            result.StatusCode = Globals.HIDE_FAILURE_STATUS_CODE;
+            result.StatusDesc = "EXCEPTION: " + ex.Message;
+        }
+        return result;
+    }
 }

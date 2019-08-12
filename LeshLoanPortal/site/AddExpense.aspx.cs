@@ -30,7 +30,7 @@ public partial class AddExpense : System.Web.UI.Page
                 string UserType = Request.QueryString["UserType"];
                 string Type = Request.QueryString["Type"];
                 string Status = Request.QueryString["Status"];
-                //LoadData();
+                LoadData();
                 if (Request.QueryString["transferid"] != null)
                 {
                     //string UserCode = Encryption.encrypt.DecryptString(Request.QueryString["transferid"].ToString(), "25011Pegsms2322");
@@ -48,6 +48,13 @@ public partial class AddExpense : System.Web.UI.Page
         }
     }
 
+    private void LoadData()
+    {
+        txtExpNo.Text = bll.GenerateSystemCode("EXP");
+        txtExpNo.Enabled = false;
+        btnEdit.Visible = false;
+    }
+
     private void ShowMessage(string Message, bool Error)
     {
         Label lblmsg = (Label)Master.FindControl("lblmsg");
@@ -61,5 +68,110 @@ public partial class AddExpense : System.Web.UI.Page
         {
             lblmsg.Text = "MESSAGE: " + Message.ToUpper();
         }
+    }
+
+    protected void btnSubmit_Click(object sender, EventArgs e)
+    {
+        try
+        {
+
+            Expense Exp = GetExpenseDetails();
+            //validate Injection details input
+            string check_status = validate_input(Exp.Amount, Exp.ExpenseDate, Exp.Description, Exp.Type, Exp.ReceiptNumber);
+
+
+            if (!check_status.Equals("OK"))
+            {
+                ShowMessage(check_status, true);
+            }
+            else
+            {
+                //save client additional details
+                Result user_save = Client.SaveExpense(Exp);
+
+                if (user_save.StatusCode != "0")
+                {
+                    //MultiView2.ActiveViewIndex = 0;
+                    ShowMessage(user_save.StatusDesc, true);
+                    return;
+                }
+                ShowMessage("EXPENSE DETAILS SAVED SUCCESSFULLY", false);
+                Clear_contrls();
+                //bll.InsertIntoAuditLog("USER-CREATION", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER CREATED SUCCESSFULLY");
+                //MultiView1.SetActiveView(LoanDetails);
+
+            }
+
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
+
+    private void Clear_contrls()
+    {
+
+        txtExpNo.Text = "";
+        txtAmount.Text = "";
+        txtExpDate.Text = "";
+        txtExpDesc.Text = "";
+        txtExpType.Text = "";
+        txtReceipt.Text = "";
+    }
+
+    private Expense GetExpenseDetails()
+    {
+        Expense Exp = new Expense();
+        Exp.CompanyCode = user.CompanyCode;
+        Exp.ExpenseID = txtExpNo.Text;
+        Exp.Amount = txtAmount.Text;
+        Exp.ExpenseDate = txtExpDate.Text;
+        Exp.Description = txtExpDesc.Text;
+        Exp.Type = txtExpType.Text;
+        Exp.ReceiptNumber = txtReceipt.Text;
+        Exp.ModifiedBy = user.UserId;
+        return Exp;
+    }
+
+    private string validate_input(string Amount, string Date, string Descr, string Type, string ReceiptNo)
+    {
+        string output = "";
+        if (Amount.Equals(""))
+        {
+            output = "Expense Amount Required";
+            txtAmount.Focus();
+        }
+        else if (Date.Equals(""))
+        {
+            output = "Date Required";
+            txtExpDate.Focus();
+        }
+        else if (Descr.Equals(""))
+        {
+            output = "Expense Description Required";
+            txtExpDesc.Focus();
+        }
+        else if (Type.Equals(""))
+        {
+            output = "Expense Type Required";
+            txtExpType.Focus();
+        }
+        else if (ReceiptNo.Equals(""))
+        {
+            output = "Expense Receipt No Required";
+            txtReceipt.Focus();
+        }
+
+        else
+        {
+            output = "OK";
+        }
+        return output;
+    }
+
+    protected void btnEdit_Click(object sender, EventArgs e)
+    {
+
     }
 }

@@ -55,6 +55,12 @@ namespace InterConnect.LeshLaonApi {
         
         private System.Threading.SendOrPostCallback SaveReceiptOperationCompleted;
         
+        private System.Threading.SendOrPostCallback SaveInjectionOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback SaveExpenseOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback SaveIncomeOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -128,6 +134,15 @@ namespace InterConnect.LeshLaonApi {
         
         /// <remarks/>
         public event SaveReceiptCompletedEventHandler SaveReceiptCompleted;
+        
+        /// <remarks/>
+        public event SaveInjectionCompletedEventHandler SaveInjectionCompleted;
+        
+        /// <remarks/>
+        public event SaveExpenseCompletedEventHandler SaveExpenseCompleted;
+        
+        /// <remarks/>
+        public event SaveIncomeCompletedEventHandler SaveIncomeCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/ExecuteDataSet", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -490,6 +505,93 @@ namespace InterConnect.LeshLaonApi {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/SaveInjection", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Result SaveInjection(Injection Inj) {
+            object[] results = this.Invoke("SaveInjection", new object[] {
+                        Inj});
+            return ((Result)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void SaveInjectionAsync(Injection Inj) {
+            this.SaveInjectionAsync(Inj, null);
+        }
+        
+        /// <remarks/>
+        public void SaveInjectionAsync(Injection Inj, object userState) {
+            if ((this.SaveInjectionOperationCompleted == null)) {
+                this.SaveInjectionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSaveInjectionOperationCompleted);
+            }
+            this.InvokeAsync("SaveInjection", new object[] {
+                        Inj}, this.SaveInjectionOperationCompleted, userState);
+        }
+        
+        private void OnSaveInjectionOperationCompleted(object arg) {
+            if ((this.SaveInjectionCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SaveInjectionCompleted(this, new SaveInjectionCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/SaveExpense", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Result SaveExpense(Expense Exp) {
+            object[] results = this.Invoke("SaveExpense", new object[] {
+                        Exp});
+            return ((Result)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void SaveExpenseAsync(Expense Exp) {
+            this.SaveExpenseAsync(Exp, null);
+        }
+        
+        /// <remarks/>
+        public void SaveExpenseAsync(Expense Exp, object userState) {
+            if ((this.SaveExpenseOperationCompleted == null)) {
+                this.SaveExpenseOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSaveExpenseOperationCompleted);
+            }
+            this.InvokeAsync("SaveExpense", new object[] {
+                        Exp}, this.SaveExpenseOperationCompleted, userState);
+        }
+        
+        private void OnSaveExpenseOperationCompleted(object arg) {
+            if ((this.SaveExpenseCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SaveExpenseCompleted(this, new SaveExpenseCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/SaveIncome", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Result SaveIncome(Income Inco) {
+            object[] results = this.Invoke("SaveIncome", new object[] {
+                        Inco});
+            return ((Result)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void SaveIncomeAsync(Income Inco) {
+            this.SaveIncomeAsync(Inco, null);
+        }
+        
+        /// <remarks/>
+        public void SaveIncomeAsync(Income Inco, object userState) {
+            if ((this.SaveIncomeOperationCompleted == null)) {
+                this.SaveIncomeOperationCompleted = new System.Threading.SendOrPostCallback(this.OnSaveIncomeOperationCompleted);
+            }
+            this.InvokeAsync("SaveIncome", new object[] {
+                        Inco}, this.SaveIncomeOperationCompleted, userState);
+        }
+        
+        private void OnSaveIncomeOperationCompleted(object arg) {
+            if ((this.SaveIncomeCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.SaveIncomeCompleted(this, new SaveIncomeCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -602,6 +704,9 @@ namespace InterConnect.LeshLaonApi {
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Income))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Expense))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Injection))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Receipt))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LoanDetails))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SystemSetting))]
@@ -690,6 +795,9 @@ namespace InterConnect.LeshLaonApi {
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Result))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Entity))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Income))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Expense))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Injection))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Receipt))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(LoanDetails))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SystemSetting))]
@@ -778,6 +886,285 @@ namespace InterConnect.LeshLaonApi {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Income : Entity {
+        
+        private string incomeIDField;
+        
+        private string amountField;
+        
+        private string incomeDateField;
+        
+        private string descriptionField;
+        
+        private string typeField;
+        
+        /// <remarks/>
+        public string IncomeID {
+            get {
+                return this.incomeIDField;
+            }
+            set {
+                this.incomeIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Amount {
+            get {
+                return this.amountField;
+            }
+            set {
+                this.amountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string IncomeDate {
+            get {
+                return this.incomeDateField;
+            }
+            set {
+                this.incomeDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Type {
+            get {
+                return this.typeField;
+            }
+            set {
+                this.typeField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1064.2")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Expense : Entity {
+        
+        private string expenseIDField;
+        
+        private string amountField;
+        
+        private string expenseDateField;
+        
+        private string descriptionField;
+        
+        private string typeField;
+        
+        private string receiptNumberField;
+        
+        /// <remarks/>
+        public string ExpenseID {
+            get {
+                return this.expenseIDField;
+            }
+            set {
+                this.expenseIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Amount {
+            get {
+                return this.amountField;
+            }
+            set {
+                this.amountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ExpenseDate {
+            get {
+                return this.expenseDateField;
+            }
+            set {
+                this.expenseDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Type {
+            get {
+                return this.typeField;
+            }
+            set {
+                this.typeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ReceiptNumber {
+            get {
+                return this.receiptNumberField;
+            }
+            set {
+                this.receiptNumberField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1064.2")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Injection : Entity {
+        
+        private string injectionNumberField;
+        
+        private string injectorNameField;
+        
+        private string amountField;
+        
+        private string injectionDateField;
+        
+        private string phoneNoField;
+        
+        private string emailField;
+        
+        private string repaymentDateField;
+        
+        private string repaymentAmountField;
+        
+        private string injectionDescField;
+        
+        private string injectionTypeField;
+        
+        /// <remarks/>
+        public string InjectionNumber {
+            get {
+                return this.injectionNumberField;
+            }
+            set {
+                this.injectionNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string InjectorName {
+            get {
+                return this.injectorNameField;
+            }
+            set {
+                this.injectorNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Amount {
+            get {
+                return this.amountField;
+            }
+            set {
+                this.amountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string InjectionDate {
+            get {
+                return this.injectionDateField;
+            }
+            set {
+                this.injectionDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PhoneNo {
+            get {
+                return this.phoneNoField;
+            }
+            set {
+                this.phoneNoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Email {
+            get {
+                return this.emailField;
+            }
+            set {
+                this.emailField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string RepaymentDate {
+            get {
+                return this.repaymentDateField;
+            }
+            set {
+                this.repaymentDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string RepaymentAmount {
+            get {
+                return this.repaymentAmountField;
+            }
+            set {
+                this.repaymentAmountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string InjectionDesc {
+            get {
+                return this.injectionDescField;
+            }
+            set {
+                this.injectionDescField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string InjectionType {
+            get {
+                return this.injectionTypeField;
+            }
+            set {
+                this.injectionTypeField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1064.2")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
     public partial class Receipt : Entity {
         
         private string receiptNumberField;
@@ -793,6 +1180,8 @@ namespace InterConnect.LeshLaonApi {
         private string currencyCodeField;
         
         private string receiptAmountField;
+        
+        private string remarksField;
         
         /// <remarks/>
         public string ReceiptNumber {
@@ -861,6 +1250,16 @@ namespace InterConnect.LeshLaonApi {
             }
             set {
                 this.receiptAmountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Remarks {
+            get {
+                return this.remarksField;
+            }
+            set {
+                this.remarksField = value;
             }
         }
     }
@@ -1707,6 +2106,84 @@ namespace InterConnect.LeshLaonApi {
         private object[] results;
         
         internal SaveReceiptCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Result Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Result)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void SaveInjectionCompletedEventHandler(object sender, SaveInjectionCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class SaveInjectionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal SaveInjectionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Result Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Result)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void SaveExpenseCompletedEventHandler(object sender, SaveExpenseCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class SaveExpenseCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal SaveExpenseCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Result Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Result)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void SaveIncomeCompletedEventHandler(object sender, SaveIncomeCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class SaveIncomeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal SaveIncomeCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

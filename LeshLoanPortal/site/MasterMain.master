@@ -160,7 +160,7 @@
 					<a href="AddExpense.aspx"><i class="fa fa-caret-right"></i> Add Expense</a>
 				  </li>
 				  <li>
-					<a href="ViewUsers.aspx"><i class="fa fa-caret-right"></i> View Income Statement</a>
+					<a href="ViewIncomeExpense.aspx"><i class="fa fa-caret-right"></i> View Income Statement</a>
 				  </li>
                     <%}%>
             </ul>

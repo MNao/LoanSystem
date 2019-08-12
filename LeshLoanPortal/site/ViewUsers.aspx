@@ -21,21 +21,13 @@
             <asp:MultiView ID="MultiView2" ActiveViewIndex="0" runat="server">
                 <asp:View ID="View2" runat="server">
                 <div class="row">
-                <div class="col-md-3">
-                    <label>Bank</label>
-                    <asp:DropDownList ID="ddlAreas" runat="server" CssClass="form-control">
-                    <asp:ListItem>True</asp:ListItem>
-                    <asp:ListItem>False</asp:ListItem>
-                    </asp:DropDownList>
-                </div>
-                    <div class="col-md-2">
-                    <label>Branch</label>
-                    <asp:DropDownList ID="ddBranch" runat="server" CssClass="form-control">
-                    <asp:ListItem>True</asp:ListItem>
-                    <asp:ListItem>False</asp:ListItem>
-                    </asp:DropDownList>
-                </div>
                 <div class="col-md-2">
+                    <label>Company</label>
+                    <asp:DropDownList ID="ddCompany" runat="server" CssClass="form-control">
+                    <asp:ListItem Value="Lesh">LENSH</asp:ListItem>
+                </asp:DropDownList>
+                </div>
+                <div class="col-md-3">
                     <label>User Role</label>
                     <asp:DropDownList ID="ddlUserType" runat="server" AutoPostBack="True" CssClass="form-control">
                     </asp:DropDownList>
@@ -45,7 +37,7 @@
                     <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control"></asp:TextBox>
                 </div>
                 <div class="col-md-2">
-                    <label>.</label><br/>
+                    <label></label><br/>
                     <asp:Button ID="btnOK" runat="server" CssClass="btn btn-success" OnClick="btnOK_Click" Text="Search" />
                 </div>
                 </div>
@@ -61,7 +53,6 @@
                             <Columns>
                                 <asp:TemplateField HeaderText="Details">
                                     <ItemTemplate>
-                                        <%--<asp:Button ID="btnedit" runat="server" Text="Edit" CommandName="EditEntity" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />--%>
                                         <asp:Button ID="btnedit" runat="server" Text="Edit Details" CommandName="EditUser" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
                                     </ItemTemplate>
                                 </asp:TemplateField>

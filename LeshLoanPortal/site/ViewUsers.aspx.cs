@@ -9,8 +9,8 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using Encryption;
-using InterConnect.UBAApi;
 using System.Collections.Generic;
+using InterConnect.LeshLaonApi;
 
 public partial class ViewUsers : System.Web.UI.Page
 {
@@ -29,9 +29,9 @@ public partial class ViewUsers : System.Web.UI.Page
                 }
                 MultiView2.ActiveViewIndex = 0;
 
-                bll.LoadBanksIntoDropDownALL(user, ddlAreas);
-                bll.LoadRolesIntoDropDown(user.BankCode, user, ddlUserType);
-                bll.LoadBranchesIntoDropDown(user.BankCode, user, ddBranch);
+                //bll.LoadBanksIntoDropDownALL(user, ddlAreas);
+                bll.LoadRolesIntoDropDown(ddCompany.SelectedValue, user, ddlUserType);
+                //bll.LoadBranchesIntoDropDown(user.BankCode, user, ddBranch);
                 //bll.LoadBranchesForSearchIntoDropDown();
                 string urole = Session["RoleCode"].ToString();
                 SearchDB();
@@ -81,13 +81,12 @@ public partial class ViewUsers : System.Web.UI.Page
     private string[] GetSearchParameters()
     {   
         List<string> searchCriteria = new List<string>();
-        string BankCode = ddlAreas.SelectedValue.ToString();
-        string BranchCode = ddBranch.SelectedValue.ToString();
+
+        string CompanyCode = ddCompany.SelectedValue;
         string Role_code = ddlUserType.SelectedValue.ToString();
         string UserId = txtSearch.Text.Trim();
 
-        searchCriteria.Add(BankCode);
-        searchCriteria.Add(BranchCode);
+        searchCriteria.Add(CompanyCode);
         searchCriteria.Add(Role_code);
         searchCriteria.Add(UserId);
         return searchCriteria.ToArray();

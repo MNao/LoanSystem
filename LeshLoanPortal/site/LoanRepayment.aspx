@@ -91,6 +91,9 @@
                 <div class="modal-content col-md-6  col-sm-6 col-xs-10"  style="margin:0 auto;">
                    
 		            <div class="modal-body">
+                       Receipt Number
+                      <asp:TextBox ID="txtReceiptNo" runat="server" CssClass="form-control"  placeholder="Receipt Number"></asp:TextBox>
+
 
                         Client Number
                       <asp:TextBox ID="txtClientNo" runat="server" CssClass="form-control"  placeholder="Client Number"></asp:TextBox>
@@ -104,7 +107,13 @@
                         Amount Paid
                       <asp:TextBox ID="txtPaidAmount" runat="server" CssClass="form-control"  placeholder="Loan Amount Paid" onkeyup="javascript:this.value=Comma(this.value);"></asp:TextBox>
 
-                      Repayment Date
+                        Payment Type
+                      <asp:DropDownList ID="ddPaymentType" runat="server" CssClass="form-control">
+                          <asp:ListItem Value="MOMO">MOBILE MONEY</asp:ListItem>
+                          <asp:ListItem Value="CASH">CASH</asp:ListItem>
+                      </asp:DropDownList>
+
+                      Payment Date
                       <asp:TextBox ID="txtRepaymentDate" runat="server" CssClass="form-control" placeholder="Repayment Date"></asp:TextBox>
                         
                       Mobile No. Own

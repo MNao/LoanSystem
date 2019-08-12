@@ -143,12 +143,14 @@ public partial class LoanRepayment : System.Web.UI.Page
             txtfname.Text = Det.ClientName;
             txtMobileNo.Text = Det.ClientPhoneNumber;
             txtEmail.Text = Det.ClientEmail;
+            txtReceiptNo.Text = bll.GenerateSystemCode("RCPT");
 
             txtClientNo.Enabled = false;
             txtLoanNo.Enabled = false;
             txtfname.Enabled = false;
             txtMobileNo.Enabled = false;
             txtEmail.Enabled = false;
+            txtReceiptNo.Enabled = false;
 
             //bll.ShowMessage(lblmsg, "Loan Missing details", true, Session);
 
@@ -159,9 +161,9 @@ public partial class LoanRepayment : System.Web.UI.Page
     {
         try
         {
-            InterConnect.LeshLaonApi.LoanDetails Payment = GetLoanRepaymentDetails();
+            InterConnect.LeshLaonApi.Receipt Payment = GetLoanRepaymentDetails();
             //validate client details input
-            string check_status = validate_input(Payment.LoanDate, Payment.LoanAmount);
+            string check_status = validate_input(Payment.PaymentDate, Payment.ReceiptAmount);
 
 
             if (!check_status.Equals("OK"))
@@ -169,13 +171,13 @@ public partial class LoanRepayment : System.Web.UI.Page
                 ShowMessage(check_status, true);
             }
             else
-            {   
+            {
                 //if(Payment.LoanAmount < AmountPerMonth)
                 //{
                 //    Payment.
                 //}
                 //save Payment details
-                Result user_save = bll.SavePaymentDetails(Payment);
+                Result user_save = Client.SaveReceipt(Payment);//bll.SavePaymentDetails(Payment);
 
                 if (user_save.StatusCode != "0")
                 {
@@ -184,8 +186,10 @@ public partial class LoanRepayment : System.Web.UI.Page
                     return;
                 }
                 ShowMessage("LOAN PAYMENT DETAILS SAVED SUCCESSFULLY", false);
-                ClearControls();
+                
                 //Print Payment Receipt
+                Server.Transfer("~/PrintReceipt.aspx?ClientID=" + Payment.ClientID + "&ClientName=" + txtfname.Text + "&ReceiptNo=" + txtReceiptNo.Text + "&CompanyCode=" + user.CompanyCode);
+                ClearControls();
                 Response.Redirect("LoanRepayment.aspx");
             }
         } 
@@ -195,16 +199,19 @@ public partial class LoanRepayment : System.Web.UI.Page
         }
     }
 
-    public LoanDetails GetLoanRepaymentDetails()
+    public Receipt GetLoanRepaymentDetails()
     {
-        LoanDetails LoanRepayDet = new LoanDetails();
-
+        Receipt LoanRepayDet = new Receipt();
+        LoanRepayDet.CompanyCode = user.CompanyCode;
         LoanRepayDet.ClientID = txtClientNo.Text;
-        LoanRepayDet.LoanNo = txtLoanNo.Text;
-        LoanRepayDet.LoanDate = txtRepaymentDate.Text;
-        LoanRepayDet.LoanAmount = txtPaidAmount.Text.Replace(",","");
-        LoanRepayDet.Observations = txtRemarks.Text;
-        LoanRepayDet.CreatedBy = user.UserId;
+        LoanRepayDet.LoanNumber = txtLoanNo.Text;
+        LoanRepayDet.ReceiptNumber = txtReceiptNo.Text;
+        LoanRepayDet.PaymentDate = txtRepaymentDate.Text;
+        LoanRepayDet.ReceiptAmount = txtPaidAmount.Text.Replace(",","");
+        LoanRepayDet.PaymentType = ddPaymentType.SelectedValue; ;//txtfname.Text;
+        LoanRepayDet.Remarks = txtRemarks.Text;
+        LoanRepayDet.CurrencyCode = "UGX";
+        LoanRepayDet.ModifiedBy = user.UserId;
         return LoanRepayDet;
     }
 

@@ -244,7 +244,7 @@ namespace LeshLoanMngt.ControlClasses
                 return result;
             }
 
-            DataTable dt = dh.ExecuteDataSet("SaveReceipt", new string[] { recpt.CompanyCode, recpt.ClientID, recpt.ReceiptNumber, recpt.LoanNumber, recpt.PaymentType, recpt.PaymentDate, recpt.ReceiptAmount, recpt.CurrencyCode, recpt.ModifiedBy }).Tables[0];
+            DataTable dt = dh.ExecuteDataSet("SaveReceipt", new string[] { recpt.CompanyCode, recpt.ClientID, recpt.ReceiptNumber, recpt.LoanNumber, recpt.PaymentType, recpt.PaymentDate, recpt.ReceiptAmount, recpt.CurrencyCode, recpt.Remarks, recpt.ModifiedBy }).Tables[0];
             if (dt.Rows.Count <= 0)
             {
                 result.StatusCode = Globals.FAILURE_STATUS_CODE;
@@ -258,6 +258,80 @@ namespace LeshLoanMngt.ControlClasses
             return result;
         }
 
+        public Result SaveInjection(Injection Inj)
+        {
+            Result result = new Result();
+
+            if (!Inj.IsValid())
+            {
+                result.StatusCode = Globals.FAILURE_STATUS_CODE;
+                result.StatusDesc = Inj.StatusDesc;
+                return result;
+            }
+
+            DataTable dt = dh.ExecuteDataSet("SaveInjectionDetails", new string[] { Inj.CompanyCode, Inj.InjectionNumber, Inj.InjectorName, Inj.Amount, Inj.InjectionDate, Inj.RepaymentAmount, Inj.RepaymentDate, Inj.PhoneNo, Inj.Email, Inj.InjectionDesc, Inj.InjectionType, Inj.ModifiedBy }).Tables[0];
+            if (dt.Rows.Count <= 0)
+            {
+                result.StatusCode = Globals.FAILURE_STATUS_CODE;
+                result.StatusDesc = "FAILED: INJECTION NOT SAVED";
+                return result;
+            }
+
+            result.StatusCode = Globals.SUCCESS_STATUS_CODE;
+            result.StatusDesc = Globals.SUCCESS_STATUS_TEXT;
+            result.LoanID = dt.Rows[0][0].ToString();
+            return result;
+        }
+
+        public Result SaveIncome(Income Inco)
+        {
+            Result result = new Result();
+
+            if (!Inco.IsValid())
+            {
+                result.StatusCode = Globals.FAILURE_STATUS_CODE;
+                result.StatusDesc = Inco.StatusDesc;
+                return result;
+            }
+
+            DataTable dt = dh.ExecuteDataSet("SaveIncomeDetails", new string[] { Inco.CompanyCode, Inco.IncomeID, Inco.Amount, Inco.IncomeDate, Inco.Description, Inco.Type, Inco.ModifiedBy }).Tables[0];
+            if (dt.Rows.Count <= 0)
+            {
+                result.StatusCode = Globals.FAILURE_STATUS_CODE;
+                result.StatusDesc = "FAILED: INCOME NOT SAVED";
+                return result;
+            }
+
+            result.StatusCode = Globals.SUCCESS_STATUS_CODE;
+            result.StatusDesc = Globals.SUCCESS_STATUS_TEXT;
+            result.LoanID = dt.Rows[0][0].ToString();
+            return result;
+        }
+
+        public Result SaveExpense(Expense Expe)
+        {
+            Result result = new Result();
+
+            if (!Expe.IsValid())
+            {
+                result.StatusCode = Globals.FAILURE_STATUS_CODE;
+                result.StatusDesc = Expe.StatusDesc;
+                return result;
+            }
+
+            DataTable dt = dh.ExecuteDataSet("SaveExpenseDetails", new string[] { Expe.CompanyCode, Expe.ExpenseID, Expe.Amount, Expe.ExpenseDate, Expe.Description, Expe.ReceiptNumber, Expe.Type, Expe.ModifiedBy }).Tables[0];
+            if (dt.Rows.Count <= 0)
+            {
+                result.StatusCode = Globals.FAILURE_STATUS_CODE;
+                result.StatusDesc = "FAILED: EXPENSE NOT SAVED";
+                return result;
+            }
+
+            result.StatusCode = Globals.SUCCESS_STATUS_CODE;
+            result.StatusDesc = Globals.SUCCESS_STATUS_TEXT;
+            result.LoanID = dt.Rows[0][0].ToString();
+            return result;
+        }
 
         public ClientDetails[] GetClientDetails(string BankCode, string UserID, string ClientID)
             {

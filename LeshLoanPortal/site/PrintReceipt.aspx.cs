@@ -36,12 +36,13 @@ public partial class PrintReceipt : System.Web.UI.Page
 
     private void LoadRecieptDetails()
     {
-        string ReceiptNo = Request.QueryString["Id"];
+        string ReceiptNo = Request.QueryString["ReceiptNo"];
         string CompanyCode = Request.QueryString["CompanyCode"];
-        string ClientCode = Request.QueryString["ClientCode"];
+        string ClientCode = Request.QueryString["ClientID"];
+        string ClientName = Request.QueryString["ClientName"];
 
 
-        Receipt result = bll.GetReceiptDetails(user, ReceiptNo, ClientCode); ;
+        Entity result = bll.GetReceiptDetails(user, ReceiptNo, ClientCode); ;
         //api.GetById(CompanyCode, "RECIEPT", RecieptId);
 
         if (result.StatusCode != Globals.SUCCESS_STATUS_CODE)
@@ -53,7 +54,7 @@ public partial class PrintReceipt : System.Web.UI.Page
 
         //string[] clientDetails = GetClientNameByCode(receipt.CompanyCode, ClientCode);
         //string ClientName = clientDetails[0];
-        string pdfFile = "E:\\PePay\\PegasusBussinessManagementSystem-master\\application\\apps\\Receipts\\" + Receipt.ClientName + " Receipt.pdf";
+        string pdfFile = "E:\\Projects\\LeshLoanSystem\\LeshLoanPortal\\site\\Receipts\\" + ClientName + " Receipt.pdf";
         //string pdfFile = "C:\\Users\\MNO\\Desktop\\application\\apps\\Receipts\\Reciept.pdf";
 
         DataTable PaymentReceipt = new DataTable();
@@ -69,7 +70,7 @@ public partial class PrintReceipt : System.Web.UI.Page
         row["ReceiptNumber"] = receipt.ReceiptNumber;
         row["LoanNumber"] = receipt.LoanNumber; ; //invoice.quantity;
         row["PaymentType"] = receipt.PaymentType; //invoice.unitprice;
-        //row["BankName"] = Convert.ToInt64(receipt.ReceiptAmount) + " Ugandan Shillings"; //reciept.BankAccountName;
+        //row["BankName"] = Convert.ToInt64(receipt.ReceiptAmount) + " Ugandan Shillings"; 
         row["PaymentDate"] = receipt.PaymentDate;
         row["Amount"] = receipt.ReceiptAmount;
         row["Currency"] = receipt.CurrencyCode;

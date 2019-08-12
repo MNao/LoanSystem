@@ -55,7 +55,10 @@
     <Compile Include="ControlClasses\DataBaseHandler.cs" />
     <Compile Include="Entities\ClientDetails.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Expense.cs" />
     <Compile Include="Entities\Globals.cs" />
+    <Compile Include="Entities\Income.cs" />
+    <Compile Include="Entities\Injection.cs" />
     <Compile Include="Entities\LoanDetails.cs" />
     <Compile Include="Entities\Receipt.cs" />
     <Compile Include="Entities\Result.cs" />
