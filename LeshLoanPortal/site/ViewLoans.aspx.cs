@@ -361,29 +361,27 @@ public partial class ViewLoans : Page
         GridView grid = sender as GridView;
         index = Convert.ToInt32(e.CommandArgument);
         row = grid.Rows[index];
-        string KYCID = row.Cells[2].Text;
-        string CustomerName = row.Cells[3].Text;
-        string PhoneNumber = row.Cells[4].Text;
-        string IDNumber = row.Cells[6].Text;
-        string status = row.Cells[8].Text;
+        string ClientID = row.Cells[1].Text;
+        string LoanID = row.Cells[2].Text;
+        string AmountPerMonth = row.Cells[8].Text;
         Label lblmsg = (Label)Master.FindControl("lblmsg");
 
-        if (e.CommandName.Equals("Verify"))
+        if (e.CommandName.Equals("ViewPayments"))
         {
-            if (IDNumber != "")
+            if (LoanID != "")
             {
-                Server.Transfer("~/KYCDetails.aspx?KYCID=" + KYCID + "&CustName=" + CustomerName + "&PhoneNo=" + PhoneNumber + "&Status=" + status);
+                Server.Transfer("~/ViewLoanPayments.aspx?ClientID=" + ClientID + "&LoanID=" + LoanID + "&AmountPerMonth=" + AmountPerMonth);
                 //return;
             }
             else
             {
-                bll.ShowMessage(lblmsg, "KYC Missing details", true, Session);
+                bll.ShowMessage(lblmsg, "Loan Missing details", true, Session);
             }
 
         }
         if (e.CommandName.Equals("Download"))
         {
-            string OutPutFileName = CustomerName + ".zip";
+            string OutPutFileName = LoanID + ".zip";
             Response.Clear();
             Response.ContentType = "application/zip";
             Response.AddHeader("Content-Disposition", "attachment; filename=" + OutPutFileName);
@@ -407,12 +405,12 @@ public partial class ViewLoans : Page
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             //e.Row.Cells[2].Text = "<i>" + e.Row.Cells[2].Text + "</i>";
-            string LoanId = e.Row.Cells[1].Text;
-            string ClientID = e.Row.Cells[0].Text;
+            string LoanId = e.Row.Cells[2].Text;
+            string ClientID = e.Row.Cells[1].Text;
             HyperLink Link = new HyperLink();
             Link.NavigateUrl = "PrintLoanSchedule.aspx?CompanyCode=" + user.CompanyCode + "&Id=" + LoanId + "&ClientCode=" + ClientID;
             Link.Text = LoanId;
-            e.Row.Cells[1].Controls.Add(Link);
+            e.Row.Cells[2].Controls.Add(Link);
         }
     }
 }

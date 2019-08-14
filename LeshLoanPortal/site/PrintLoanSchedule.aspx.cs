@@ -108,6 +108,8 @@ public partial class PrintLoanSchedule : System.Web.UI.Page
             //paymentVoucher.Rows.Add(row);
             GenerateVoucher.Load(@"E:\Projects\LeshLoanSystem\LeshLoanPortal\site\bin\reports\LoanReport.rpt");
             GenerateVoucher.SetDataSource(ds);
+            GenerateVoucher.Database.Tables[0].SetDataSource(Loan);
+            GenerateVoucher.Database.Tables[1].SetDataSource(LoanSchedule);
             GenerateVoucher.SetParameterValue("ImgUrl", "E:\\Projects\\LeshLoanSystem\\LeshLoanPortal\\site\\Images\\" + CompanyCode + ".jpeg");
             CrystalReportViewer1.ReportSource = GenerateVoucher;
         }

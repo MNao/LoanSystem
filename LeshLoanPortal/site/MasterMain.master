@@ -243,6 +243,18 @@
 					<a href="ApproveEditUser.aspx"><i class="fa fa-caret-right"></i> Approve Edited Users</a>
 				  </li>
                     <%}%>
+                    <li>
+					<a href="AddSystemSetting.aspx"><i class="fa fa-caret-right"></i> Add System Setting</a>
+				  </li>
+                    <li>
+					<a href="ViewSytsemSettings.aspx"><i class="fa fa-caret-right"></i> View System Settings</a>
+				  </li>
+                    <li>
+					<a href="AddInterest.aspx"><i class="fa fa-caret-right"></i> Add Interest</a>
+				  </li>
+                    <li>
+					<a href="ViewInterest.aspx"><i class="fa fa-caret-right"></i> View Interest</a>
+				  </li>
             </ul>
           </li>
           <%} %>

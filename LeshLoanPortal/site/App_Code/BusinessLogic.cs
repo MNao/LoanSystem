@@ -1418,6 +1418,13 @@ public string SendMailMessageWithAttachment(SystemUser user)
         return dt;
     }
 
+    public DataTable SearchLoanPayments(string[] searchParams)
+    {
+        DataTable dt = Client.ExecuteDataSet("SearchLoanPayments", searchParams).Tables[0];
+        return dt;
+    }
+
+
     public DataTable SearchKYCDetailsToApprove(string[] searchParams)
     {
         DataTable dt = Client.ExecuteDataSet("SearchKYCDetailsToApprove", searchParams).Tables[0];

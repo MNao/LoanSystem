@@ -12,10 +12,10 @@
   <xs:element name="Loan" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="Loan" msprop:Generator_UserDSName="Loan">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Loan" msprop:Generator_TableClassName="LoanDataTable" msprop:Generator_TableVarName="tableLoan" msprop:Generator_RowChangedName="LoanRowChanged" msprop:Generator_TablePropName="_Loan" msprop:Generator_RowDeletingName="LoanRowDeleting" msprop:Generator_RowChangingName="LoanRowChanging" msprop:Generator_RowEvHandlerName="LoanRowChangeEventHandler" msprop:Generator_RowDeletedName="LoanRowDeleted" msprop:Generator_RowClassName="LoanRow" msprop:Generator_UserTableName="Loan" msprop:Generator_RowEvArgName="LoanRowChangeEvent">
+        <xs:element name="Loan" msprop:Generator_TableClassName="LoanDataTable" msprop:Generator_TableVarName="tableLoan" msprop:Generator_TablePropName="_Loan" msprop:Generator_RowDeletingName="LoanRowDeleting" msprop:Generator_RowChangingName="LoanRowChanging" msprop:Generator_RowEvHandlerName="LoanRowChangeEventHandler" msprop:Generator_RowDeletedName="LoanRowDeleted" msprop:Generator_UserTableName="Loan" msprop:Generator_RowChangedName="LoanRowChanged" msprop:Generator_RowEvArgName="LoanRowChangeEvent" msprop:Generator_RowClassName="LoanRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="LoanNo" msprop:Generator_ColumnVarNameInTable="columnLoanNo" msprop:Generator_ColumnPropNameInRow="LoanNo" msprop:Generator_ColumnPropNameInTable="LoanNoColumn" msprop:Generator_UserColumnName="LoanNo" type="xs:string" minOccurs="0" />
+              <xs:element name="LoanNo" msprop:Generator_ColumnVarNameInTable="columnLoanNo" msprop:Generator_ColumnPropNameInRow="LoanNo" msprop:Generator_ColumnPropNameInTable="LoanNoColumn" msprop:Generator_UserColumnName="LoanNo" type="xs:string" />
               <xs:element name="ClientID" msprop:Generator_ColumnVarNameInTable="columnClientID" msprop:Generator_ColumnPropNameInRow="ClientID" msprop:Generator_ColumnPropNameInTable="ClientIDColumn" msprop:Generator_UserColumnName="ClientID" type="xs:string" minOccurs="0" />
               <xs:element name="ClientName" msprop:Generator_ColumnVarNameInTable="columnClientName" msprop:Generator_ColumnPropNameInRow="ClientName" msprop:Generator_ColumnPropNameInTable="ClientNameColumn" msprop:Generator_UserColumnName="ClientName" type="xs:string" minOccurs="0" />
               <xs:element name="LoanDate" msprop:Generator_ColumnVarNameInTable="columnLoanDate" msprop:Generator_ColumnPropNameInRow="LoanDate" msprop:Generator_ColumnPropNameInTable="LoanDateColumn" msprop:Generator_UserColumnName="LoanDate" type="xs:string" minOccurs="0" />
@@ -27,17 +27,26 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="LoanSchedule" msprop:Generator_TableClassName="LoanScheduleDataTable" msprop:Generator_TableVarName="tableLoanSchedule" msprop:Generator_TablePropName="LoanSchedule" msprop:Generator_RowDeletingName="LoanScheduleRowDeleting" msprop:Generator_RowChangingName="LoanScheduleRowChanging" msprop:Generator_RowEvHandlerName="LoanScheduleRowChangeEventHandler" msprop:Generator_RowDeletedName="LoanScheduleRowDeleted" msprop:Generator_UserTableName="LoanSchedule" msprop:Generator_RowChangedName="LoanScheduleRowChanged" msprop:Generator_RowEvArgName="LoanScheduleRowChangeEvent" msprop:Generator_RowClassName="LoanScheduleRow">
+        <xs:element name="LoanSchedule" msprop:Generator_TableClassName="LoanScheduleDataTable" msprop:Generator_TableVarName="tableLoanSchedule" msprop:Generator_RowChangedName="LoanScheduleRowChanged" msprop:Generator_TablePropName="LoanSchedule" msprop:Generator_RowDeletingName="LoanScheduleRowDeleting" msprop:Generator_RowChangingName="LoanScheduleRowChanging" msprop:Generator_RowEvHandlerName="LoanScheduleRowChangeEventHandler" msprop:Generator_RowDeletedName="LoanScheduleRowDeleted" msprop:Generator_RowClassName="LoanScheduleRow" msprop:Generator_UserTableName="LoanSchedule" msprop:Generator_RowEvArgName="LoanScheduleRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Installments" msprop:Generator_ColumnVarNameInTable="columnInstallments" msprop:Generator_ColumnPropNameInRow="Installments" msprop:Generator_ColumnPropNameInTable="InstallmentsColumn" msprop:Generator_UserColumnName="Installments" type="xs:string" minOccurs="0" />
               <xs:element name="Principal" msprop:Generator_ColumnVarNameInTable="columnPrincipal" msprop:Generator_ColumnPropNameInRow="Principal" msprop:Generator_ColumnPropNameInTable="PrincipalColumn" msprop:Generator_UserColumnName="Principal" type="xs:string" minOccurs="0" />
               <xs:element name="InterestPerInstallment" msprop:Generator_ColumnVarNameInTable="columnInterestPerInstallment" msprop:Generator_ColumnPropNameInRow="InterestPerInstallment" msprop:Generator_ColumnPropNameInTable="InterestPerInstallmentColumn" msprop:Generator_UserColumnName="InterestPerInstallment" type="xs:string" minOccurs="0" />
               <xs:element name="EMI" msprop:Generator_ColumnVarNameInTable="columnEMI" msprop:Generator_ColumnPropNameInRow="EMI" msprop:Generator_ColumnPropNameInTable="EMIColumn" msprop:Generator_UserColumnName="EMI" type="xs:string" minOccurs="0" />
+              <xs:element name="LoanNo" msprop:Generator_ColumnVarNameInTable="columnLoanNo" msprop:Generator_ColumnPropNameInRow="LoanNo" msprop:Generator_ColumnPropNameInTable="LoanNoColumn" msprop:Generator_UserColumnName="LoanNo" type="xs:string" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
       </xs:choice>
     </xs:complexType>
+    <xs:unique name="LoanKey1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Loan" />
+      <xs:field xpath="mstns:LoanNo" />
+    </xs:unique>
+    <xs:unique name="LoanScheduleKey1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:LoanSchedule" />
+      <xs:field xpath="mstns:LoanNo" />
+    </xs:unique>
   </xs:element>
 </xs:schema>

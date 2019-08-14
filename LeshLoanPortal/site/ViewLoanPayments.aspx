@@ -1,26 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterMain.master" AutoEventWireup="true" CodeFile="ViewLoans.aspx.cs" Inherits="ViewLoans" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterMain.master" AutoEventWireup="true" CodeFile="ViewLoanPayments.aspx.cs" Inherits="ViewLoanPayments" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<%--<%@ Register 
- Assembly="AjaxControlToolkit" 
- Namespace="AjaxControlToolkit" 
- TagPrefix="ajaxToolkit" %>--%>
- <%--<asp:ScriptManager runat="Server" EnableScriptGlobalization="true"
-        EnableScriptLocalization="true" ID="ScriptManager1" 
-        />--%>
 <div class="col-lg-12">
-   
-    <%--<div class="card mb-3">
-        <div class="card-header">
-        <i class="fa fa fa-envelope"></i> Verification <i class='fa fa-arrow-right'></i> Verify KYC Details
-        <a  href="Send_SMS_Template.csv" class="pull-right"> <i class='fa fa-file-excel-o'></i> Template</a>
-        
-        </div>
-        <div class="card-body">
-    
-    </div>
-</div>--%>
 
 <asp:MultiView ID="MultiView1" ActiveViewIndex="0" runat="server">
     <asp:View ID="SearchView" runat="server">
@@ -29,9 +11,9 @@
         <div class="row">
             <div class="col-lg-3">
                 <label>
-                    Client Number
+                    Loan Number
                 </label>
-                <asp:TextBox ID="txtClientNo" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="txtLoanNo" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="col-lg-2">
                 <label>
@@ -39,10 +21,8 @@
                 </label>
                 <asp:DropDownList ID="ddStatus" runat="server" CssClass="form-control">
                     <asp:ListItem Value="">--Select Status--</asp:ListItem>
-                    <asp:ListItem Value="PENDING">PENDING</asp:ListItem>
-                     <asp:ListItem Value="VERIFIED">VERIFIED</asp:ListItem>
-                    <asp:ListItem Value="APPROVED">APPROVED</asp:ListItem>
-                     <asp:ListItem Value="REJECTED">REJECTED</asp:ListItem>
+                    <asp:ListItem Value="COMPLETED">COMPLETED</asp:ListItem>
+                     <asp:ListItem Value="NOTCOMPLETED">NOT COMPLETED</asp:ListItem>
                 </asp:DropDownList>
             </div>
             <div class="col-lg-2">
@@ -80,17 +60,17 @@
                 <div class="row" style="overflow-x:auto;">
                     <div class="table-responsive">
                         <asp:GridView runat="server" Width="100%" CssClass="table table-bordered table-hover"
-                            ID="dataGridResults" AutoGenerateColumns="true" OnRowCommand="dataGridResults_RowCommand" OnRowDataBound="dataGridResults_RowDataBound"> <%-- OnRowCreated="dataGridResults_RowCreated" arBFE4FF hc115E9B  --%>
+                            ID="dataGridResults" AutoGenerateColumns="true" OnRowCommand="dataGridResults_RowCommand"> <%-- OnRowCreated="dataGridResults_RowCreated" arBFE4FF hc115E9B  --%>
                             <AlternatingRowStyle BackColor="#FFF9FB" /> <%--DE6868--%>
                             <HeaderStyle BackColor="#E44B4B" Font-Bold="false" ForeColor="white" Font-Italic="False"
                                 Font-Overline="False" Font-Strikeout="False" Font-Underline="False" Height="30px" />
                             <Columns>
-                               <asp:TemplateField HeaderText="View Payments">
+                               <%--<asp:TemplateField HeaderText="View Payments">
                                     <ItemTemplate>
                                         <asp:Button ID="btnViewPayments" runat="server" Text="View Payments" CommandName="ViewPayments" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                 <%--<asp:TemplateField HeaderText="Details">
+                                 <asp:TemplateField HeaderText="Details">
                                     <ItemTemplate>
                                         <asp:Button ID="btnDownloadKYC" runat="server" Text="View Details" CommandName="Verify" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
                                     </ItemTemplate>
@@ -123,6 +103,8 @@
     }
 </script>
 </asp:Content>
+
+
 
 
 
