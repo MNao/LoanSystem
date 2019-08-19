@@ -41,7 +41,7 @@
                       <asp:TextBox ID="txtlname" runat="server" CssClass="form-control"></asp:TextBox>
 
                       User Role
-                      <asp:DropDownList ID="ddlUserType" runat="server" OnDataBound="ddlUserType_DataBound" CssClass="form-control">
+                      <asp:DropDownList ID="ddlUserType" runat="server" CssClass="form-control">
                       </asp:DropDownList>
                         <div class="row">
                                         <div class="col-lg-6">
@@ -69,7 +69,7 @@
                                     </div>
                     </div>
                     <div class="modal-footer">
-                        <asp:Button ID="btnOK" runat="server" CssClass="btn btn-success" Text="SUBMIT DETAILS"  OnClick="btnOK_Click" />
+                        <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="SUBMIT DETAILS"  OnClick="btnSubmit_Click" />
                         <asp:Button ID="btnEdit" runat="server" CssClass="btn btn-success" Text="UPDATE DETAILS"  OnClick="btnEdit_Click" />
                     </div>
                 </div>

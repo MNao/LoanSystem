@@ -31,10 +31,9 @@ namespace LeshLoanMngt.Entities
         public string EducLevel = "";
         public string MonthlyIncome = "";
 
-
         public override bool IsValid()
         {
-            string propertiesThatCanBeNull = "ClientAddress|ClientEmail|Gender|DOB|BusinessLoc|Occupation|NoOfBeneficiaries|EducLevel|MonthylyIncome";
+            string propertiesThatCanBeNull = "ClientAddress|ClientEmail|Gender|DOB|BusinessLoc|Occupation|NoOfBeneficiaries|EducLevel|MonthlyIncome";
             string nullCheckResult = SharedCommons.CheckForNulls(this, propertiesThatCanBeNull);
             if (nullCheckResult != Globals.SUCCESS_STATUS_TEXT)
             {

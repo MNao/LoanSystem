@@ -331,6 +331,7 @@ public partial class AddLoan : System.Web.UI.Page
     //        MultiView1.SetActiveView(LoanAgmtView);
     //    }
         MultiView1.SetActiveView(LoanAgmtView);
+        FillLoanAgreement();
     }
 
     protected void btnSubmitLoanDetails_Click(object sender, EventArgs e)
@@ -523,6 +524,7 @@ public partial class AddLoan : System.Web.UI.Page
 
                 //redirect to loan aggreement
                 MultiView1.SetActiveView(LoanAgmtView);
+                FillLoanAgreement();
 
             }
 
@@ -531,6 +533,52 @@ public partial class AddLoan : System.Web.UI.Page
         {
 
         }
+    }
+
+    private void FillLoanAgreement()
+    {
+        LoanDetails LoanDet = GetLoanAgreementDetails();
+        InterConnect.LeshLaonApi.ClientDetails cli = GetClientDetails();
+        lblCliName.Text = lblClientName1.Text = lblClientName2.Text = lblClientName3.Text = cli.ClientName;
+        lblLocation.Text = cli.BusinessLoc;
+        lblTel.Text = cli.ClientPhoneNumber;
+
+        lblIntRate.Text = LoanDet.InterestRate;
+        lblTotAmnt.Text = LoanDet.ApprovedAmount;
+    }
+
+    private InterConnect.LeshLaonApi.ClientDetails GetClientDetails()
+    {
+        InterConnect.LeshLaonApi.ClientDetails cli = new InterConnect.LeshLaonApi.ClientDetails();
+        cli.BusinessLoc = txtBusLoc.Text;
+        cli.ClientName = txtClientname.Text;
+        cli.ClientPhoneNumber = txtMobileNo.Text;
+        return cli;
+    }
+
+    private LoanDetails GetLoanAgreementDetails()
+    {
+        LoanDetails LoanAgreementDetails = new LoanDetails();
+
+        LoanAgreementDetails.LoanNo = txtLoanNo.Text;
+        LoanAgreementDetails.InterestRate = txtInterest.Text;
+        LoanAgreementDetails.ApprovedAmount = txtAppLoanAmount.Text;
+
+        LoanAgreementDetails.Name = txtColName.Text.ToString();
+        LoanAgreementDetails.Type = txtLoanAmount.Text.Trim();
+        LoanAgreementDetails.Model = txtLoanPurp.Text.Trim().ToString();
+        LoanAgreementDetails.Make = txtInterest.Text.Trim().ToString();
+        LoanAgreementDetails.SerialNumber = txtColSerialNo.Text.ToString();
+        LoanAgreementDetails.Observations = txtColObsv.Text;
+        LoanAgreementDetails.ImageProof = txtColImgProof.FileBytes.ToString();
+        LoanAgreementDetails.EstimatedPrice = txtorg.Text;
+        LoanAgreementDetails.ModifiedBy = user.UserId;
+
+        LoanAgreementDetails.ApprovedAmount = txtAppLoanAmount.Text.Replace(",", "");
+        LoanAgreementDetails.EasyPaidAmountPerMonth = txtAmountToPayPerMonth.Text.Replace(",", "");
+        LoanAgreementDetails.MonthsToPayIn = txtMonths.Text;
+
+        return LoanAgreementDetails;
     }
 
     protected LoanDetails GetCollateralDetails()

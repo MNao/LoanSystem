@@ -40,6 +40,9 @@ public partial class PrintLoanSchedule : System.Web.UI.Page
         DataTable Loan = api.ExecuteDataSet("GetLoanDetailsForSchedule", Params).Tables[0];//bll.GetLoanDetails(user, LoanId, ClientCode);
         LoanDetails response = GetClientNameByCode(CompanyCode, ClientCode);
 
+        imgUrlGuarantoorProof.Text = Loan.Rows[0]["GuarantorProof"].ToString();
+        imgUrlGuarantoorProof.Visible = false;
+
         //string[] BaseText = Purchase.Rows[0]["GuarantorProof"].ToString().Split(',');
 
         //byte[] imageBytes = Convert.FromBase64String(BaseText[1]);
@@ -83,29 +86,6 @@ public partial class PrintLoanSchedule : System.Web.UI.Page
 
         if (Loan.Rows.Count > 0)
         {
-            //foreach (DataRow row in Loan.Rows)
-            //{
-            //    row["ClientName"] = response.LoanNo;
-            //    row["ClientAddress"] = response.LoanDesc;
-            //    row["ClientPhone"] = response.LoanAmount; //invoice.Phone;
-
-            //}
-
-            //PaymentVoucher voucher = result as PaymentVoucher;
-
-            //DataTable paymentVoucher = new DataTable();
-            //paymentVoucher.Columns.Add("ClientName");
-            //paymentVoucher.Columns.Add("VoucherAmount");
-            //paymentVoucher.Columns.Add("InvoiceNumber");
-            //paymentVoucher.Columns.Add("VoucherCode");
-            //paymentVoucher.Columns.Add("Reason");
-            //DataRow row = paymentVoucher.NewRow();
-            //row["ClientName"] = GetClientNameByCode(CompanyCode, ClientCode);
-            //row["VoucherAmount"] = voucher.VoucherAmount;
-            //row["InvoiceNumber"] = voucher.InvoiceNumber;
-            //row["VoucherCode"] = voucher.VoucherCode; ;
-            //row["Reason"] = voucher.Reason;
-            //paymentVoucher.Rows.Add(row);
             GenerateVoucher.Load(@"E:\Projects\LeshLoanSystem\LeshLoanPortal\site\bin\reports\LoanReport.rpt");
             GenerateVoucher.SetDataSource(ds);
             GenerateVoucher.Database.Tables[0].SetDataSource(Loan);
@@ -125,4 +105,52 @@ public partial class PrintLoanSchedule : System.Web.UI.Page
         LoanDetails aclient = new LoanDetails();// result as LoanDetails;
         return aclient;
     }
+
+    protected void btnLoanSch_Click(object sender, EventArgs e)
+    {
+        MultiView2.SetActiveView(LoanSchedule);
+    }
+
+    protected void btnLoanDet_Click(object sender, EventArgs e)
+    {
+        MultiView2.SetActiveView(LoanDetails);
+    }
+
+    protected void btnBack_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ViewLoans.aspx");
+    }
+
+    protected void btnGuaratorProof_Click(object sender, EventArgs e)
+    {
+        string[] BaseText = imgUrlGuarantoorProof.Text.Split(',');
+
+        if (BaseText[0].Contains("pdf"))
+        {
+
+            byte[] imageBytes = Convert.FromBase64String(BaseText[1]);
+            //MemoryStream ms = new MemoryStream(imageBytes, 0,
+            //  imageBytes.Length);
+
+            //// Convert byte[] to Image
+            //ms.Write(imageBytes, 0, imageBytes.Length);
+
+            Response.Clear();
+            Response.ContentType = "application/pdf";
+            Response.AppendHeader("Content-Disposition", "inline;filename=data.pdf");
+            Response.BufferOutput = true;
+
+            ////Response.AddHeader("Content-Length", response.Length.ToString());
+            Response.BinaryWrite(imageBytes);
+            Response.End();
+        }
+        else
+        {
+            Image1.Visible = true;
+            Image1.ImageUrl = imgUrlGuarantoorProof.Text;
+        }
+        Image1.Width = Unit.Percentage(50);
+        Image1.Height = Unit.Percentage(50);
+    }
+        
 }

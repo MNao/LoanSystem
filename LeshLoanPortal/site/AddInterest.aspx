@@ -37,17 +37,25 @@
                                         </div>
                                         
                                     </div>
+                        <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>Interest Name</label>
+                                            <asp:TextBox ID="txtSettingName" runat="server" CssClass="form-control"  placeholder="Enter text" autocomplete="off"></asp:TextBox>
+                                            <p class="help-block">The Name of the Interest</p>
+                                        </div>
+                                        
+                                    </div>
 
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <label>Setting Code</label>
-                                            <asp:TextBox ID="txtSettingCode" runat="server" CssClass="form-control" placeholder="Enter text" />
-                                            <p class="help-block">The Code associated with The Setting</p>
+                                            <label>Interest Code</label>
+                                            <asp:TextBox ID="txtSettingCode" runat="server" CssClass="form-control" placeholder="Enter text" autocomplete="off" />
+                                            <p class="help-block">The Code associated with The Interest</p>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>Setting Value</label>
-                                            <asp:TextBox ID="txtSettingValue" runat="server" CssClass="form-control" placeholder="Enter text" />
-                                            <p class="help-block">The Value of The Setting</p>
+                                            <label>Interest Value</label>
+                                            <asp:TextBox ID="txtSettingValue" runat="server" CssClass="form-control" placeholder="Enter text" autocomplete="off" />
+                                            <p class="help-block">The Value of The Interest</p>
                                         </div>
                                     </div>
                     </div>

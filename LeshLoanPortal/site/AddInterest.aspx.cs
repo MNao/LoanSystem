@@ -18,7 +18,8 @@ public partial class AddInterest : System.Web.UI.Page
 
             user = Session["User"] as SystemUser;
             Session["IsError"] = null;
-            string Id = Request.QueryString["BankCode"];
+            string Id = Request.QueryString["CompanyCode"];
+            string InterestCode = Request.QueryString["InterestCode"];
 
             //Session is invalid
             if (user == null)
@@ -33,7 +34,7 @@ public partial class AddInterest : System.Web.UI.Page
             //Load Old details
             else if (!string.IsNullOrEmpty(Id))
             {
-                LoadEntityData(Id);
+                LoadEntityData(Id,InterestCode);
             }
             //First time Request
             else
@@ -56,10 +57,28 @@ public partial class AddInterest : System.Web.UI.Page
 
     }
 
-    private void LoadEntityData(string id)
+    private void LoadEntityData(string id, string InterestCode)
     {
         btnSubmit.Visible = false;
         btnEdit.Visible = true;
+
+        SystemSetting Setting = bll.GetInterestSetting(id, InterestCode);
+        if (Setting.StatusCode == "0")
+        {
+            ddCompanies.SelectedItem.Value = id;
+            ddCompanies.SelectedItem.Text = id;
+            ddCompanies.Enabled = false;
+
+            txtSettingName.Text = Setting.SettingName;
+            txtSettingCode.Text = Setting.SettingCode;
+            txtSettingValue.Text = Setting.SettingValue;
+            txtSettingCode.Enabled = false;
+        }
+        else
+        {
+            ShowMessage(Setting.StatusDesc, true);
+        }
+        
 
     }
 
@@ -67,7 +86,27 @@ public partial class AddInterest : System.Web.UI.Page
     {
         try
         {
+            string msg = "";
+            SystemSetting setting = GetSystemSetting();
+            if(string.IsNullOrEmpty(setting.SettingCode) || string.IsNullOrEmpty(setting.SettingValue))
+            {
+                ShowMessage("Please Provide Interest Details", true);
+                return;
+            }
+            Result result = bll.SaveInterestSetting(user, setting);
 
+            if (result.StatusCode != Globals.SUCCESS_STATUS_CODE)
+            {
+                msg = "FAILED: " + result.StatusDesc;
+                ShowMessage(msg, true);
+                return;
+            }
+
+
+            msg = "INTEREST DETAILS EDITED SUCCESSFULLY";
+            ShowMessage(msg, false);
+            Clear_Controls();
+            Response.Redirect("ViewInterest.aspx");
         }
         catch (Exception ex)
         {
@@ -80,8 +119,13 @@ public partial class AddInterest : System.Web.UI.Page
         try
         {
             string msg = "";
-            SystemSetting aclient = GetSystemSetting();
-            Result result = client.SaveSystemSetting(aclient);
+            SystemSetting setting = GetSystemSetting();
+            if (string.IsNullOrEmpty(setting.SettingCode) || string.IsNullOrEmpty(setting.SettingValue))
+            {
+                ShowMessage("Please Provide Interest Details", true);
+                return;
+            }
+            Result result = bll.SaveInterestSetting(user,setting);
 
             if (result.StatusCode != Globals.SUCCESS_STATUS_CODE)
             {
@@ -91,30 +135,33 @@ public partial class AddInterest : System.Web.UI.Page
             }
 
 
-            msg = "SYSTEM SETTING DETAILS SAVED SUCCESSFULLY";
+            msg = "INTEREST DETAILS SAVED SUCCESSFULLY";
             ShowMessage(msg, false);
             Clear_Controls();
         }
         catch (Exception ex)
         {
-            bll.LogError(user.CompanyCode, "", ex.Message, "SAVE-SYSTEM SETTING", "EXCEPTION", ex.StackTrace);
+            bll.LogError(user.CompanyCode, "", ex.Message, "SAVE-INTEREST SETTING", "EXCEPTION", ex.StackTrace);
             ShowMessage(ex.Message, true);
         }
     }
 
     private void Clear_Controls()
     {
-
+        txtSettingName.Text = "";
+        txtSettingCode.Text = "";
+        txtSettingValue.Text = "";
     }
 
     private SystemSetting GetSystemSetting()
     {
-        SystemSetting user = new SystemSetting();
-        user.CompanyCode = ddCompanies.SelectedValue;
-        user.SettingCode = txtSettingCode.Text;
-        user.SettingValue = txtSettingValue.Text;
-        user.ModifiedBy = this.user.UserId;
-        return user;
+        SystemSetting setting = new SystemSetting();
+        setting.CompanyCode = ddCompanies.SelectedValue;
+        setting.SettingName = txtSettingName.Text;
+        setting.SettingCode = txtSettingCode.Text;
+        setting.SettingValue = txtSettingValue.Text;
+        setting.ModifiedBy = this.user.UserId;
+        return setting;
     }
 
     private void ShowMessage(string Message, bool Error)

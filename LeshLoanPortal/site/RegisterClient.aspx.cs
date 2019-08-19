@@ -55,9 +55,11 @@ public partial class RegisterClient : System.Web.UI.Page
             //The Captcha entered by user is Valid.
             lblCaptchaError.Visible = false;
 
-            InterConnect.LeshLaonApi.ClientDetails client = GetClientDetails();
+            InterConnect.LeshLaonApi.ClientDetails clientDet = GetClientDetails();
 
-            Result client_save = Client.SaveClientDetails(client);
+            string Password = clientDet.ClientPassword;
+            clientDet.ClientPassword = SharedCommons.GenerateUserPassword(clientDet.ClientPassword);
+            Result client_save = Client.SaveClientDetails(clientDet);
 
             if (client_save.StatusCode != "0")
             {
@@ -69,7 +71,7 @@ public partial class RegisterClient : System.Web.UI.Page
             lblmsg.Text = "CLIENT SAVED SUCCESSFULLY";
             lblmsg.ForeColor = System.Drawing.Color.Green; lblmsg.Font.Bold = true;
             Clear_controls();
-            //bll.SendCredentialsToUser(RegUser, Password);
+            bll.SendCredentialsToClientUser(clientDet, Password);
             bll.InsertIntoAuditLog("USER-CREATION", "SYSTEMUSERS", "Lensh", txtClientNo.Text, "USER CREATED SUCCESSFULLY");
             Response.Redirect("Default.aspx");
 
@@ -112,8 +114,8 @@ public partial class RegisterClient : System.Web.UI.Page
         clients.ClientNo = txtClientNo.Text;
         clients.ClientName = txtName.Text;
         clients.ClientPhoneNumber = txtPhoneNo.Text;
-        clients.ClientPhoto = "testimage";//bll.GetBase64String(IDPhoto.FileBytes);
-        clients.IDPhoto = "testphoto";
+        clients.ClientPhoto = bll.GetImageUploadedInBase64String(ClientPhoto);
+        clients.IDPhoto = bll.GetImageUploadedInBase64String(IDPhoto);
         clients.Referee = txtReferee.Text;
         clients.RefrereePhoneNo = txtRefereePhone.Text;
         clients.IDType = ddIDType.SelectedValue;
@@ -123,9 +125,7 @@ public partial class RegisterClient : System.Web.UI.Page
         clients.ClientAddress = "Kampala";
         clients.ModifiedBy = txtClientNo.Text;
 
-        string Password = bll.GeneratePassword();
-
-        clients.ClientPassword = SharedCommons.GenerateUserPassword(Password);
+        clients.ClientPassword = bll.GeneratePassword();
         return clients;
     }
 }

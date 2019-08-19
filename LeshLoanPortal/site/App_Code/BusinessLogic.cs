@@ -74,6 +74,22 @@ public class BusinessLogic
         }
     }
 
+    public Result SaveInterestSetting(SystemUser user,SystemSetting setting)
+    {
+        Result res = new Result();
+        string[] Params = { user.CompanyCode, setting.SettingName, setting.SettingCode, setting.SettingValue, user.UserId };
+        DataTable dt= Client.ExecuteDataSet("SaveInterestSetting", Params).Tables[0];
+        if (dt.Rows.Count < 0)
+        {
+            res.StatusCode = Globals.FAILURE_STATUS_CODE;
+            res.StatusDesc = "SAVE INTEREST SETTING FAILED";
+            return res;
+        }
+        res.StatusCode = Globals.SUCCESS_STATUS_CODE;
+        res.StatusDesc = Globals.SUCCESS_STATUS_CODE;
+        return res;
+    }
+
     public void ShowExternalMessage(Label lblmsg, System.Web.SessionState.HttpSessionState Session)
     {
         //no external Msg
@@ -182,6 +198,59 @@ public class BusinessLogic
             InterConnect.MailApi.Result resp = mailApi.PostEmail(email);
             result.StatusCode = resp.StatusCode;
             result.StatusDesc = resp.StatusDesc;
+        }
+        catch (Exception ex)
+        {
+            result.StatusCode = Globals.FAILURE_STATUS_CODE;
+            result.StatusDesc = "EXCEPTION: " + ex.Message;
+        }
+        return result;
+    }
+
+    public Result SendCredentialsToClientUser(ClientDetails user, string Password)
+    {
+        string UserType = "Client";
+
+        Result result = new Result();
+        try
+        {   
+            //smtp creds
+            int smtpPort = 587;
+            string smtpServer = "smtp.gmail.com";
+            const string smtpPassword = "0701081899";
+            const string smtpUsername = "timothykasaga@gmail.com";
+            //email.From = "lensh.finance@gmail.com";
+
+            //BUILD EMAIL
+            MailMessage message = new MailMessage();
+            message.To.Clear();
+            message.To.Add(user.ClientEmail);
+            message.Subject = "LENSH LOAN SYSTEM USER CREDENTIALS";
+            message.Body = "Hi " + user.ClientName + "<br/>" +
+                            "Your Credentials for The LENSH LOAN System are Below<br/>" +
+                            "UserId: " + user.ClientNo + "<br/>" +
+                            "Password: " + Password + "<br/>" +
+                            "Role: " + UserType + "<br/>" +
+                            "Thank you. <br/>";
+            message.IsBodyHtml = true;
+            message.From = new MailAddress(smtpUsername);
+
+            NetworkCredential cred = new NetworkCredential(smtpUsername, smtpPassword);
+            SmtpClient mailClient = new SmtpClient(smtpServer, smtpPort);
+            mailClient.EnableSsl = true;
+            mailClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+            mailClient.UseDefaultCredentials = false;
+            mailClient.Timeout = 450000;
+            mailClient.Credentials = cred;
+
+            //SEND EMAIL
+            mailClient.Send(message);
+
+
+            result.StatusCode = Globals.SUCCESS_STATUS_CODE;
+            result.StatusDesc = "Email Sent Successfully";
+            return result;
+            
         }
         catch (Exception ex)
         {
@@ -639,7 +708,7 @@ public string SendMailMessageWithAttachment(SystemUser user)
             ddlst.Items.Add(new ListItem(Value, Text));
         }
 
-        if (user.RoleCode != "001")
+        if (user.RoleCode != "005")
         {
             ddlst.SelectedValue = user.CompanyCode;
             ddlst.Enabled = false;
@@ -1272,6 +1341,29 @@ public string SendMailMessageWithAttachment(SystemUser user)
         return setting;
     }
 
+    public SystemSetting GetInterestSetting(string companyCode, string InterestCode)
+    {
+        SystemSetting setting = new SystemSetting();
+        string[] parameters = { companyCode, InterestCode };
+        DataTable dt = Client.ExecuteDataSet("SearchInterestSettingTable", parameters).Tables[0];
+        if (dt.Rows.Count > 0)
+        {
+            setting.SettingValue = dt.Rows[0]["InterestValue"].ToString();
+            setting.SettingName = dt.Rows[0]["InterestName"].ToString();
+            setting.SettingCode = dt.Rows[0]["InterestCode"].ToString();
+            setting.ModifiedBy = dt.Rows[0]["CreatedBy"].ToString();
+            setting.CompanyCode = dt.Rows[0]["CompanyCode"].ToString();
+            setting.StatusCode = "0";
+            setting.StatusDesc = "SUCCESS";
+        }
+        else
+        {
+            setting.StatusCode = "100";
+            setting.StatusDesc = "FAILED: NO SETTING FOUND WITH ID [" + InterestCode + "] UNDER COMPANY " + companyCode;
+        }
+        return setting;
+    }
+
     //public Company GetCompanyByCompanyCode(string CompanyCode)
     //{
     //    Company company = new Company();
@@ -1392,7 +1484,14 @@ public string SendMailMessageWithAttachment(SystemUser user)
 
         return dt;
     }
-    
+
+    public DataTable SearchInterestSettingTable(string[] searchParams)
+    {
+        DataTable dt = Client.ExecuteDataSet("SearchInterestSettingTable", searchParams).Tables[0];
+
+        return dt;
+    }
+
     public DataTable SearchClientDetailsTable(string[] searchParams)
     {
         DataTable dt = Client.ExecuteDataSet("SearchClientDetailsTable", searchParams).Tables[0];
@@ -1633,10 +1732,10 @@ public string SendMailMessageWithAttachment(SystemUser user)
         return dt;
     }
 
-    public string UpdateKYCStatus(string KYCID, string CustomerName, string PhoneNo, string RoleCode, string Reason, string UserId)
+    public string UpdateClientStatus(string ClientID, string Reason, string UserId)
     {
-        string[] parameters = { KYCID, CustomerName, PhoneNo, RoleCode, Reason, UserId };
-        int dt = Client.ExecuteNonQuery("UpdateKYCStatus", parameters);
+        string[] parameters = { ClientID, Reason, UserId };
+        int dt = Client.ExecuteNonQuery("UpdateClientStatus", parameters);
         return dt.ToString();
     }
 
@@ -2047,8 +2146,10 @@ public string SendMailMessageWithAttachment(SystemUser user)
             Det.Gender = dt.Rows[0]["Gender"].ToString();
             Det.IDNumber = dt.Rows[0]["IDNumber"].ToString();
             Det.ClientEmail = dt.Rows[0]["Email"].ToString();
+            Det.IDType = dt.Rows[0]["IDType"].ToString();
 
             Det.Referee = dt.Rows[0]["RefereeName"].ToString();
+            Det.RefrereePhoneNo = dt.Rows[0]["RefereePhoneNo"].ToString();
             Det.ClientAddress = dt.Rows[0]["ClientAddress"].ToString();
             Det.ModifiedBy = dt.Rows[0]["CreatedBy"].ToString();
             Det.ModifiedOn = dt.Rows[0]["CreatedOn"].ToString();

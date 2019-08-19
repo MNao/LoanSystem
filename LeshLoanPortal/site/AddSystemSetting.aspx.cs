@@ -50,7 +50,7 @@ public partial class AddSystemSetting : System.Web.UI.Page
 
     private void LoadData()
     {
-        btnOK.Visible = true;
+        btnSubmit.Visible = true;
         btnEdit.Visible = false;
         //bll.LoadCompaniesIntoDropDown(user, ddCompanies);
 
@@ -58,7 +58,7 @@ public partial class AddSystemSetting : System.Web.UI.Page
 
     private void LoadEntityData(string id)
     {
-        btnOK.Visible = false;
+        btnSubmit.Visible = false;
         btnEdit.Visible = true;
 
     }

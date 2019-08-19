@@ -8,12 +8,13 @@ namespace LeshLoanMngt.Entities
 {
     public class SystemSetting : Entity
     {
+        public string SettingName = "";
         public string SettingCode = "";
         public string SettingValue = "";
 
         public override bool IsValid()
         {
-            string propertiesThatCanBeNull = "N/A";
+            string propertiesThatCanBeNull = "SettingName";
             string nullCheckResult = SharedCommons.CheckForNulls(this, propertiesThatCanBeNull);
             if (nullCheckResult != Globals.SUCCESS_STATUS_TEXT)
             {

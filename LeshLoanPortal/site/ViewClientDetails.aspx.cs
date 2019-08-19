@@ -131,226 +131,8 @@ public partial class ViewClientDetails : Page
     private ArrayList GetNumbers(string nums)
     {
         var tels = new ArrayList();
-        //PhoneValidator pv = new PhoneValidator();
-        //try
-        //{
-        //    string phones = nums.Split(',');
-        //    foreach (string s in phones)
-        //    {
-        //        if (pv.PhoneNumbersOk(s))
-        //        {
-        //            s = pv.Format(s);
-        //            tels.Add(s);
-        //        }
-        //    }
-        //}
-        //catch (Exception ex)
-        //{
-        //    ShowMessage(ex.Message, true);
-        //}
         return tels;
     }
-
-    //private void Toggle(string listCode, string prefix, string message)
-    //{
-
-    //    MultiView1.ActiveViewIndex = 2;
-
-    //    string contactsToDisplay = "";
-    //    var listName = ddlists.SelectedItem.ToString();
-    //    var enteredNumber = txtPhones.Text.Trim();      
-
-    //    var receipientType = ddlReceipient.SelectedValue;
-
-    //    //User entered a list of numbers comma separated
-    //    if (receipientType == RECEIPTION_TYPE_PHONE_NO) {
-    //        contactsToDisplay = txtPhones.Text.Trim();
-    //    }
-
-    //    //User selected a list to send to
-    //    else if (receipientType == RECEIPTION_TYPE_LIST)
-    //    {
-    //        contactsToDisplay = listName;
-    //    }
-
-    //    //User uploaded a file
-    //    else {
-    //        contactsToDisplay = FileUpload1.FileName;
-    //        uploadedFile = FileUpload1;
-    //        Session["uploadedFile"] = uploadedFile;
-
-    //    }
-
-    //    ////Not a receiption type list so we the phone numbers
-    //    //if (listName.Trim().Equals("Select List"))
-    //    //{
-    //    //    listName = "";           
-    //    //    //Get the list of phone numbers
-    //    //    txtviewlistname.Text = enteredNumber;
-    //    //}
-    //    //else if (enteredNumber.Equals(""))
-    //    //{
-    //    //    //No phone numbers input
-    //    //    txtviewlistname.Text = listName;
-    //    //}
-    //    //else
-    //    //{
-    //    //    txtviewlistname.Text = listName + ", " + enteredNumber;
-    //    //}
-
-
-    //    txtviewlistname.Text = contactsToDisplay;
-    //    txtviewprefix.Text = prefix;
-    //    txtViewMessage.Text = message;
-    //    Label1.Text = "Please Confirm Details Below";
-    //    ShowMessage("Please Confirm and Continue", false);
-
-    //}
-
-    //protected void ddlists_DataBound(object sender, EventArgs e)
-    //{
-    //    ddlists.Items.Insert(0, new ListItem(" Select Group ", "0"));
-    //}
-
-    //protected void Button1_Click(object sender, EventArgs e)
-    //{
-    //    try
-    //    {
-    //var Receipient = ddlReceipient.SelectedItem.ToString();
-    //var ReceipientType = ddlReceipient.SelectedValue;
-
-    //var Phones = txtPhones.Text;
-    //var ContactGroup = ddlists.SelectedValue;
-    //var FileUpload = FileUpload1.FileName;
-    //var message = txtViewMessage.Text.Trim();
-    //var VendorCode = Session["VendorCode"].ToString();
-
-
-    //if (Receipient.Equals(""))
-    //{
-    //    ShowMessage("Please Select a contact group To Send to", true);
-    //    MultiView1.ActiveViewIndex = 0;
-    //}else
-    //if (txtMessage.Equals(""))
-    //{
-    //    ShowMessage("Please type a message to send", true);
-    //    MultiView1.ActiveViewIndex = 0;
-    //}
-    //else
-    //{
-    //    var resLog = "";
-
-    //    if (ReceipientType.Equals(RECEIPTION_TYPE_PHONE_NO) && (txtPhones.Text != null || txtPhones.Text != ""))
-    //    {
-
-    //        String[] phoneNumberArr = Phones.Split(',');
-    //        resLog = _processFile.LogSMSCommaSeparatedList(phoneNumberArr, message, VendorCode);
-
-    //    }
-
-    //    else if (ReceipientType.Equals(RECEIPTION_TYPE_LIST) && (ddlists.SelectedValue.ToString() != null || ddlists.SelectedValue.ToString() != ""))
-    //    {
-    //        string listId = ddlists.SelectedValue.ToString();
-    //        string user = Session["Username"].ToString();
-    //        string mask = Session["Mask"].ToString();
-    //        string SenderId = Session["SenderId"].ToString();
-    //        string filepath = "";
-    //        resLog = _processFile.LogSMSFileUpload(listId, filepath, message, VendorCode, user, mask, SenderId, "ListSMS");
-
-    //    }
-
-    //    else if (ReceipientType.Equals(RECEIPTION_TYPE_FILE))
-
-    //    {
-
-    //          uploadedFile = Session["uploadedFile"] as FileUpload;
-    //        //string filename = Path.GetFileName(FileUpload1.FileName);
-    //        string filename = Path.GetFileName(uploadedFile.FileName);
-    //        string extension = Path.GetExtension(filename);
-
-    //        string pathToFile = @"E:\SMSUploads\FilessToSend";
-    //        DateTime todaydate = DateTime.Now;
-    //        string datetoday = todaydate.ToString().Replace("/", "-").Replace(":", "-").Replace(" ", "-");
-    //        string filepath = pathToFile + filename + "_" + datetoday + extension;
-    //        if (!Directory.Exists(pathToFile))
-    //            Directory.CreateDirectory(pathToFile);
-
-    //        uploadedFile.SaveAs(filepath);
-    //        //FileUpload1.SaveAs(filepath);
-
-    //        var user = HttpContext.Current.Session["Username"].ToString();
-    //        var mask = HttpContext.Current.Session["Mask"].ToString();
-    //        var SenderId = HttpContext.Current.Session["SenderId"].ToString();
-    //        var listId = "";
-
-    //        resLog = _processFile.LogSMSFileUpload(listId, filepath, message, VendorCode, user, mask, SenderId, "FileSMS");
-
-    //    }
-
-
-    //    if (resLog.Contains("Successfully"))
-    //    {
-    //        ShowMessage(resLog, false);
-    //        Clear_contrls();
-    //    }
-    //    else
-    //    {
-    //        ShowMessage(resLog, true);
-    //    }
-
-    //    MultiView1.ActiveViewIndex = 0;
-    //}
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        ShowMessage(ex.Message, true);
-    //    }
-    //}
-
-    //private void Clear_contrls()
-    //{
-    //    ddlists.SelectedIndex = ddlists.Items.IndexOf(ddlists.Items.FindByValue("0"));
-    //    ddlReceipient.SelectedIndex = ddlReceipient.Items.IndexOf(ddlReceipient.Items.FindByValue("0"));
-    //    txtMessage.Text = "";
-    //}
-
-    //protected void Button2_Click(object sender, EventArgs e)
-    //{
-    //    MultiView1.ActiveViewIndex = 0;
-    //    ShowMessage(".", true);
-    //}
-
-
-
-    //protected void ddlReceipient_SelectedIndexChanged(object sender, EventArgs e)
-    //{
-    //    var prefix = ddlReceipient.SelectedValue;
-    //    if (prefix.Equals("0")){
-    //        MultiView2.ActiveViewIndex = 0;
-    //    }
-    //    else if (prefix.Equals("1"))
-    //    {
-    //        //lblMessageLength.Text = "SMS MESSAGE LENGTH : 155";
-    //        //LoadActivelists();
-    //        MultiView2.ActiveViewIndex = 1;
-    //    }
-    //    else if (prefix.Equals("2"))
-    //    {
-    //        //lblMessageLength.Text = "SMS MESSAGE LENGTH : 154";
-    //        MultiView2.ActiveViewIndex = 2;
-    //    }
-    //    lblMessageLength.Text = "SMS MESSAGE LENGTH : 160";
-    //}
-
-
-    //protected void ddlMessageTemplates_SelectedIndexChanged(object sender, EventArgs e)
-    //{
-
-    //    var messageTemplate = ddlMessageTemplates.SelectedValue;
-    //    txtMessage.Text = messageTemplate;
-
-    //}
-
     
     protected void dataGridResults_RowCommand(object sender, GridViewCommandEventArgs e)
     {
@@ -359,23 +141,24 @@ public partial class ViewClientDetails : Page
         GridView grid = sender as GridView;
         index = Convert.ToInt32(e.CommandArgument);
         row = grid.Rows[index];
-        string KYCID = row.Cells[2].Text;
-        string CustomerName = row.Cells[3].Text;
+        string CompanyCode = "";
+        string ClientID = row.Cells[1].Text;
+        string CustomerName = row.Cells[2].Text;
         string PhoneNumber = row.Cells[4].Text;
         string IDNumber = row.Cells[6].Text;
-        string status = row.Cells[8].Text;
+        string status = row.Cells[11].Text;
         Label lblmsg = (Label)Master.FindControl("lblmsg");
 
         if (e.CommandName.Equals("Verify"))
         {
             if (IDNumber != "")
             {
-                Server.Transfer("~/KYCDetails.aspx?KYCID=" + KYCID +"&CustName=" + CustomerName + "&PhoneNo=" + PhoneNumber + "&Status=" + status);
+                Server.Transfer("~/AddClientDetails.aspx?CompanyCode=" + CompanyCode +"&ClientID=" + ClientID + "&PhoneNo=" + PhoneNumber + "&Status=" + status);
                 //return;
             }
             else
             {
-                bll.ShowMessage(lblmsg, "KYC Missing details", true, Session);
+                bll.ShowMessage(lblmsg, "Client Missing details", true, Session);
             }
 
         }

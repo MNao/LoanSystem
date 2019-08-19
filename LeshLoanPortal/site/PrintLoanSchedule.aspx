@@ -100,16 +100,38 @@
 <body style="font-size: 12px;">
     <form runat="server">
         <div class="container" style="padding: 10px;">
-
-            <%-- Print Button --%>
-            <div class="row" style="padding: 10px;">
-                <div class="text-center">
+            <asp:MultiView ID="MultiView1" ActiveViewIndex="0" runat="server">
+                <asp:View ID="btnView" runat="server">
+                    <div class="row text-center">
+                        <div class="col-lg-3">
+                            <asp:Button CssClass="btn-success btn-sm" runat="server" ID="btnLoanSch" Text="View Loan Schedule" OnClick="btnLoanSch_Click"/>
+                        </div>
+                <div class="col-lg-3">
+                <asp:Button CssClass="btn-success btn-sm" runat="server" ID="btnLoanDet" Text="View Loan Details" OnClick="btnLoanDet_Click"/>
+                    </div>
+                        <div class="col-lg-3">
+                <asp:Button CssClass="btn-success btn-sm" runat="server" ID="btnOtherDet" Text="View Other Details"/>
+                            </div>
+                        <div class="col-lg-3">
+                    <asp:Button CssClass="btn-danger btn-sm" runat="server" ID="btnBack" Text="Back" OnClick="btnBack_Click"/>
+                            </div>
+                    </div>
+                    </asp:View>
+                </asp:MultiView> <br /><hr />
+                <asp:MultiView ID="MultiView2" runat="server">
+                <asp:View ID="LoanSchedule" runat="server">
+                    <%-- Print Button --%>
+            <div class="row text-center" style="padding: 10px;">
+                <div class="col-md-6">
                     <input id="Button3" accesskey="P" class="btn btn-success" onclick="printDocument()"
-                        value="Print Statement" />
+                        value="Print Schedule" />
+                </div>
+                <div class="col-md-6">
                     <a href="ViewLoans.aspx">
                         <input id="Button4" accesskey="P" class="btn btn-primary"
                             value="Return" /></a>
                 </div>
+                    
             </div>
 
             <%-- Message Label --%>
@@ -162,6 +184,18 @@
                     </div>
                 </div>
             </div>
+                </asp:View>
+
+                <asp:View ID="LoanDetails" runat="server">
+                    <%--<div class="row" style="padding:15px;>--%>
+                        <asp:Label ID="imgUrlGuarantoorProof" runat="server"></asp:Label>
+                    <asp:Button ID="btnGuaratorProof" runat="server" CssClass="btn btn-success btn-sm" Text="View Guarantor Proof" OnClick="btnGuaratorProof_Click"/>
+                    <br /><br />
+                    <asp:image ID="Image1" runat="server"/>
+                        <%--</div>--%>
+                </asp:View>
+            </asp:MultiView>
+            
         </div>
         
     </form>

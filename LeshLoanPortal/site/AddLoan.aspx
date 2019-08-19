@@ -336,14 +336,14 @@
                                     Also the borrower has given rights to the lender to take over the collateral security should the borrower default on the payments as per the agreed repayment schedule and rights of the lender over the security shall
                                     in all forms be uncontestable.
                                     <ul runat="server">
-                                        <li>Name of Collateral Security: </li>
-                                        <li>Details of Collateral Security: </li>
+                                        <li>Name of Collateral Security: <strong><asp:Label ID="lblCollateral" runat="server" Text="Collateral"></asp:Label></strong></li>
+                                        <li>Details of Collateral Security: <strong><asp:Label ID="lblCollSec" runat="server" Text="Collateral Details"></asp:Label></strong></li>
                                         <li>Guarantor: </li>
                                         <p>
                                         "The Guarantor by signing this agreement on behalf of the borrower shall have the same obligations to fulfill the obligations under this agreement as the borrower.
                                         <br />I <strong><asp:Label ID="lblGuarantor" runat="server"></asp:Label></strong> (Guarantor) of telephone ... of district .... of country ... of village ...
-                                        Sign ....... agree to ensure Mr/Mrs/Ms ... (Borrower) pays all his/her loan as per the agreed loan schedule to completion. I hereby agree to produce 
-                                        Mr/Mrs/Ms .... to Lensh Microfinance Limited should he/she fail to pay, I agree to settle the entire amount should Mr/Mrs/Ms .... fail to settle their
+                                        Sign ....... agree to ensure Mr/Mrs/Ms <strong><asp:label runat="server" ID="lblClientName1" Text="Name"></asp:label></strong> (Borrower) pays all his/her loan as per the agreed loan schedule to completion. I hereby agree to produce 
+                                        Mr/Mrs/Ms <strong><asp:label runat="server" ID="lblClientName2" Text="Name"></asp:label></strong> to Lensh Microfinance Limited should he/she fail to pay, I agree to settle the entire amount should Mr/Mrs/Ms <strong><asp:label runat="server" ID="lblClientName3" Text="Name"></asp:label></strong> fail to settle their
                                          loan balance as per this agreement".</p>
 
                                     </ul>

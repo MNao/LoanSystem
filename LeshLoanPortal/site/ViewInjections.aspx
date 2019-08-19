@@ -21,41 +21,53 @@
         <%-------------------------------------------- Message Label ----------------------------------%>
                <!---------------------------------------------- Search Options --------------------------------->
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-md-3">
                 <label>
                     Injector Name
                 </label>
                 <asp:TextBox ID="txtInjectorNo" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
-            <div class="col-lg-2">
+            <div class="col-md-3">
                 <label>
                     Start Date
                 </label>
                 <asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" placeholder="Select Date" />
             </div>
-            <div class="col-lg-2">
+            <div class="col-md-3">
                 <label>
                     End Date
                 </label>
                 <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" placeholder="Select Date"/>
             </div>
-            <div class="col-lg-2" style="padding-top: 15px;">
+            <div class="col-md-3" style="padding-top: 15px;">
             
                 <asp:Button ID="btnSubmit" runat="server" Text="Search DB" CssClass="btn btn-success btn-lg"
                     OnClick="btnSubmit_Click" />
             </div>
         </div>
+        <hr />
+        <div class="row">
+                <div class="col-md-4"> 
+                        <asp:RadioButton runat="server" ID="rdExcel" Text="Excel" GroupName="btnCheck" CssClass="form-control" />
+                </div>
+             <div class="col-md-4">
+                 <asp:RadioButton runat="server" ID="rdPdf" Text="PDF" GroupName="btnCheck"  CssClass="form-control"/>
+             </div>
+             <div class="col-md-4">
+                 <asp:Button ID="btnExport" runat="server" Text="Export" CssClass="btn btn-success btn-lg" OnClick="btnExport_Click" />
+             </div>
+                    </div><hr />
         <ajaxToolkit:ToolkitScriptManager ID="ToolkitScriptManager1" runat="Server" EnableScriptGlobalization="true"
             EnableScriptLocalization="true">
         </ajaxToolkit:ToolkitScriptManager>
-        <br />
+        <%--<br />--%>
         <ajaxToolkit:CalendarExtender ID="CalendarExtender1" runat="server" CssClass="cal_Theme1"
             Format="yyyy-MM-dd" PopupPosition="BottomRight" TargetControlID="txtStartDate">
         </ajaxToolkit:CalendarExtender>
         <ajaxToolkit:CalendarExtender ID="CalendarExtender2" runat="server" CssClass="cal_Theme1"
             Format="yyyy-MM-dd" PopupPosition="BottomRight" TargetControlID="txtEndDate">
         </ajaxToolkit:CalendarExtender>
-        <hr />
+        <%--<hr />--%>
         <%------------------------------------------- Search Results  -----------------------------------%>
         <asp:MultiView runat="server" ID="MultiView2" ActiveViewIndex="0">
             <asp:View runat="server" ID="resultView">

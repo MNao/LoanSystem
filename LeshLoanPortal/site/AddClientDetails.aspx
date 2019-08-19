@@ -107,7 +107,7 @@
                                             <p class="help-block"></p>
                                         </div>
                                     </div>
-                        <div class="row">
+                        <div class="row" id="UploadPhotos" runat="server">
                                         <div class="col-lg-6">
                                             <label>Client Photo</label>
                                             <asp:FileUpload ID="ClientPhoto" runat="server" CssClass="form-control"/>
@@ -127,7 +127,29 @@
                                         </div>
                                     </div>
 
-                      <%--<br/><asp:CheckBox ID="chkActive" runat="server" Text=" Is Active" /><br/>--%>
+                        <div class="row" id="ChkSec" runat="server">
+                            <div class="col-lg-6">
+                            <asp:CheckBox ID="chkApprove" runat="server" Text="Check to Approve Client Account" />
+                                </div>
+                        </div>
+                            <div class="row" id="ViewPhotos" runat="server">
+                                        <div class="col-lg-6">
+                                            <asp:Label ID="imgUrlClientPhoto" runat="server"></asp:Label>
+                                            <label>Client Photo</label><br />
+                                            <asp:Button ID="btnViewPR" Text="View Client Image" OnClick="btnViewPR_Click" runat="server" CssClass="btn btn-success btn-sm"/>
+                                            
+                                            <br /><br />
+                                         <asp:image ID="Image1" runat="server"/>
+                                        </div>
+                                <div class="col-lg-6">
+                                            <asp:Label ID="ImgUrlIDPhoto" runat="server"></asp:Label>
+                                            <label>ID Photo</label><br />
+                                            <asp:Button ID="btnViewID" Text="View ID Image" OnClick="btnViewID_Click" runat="server" CssClass="btn btn-success btn-sm"/>
+                                            
+                                            <br /><br />
+                                         <asp:image ID="Image2" runat="server"/>
+                                        </div>
+                                    </div>
 
                       <asp:MultiView ID="MultiView2" runat="server">
                         <asp:View ID="View3" runat="server">

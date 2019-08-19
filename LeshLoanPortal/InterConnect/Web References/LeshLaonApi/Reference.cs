@@ -1545,9 +1545,21 @@ namespace InterConnect.LeshLaonApi {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
     public partial class SystemSetting : Entity {
         
+        private string settingNameField;
+        
         private string settingCodeField;
         
         private string settingValueField;
+        
+        /// <remarks/>
+        public string SettingName {
+            get {
+                return this.settingNameField;
+            }
+            set {
+                this.settingNameField = value;
+            }
+        }
         
         /// <remarks/>
         public string SettingCode {
