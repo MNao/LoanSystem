@@ -56,7 +56,7 @@ public partial class AddLoan : System.Web.UI.Page
 
     public void LoadLoanDetails(string ClientID, string LoanNo)
     {
-        
+        LoanDetailsBtn.BackColor= System.Drawing.Color.LightSkyBlue;
         LoanDetails LoanDet = bll.GetLoanDetails(user, ClientID, LoanNo);
         txtLoanNo.Text = LoanNo;
         txtLoanDate.Text = Convert.ToDateTime(LoanDet.LoanDate).ToString("dd-MM-yyyy");
@@ -473,14 +473,15 @@ public partial class AddLoan : System.Web.UI.Page
         //Clear_contrls();
         bll.InsertIntoAuditLog("LOAN-APPROVAL", "LOANS", user.CompanyCode, user.UserId, "LOAN "+Loan.LoanNo+" APPROVED SUCCESSFULLY");
 
-        //redirect to Approval page
-        Response.Redirect("ApproveLoan.aspx");
-
+        //redirect to Acceptance of terms page and loan summary which should be a pdf
+        Server.Transfer("~/PrintLoanSummary.aspx?ClientCode=" + Loan.ClientID + "&LoanId=" + Loan.LoanNo + "&CompanyCode=" + user.CompanyCode);
+        
     }
 
     public LoanDetails GetApprovalLoanDetails()
     {
         LoanDetails ApprovalLoanDetails = new LoanDetails();
+        ApprovalLoanDetails.ClientID = Request.QueryString["ClientID"];//get ClientID
         ApprovalLoanDetails.LoanNo = txtLoanNo.Text;
         ApprovalLoanDetails.Approved = "true";
         ApprovalLoanDetails.ApprovedAmount = txtAppLoanAmount.Text.Replace(",", "");

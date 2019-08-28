@@ -80,9 +80,9 @@
 
                         
     <asp:Label ID="lblPhoneCode" runat="server" Text="0" Visible="False"></asp:Label><br />
-    <ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender1" runat="server"
+    <%--<ajaxToolkit:FilteredTextBoxExtender ID="FilteredTextBoxExtender1" runat="server"
         TargetControlID="txtCredit" ValidChars="0123456789">
-    </ajaxToolkit:FilteredTextBoxExtender>
+    </ajaxToolkit:FilteredTextBoxExtender>--%>
 </asp:Content>
 
 

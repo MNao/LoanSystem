@@ -118,7 +118,7 @@ public partial class ClientDetails : System.Web.UI.Page
             string PhoneNumber = lblPhoneNo.Text;
             string IDNumber = lblIdNo.Text;
             string KYCID = lblKycId.Text;
-            bll.UpdateKYCStatus(KYCID, CustomerName, PhoneNumber, user.RoleCode, "", user.UserId);
+            //bll.UpdateKYCStatus(KYCID, CustomerName, PhoneNumber, user.RoleCode, "", user.UserId);
             bll.ShowMessage(Label9, "KYC Successfully Verified", false, Session);
 
             btnReject.Visible = false;
@@ -180,7 +180,7 @@ public partial class ClientDetails : System.Web.UI.Page
             string PhoneNumber = lblPhoneNo.Text;
             string IDNumber = lblIdNo.Text;
             string KYCID = lblKycId.Text;
-            bll.UpdateKYCStatus(KYCID, CustomerName, PhoneNumber, user.RoleCode, "", user.UserId);
+            //bll.UpdateKYCStatus(KYCID, CustomerName, PhoneNumber, user.RoleCode, "", user.UserId);
             bll.ShowMessage(Label9, "KYC Successfully Approved", false, Session);
 
             btnReject.Visible = false;
@@ -221,7 +221,7 @@ public partial class ClientDetails : System.Web.UI.Page
             string PhoneNumber = lblPhoneNo.Text;
             string IDNumber = lblIdNo.Text;
             string KYCID = lblKycId.Text;
-            bll.UpdateKYCStatus(KYCID, CustomerName, PhoneNumber, user.RoleCode, RejReason, user.UserId);
+            //bll.UpdateKYCStatus(KYCID, CustomerName, PhoneNumber, user.RoleCode, RejReason, user.UserId);
             bll.ShowMessage(Label9, "KYC has been Rejected", false, Session);
 
             btnReject.Enabled = false;
@@ -243,7 +243,7 @@ public partial class ClientDetails : System.Web.UI.Page
             string PhoneNumber = lblPhoneNo.Text;
             string IDNumber = lblIdNo.Text;
             string KYCID = lblKycId.Text;
-            bll.UpdateKYCStatus(KYCID, CustomerName, PhoneNumber, user.RoleCode, RejReason, user.UserId);
+            //bll.UpdateKYCStatus(KYCID, CustomerName, PhoneNumber, user.RoleCode, RejReason, user.UserId);
             bll.ShowMessage(Label9, "KYC has been Rejected", false, Session);
 
             btnReject.Enabled = false;
