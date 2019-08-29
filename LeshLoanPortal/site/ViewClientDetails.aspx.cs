@@ -149,7 +149,7 @@ public partial class ViewClientDetails : Page
         string status = row.Cells[11].Text;
         Label lblmsg = (Label)Master.FindControl("lblmsg");
 
-        if (e.CommandName.Equals("Verify"))
+        if (e.CommandName.Equals("Approve"))
         {
             if (IDNumber != "")
             {

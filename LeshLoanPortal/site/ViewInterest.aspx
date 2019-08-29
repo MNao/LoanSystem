@@ -55,7 +55,9 @@
                             <Columns>
                                 <asp:TemplateField HeaderText="Details">
                                     <ItemTemplate>
-                                        <asp:Button ID="btnedit" runat="server" Text="Edit Details" CommandName="EditUser" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                                        <i style="color:dodgerblue;"><a class="fa fa-edit"><asp:Button runat="server" ID="btnedit" Text="Edit" ForeColor="dodgerblue" CommandName="EditUser" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" BackColor="WhiteSmoke" BorderStyle="None"></asp:Button></a></i>
+                                        
+                                        <%--<asp:Button ID="btnedit" runat="server" Text="Edit Details" CommandName="EditUser" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />--%>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <%--<asp:TemplateField HeaderText="IsActive">

@@ -26,8 +26,8 @@ public partial class AddIncome : System.Web.UI.Page
 
 
                 string UserID = Request.QueryString["UserID"];
-                string BankCode = Request.QueryString["BankCode"];
-                string UserType = Request.QueryString["UserType"];
+                string CompanyCode = Request.QueryString["CompanyCode"];
+                string IncomeNo = Request.QueryString["IncomeID"];
                 string Type = Request.QueryString["Type"];
                 string Status = Request.QueryString["Status"];
                 LoadData();
@@ -36,9 +36,9 @@ public partial class AddIncome : System.Web.UI.Page
                     //string UserCode = Encryption.encrypt.DecryptString(Request.QueryString["transferid"].ToString(), "25011Pegsms2322");
                     //LoadControls(UserCode);
                 }
-                else if (!string.IsNullOrEmpty(UserID))
+                else if (!string.IsNullOrEmpty(IncomeNo))
                 {
-                    //LoadEntityData(UserID, BankCode, UserType, Type, Status);
+                    LoadEntityData(CompanyCode, IncomeNo);
                 }
             }
         }
@@ -46,6 +46,26 @@ public partial class AddIncome : System.Web.UI.Page
         {
             ShowMessage(ex.Message, true);
         }
+    }
+
+    private void LoadEntityData(string CompanyCode, string IncomeNo)
+    {
+        btnSubmit.Visible = false;
+        btnEdit.Visible = true;
+        Income Inc = bll.GetIncome(CompanyCode,IncomeNo);
+        //ddCompany.SelectedItem.Text = Inc.CompanyCode;
+        txtIncomeNo.Text = Inc.IncomeID;
+        txtAmount.Text = Inc.Amount;
+        txtIncomeDate.Text = Inc.IncomeDate;
+        txtIncomeDesc.Text = Inc.Description;
+        txtIncType.Text = Inc.Type;
+
+        txtIncomeNo.Enabled = false;
+        //txtAmount.Enabled = false;
+        //txtIncomeDate.Enabled = false;
+        //txtIncomeDesc.Enabled = false;
+        //txtIncType.Enabled = false;
+        
     }
 
     private void LoadData()
@@ -99,6 +119,7 @@ public partial class AddIncome : System.Web.UI.Page
                 Clear_contrls();
                 //bll.InsertIntoAuditLog("USER-CREATION", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER CREATED SUCCESSFULLY");
                 //MultiView1.SetActiveView(LoanDetails);
+                Response.Redirect("AddIncome.aspx");
 
             }
 
@@ -165,6 +186,41 @@ public partial class AddIncome : System.Web.UI.Page
 
     protected void btnEdit_Click(object sender, EventArgs e)
     {
+        try
+        {
 
+            Income Inco = GetIncomeDetails();
+            //validate Injection details input
+            string check_status = validate_input(Inco.Amount, Inco.IncomeDate, Inco.Description, Inco.Type);
+
+
+            if (!check_status.Equals("OK"))
+            {
+                ShowMessage(check_status, true);
+            }
+            else
+            {
+                //save client additional details
+                Result user_save = Client.SaveIncome(Inco);
+
+                if (user_save.StatusCode != "0")
+                {
+                    //MultiView2.ActiveViewIndex = 0;
+                    ShowMessage(user_save.StatusDesc, true);
+                    return;
+                }
+                ShowMessage("INCOME DETAILS EDITED SUCCESSFULLY", false);
+                Clear_contrls();
+                //bll.InsertIntoAuditLog("USER-CREATION", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER CREATED SUCCESSFULLY");
+                //MultiView1.SetActiveView(LoanDetails);
+                Response.Redirect("AddIncome.aspx");
+
+            }
+
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 }

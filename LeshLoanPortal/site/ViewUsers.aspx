@@ -21,19 +21,19 @@
             <asp:MultiView ID="MultiView2" ActiveViewIndex="0" runat="server">
                 <asp:View ID="View2" runat="server">
                 <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label>Company</label>
                     <asp:DropDownList ID="ddCompany" runat="server" CssClass="form-control">
                     <asp:ListItem>True</asp:ListItem>
                         <asp:ListItem>False</asp:ListItem>
                 </asp:DropDownList>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label>User Role</label>
                     <asp:DropDownList ID="ddlUserType" runat="server" AutoPostBack="True" CssClass="form-control">
                     </asp:DropDownList>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <label>User ID</label>
                     <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control"></asp:TextBox>
                 </div>
@@ -54,7 +54,9 @@
                             <Columns>
                                 <asp:TemplateField HeaderText="Details">
                                     <ItemTemplate>
-                                        <asp:Button ID="btnedit" runat="server" Text="Edit Details" CommandName="EditUser" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                                        <i style="color:dodgerblue;"><a class="fa fa-edit"><asp:Button runat="server" ID="btnedit" Text="Edit" ForeColor="dodgerblue" CommandName="EditUser" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" BackColor="WhiteSmoke" BorderStyle="None"></asp:Button></a></i>
+                                        
+                                        <%--<asp:Button ID="btnedit" runat="server" Text="Edit Details" CommandName="EditUser" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />--%>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="IsActive">

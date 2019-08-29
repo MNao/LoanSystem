@@ -79,7 +79,9 @@
                             <Columns>
                                 <asp:TemplateField HeaderText="Repay">
                                     <ItemTemplate>
-                                        <asp:Button ID="btnRepayLoan" runat="server" Text="Repay Loan" CommandName="Repay" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                                        <i style="color:dodgerblue;"><a class="fa fa-money"><asp:Button runat="server" ID="btnRepayLoan" Text="Repay Loan" ForeColor="dodgerblue" CommandName="Repay" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" BackColor="WhiteSmoke" BorderStyle="None"></asp:Button></a></i>
+                                        
+                                        <%--<asp:Button ID="btnRepayLoan" runat="server" Text="Repay Loan" CommandName="Repay" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />--%>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

@@ -75,17 +75,20 @@ public partial class AddUser : System.Web.UI.Page
     {
         btnOK.Visible = false;
         btnEdit.Visible = true;
-        MultiView2.SetActiveView(View2);
+        //MultiView2.SetActiveView(View2);
+        MultiView2.ActiveViewIndex = 1;
         
         SystemUser Edituser = bll.GetSystemUserByUserId(UserId);
         string [] name = Edituser.Name.Split(' ');
         txtfname.Text = name[0];
         txtlname.Text = name[1];
-        txtemail.Text = Edituser.Email;//UserId;
+        txtemail.Text = Edituser.Email;
+        txtUserID.Text = UserId;
         ddlUserType.SelectedItem.Text = UserType;
         //string UserRole = bll.GetUserRoleName(UserType);
-        ddlUserType.SelectedItem.Value = UserType;
+        ddlUserType.SelectedItem.Value = Edituser.RoleCode;
 
+        txtUserID.Enabled = false;
         if (Status == "True")
         {
             ChkDeactivate.Visible = true;
@@ -194,7 +197,7 @@ public partial class AddUser : System.Web.UI.Page
         SystemUser Details = new SystemUser();
 
             Details.CompanyCode = user.CompanyCode;
-            Details.UserId = txtemail.Text.Trim();
+            Details.UserId = txtUserID.Text.Trim();
             string fname = txtfname.Text.Trim();
             string lname = txtlname.Text.Trim();
             Details.Name = String.Concat(fname,' ', lname);
@@ -227,7 +230,7 @@ public partial class AddUser : System.Web.UI.Page
     private void Clear_contrls()
     {
         lblCode.Text = "0";
-        txtUserName.Text = "";
+        txtUserID.Text = "";
         //txtphone.Text = "";
         txtlname.Text = "";
         txtfname.Text = "";
@@ -289,6 +292,7 @@ public partial class AddUser : System.Web.UI.Page
             SystemUser aclient = GetSystemUserToEdit();
             string Password = aclient.Password;
             aclient.Password = SharedCommons.GenerateUserPassword(aclient.Password);
+
             if (ChkReset.Checked)
             {
                 result = bll.ReActivateUser(aclient, user.UserId, "RESET");
@@ -304,10 +308,10 @@ public partial class AddUser : System.Web.UI.Page
                 Clear_contrls();
                 bll.SendCredentialsToUser(aclient, Password);
                 bll.InsertIntoAuditLog("RESET-USER", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER PASSWORD RESET SUCCESSFULLY");
-                return;
+                //return;
             }
 
-            if (chkActive.Checked)
+            else if (chkActive.Checked)
             {
                 result = bll.ReActivateUser(aclient, user.UserId, "JUSTACTIVATE");
                 if (result.StatusCode != Globals.SUCCESS_STATUS_CODE)
@@ -322,9 +326,9 @@ public partial class AddUser : System.Web.UI.Page
                 Clear_contrls();
                 bll.SendCredentialsToUser(aclient, Password);
                 bll.InsertIntoAuditLog("ACTIVATE-USER", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER ACTIVATED SUCCESSFULLY");
-                return;
+                //return;
             }
-           if(ChkDeactivate.Checked)
+            else if (ChkDeactivate.Checked)
             {
                 result = bll.ReActivateUser(aclient, user.UserId, "DEACTIVATE");
                 if (result.StatusCode != Globals.SUCCESS_STATUS_CODE)
@@ -339,20 +343,25 @@ public partial class AddUser : System.Web.UI.Page
                 Clear_contrls();
                 //bll.SendCredentialsToUser(aclient, Password);
                 bll.InsertIntoAuditLog("DEACTIVATE-USER", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER DE-ACTIVATED SUCCESSFULLY");
-                return;
+                //return;
             }
-
-            result = bll.AddEditedUserToTable(aclient, user.UserId);
-            if (result.StatusCode != Globals.SUCCESS_STATUS_CODE)
+            else
             {
-                msg = "FAILED: " + result.StatusDesc;
-                bll.ShowMessage(lblmsg, msg, true, Session);
-                return;
+                result = bll.ReActivateUser(aclient, user.UserId, "EDITUSER");
+                if (result.StatusCode != Globals.SUCCESS_STATUS_CODE)
+                {
+                    msg = "FAILED: " + result.StatusDesc;
+                    bll.ShowMessage(lblmsg, msg, true, Session);
+                    return;
+                }
+
+                msg = "SYSTEM USER DETAILS EDITED SUCCESSFULLY.";
+                bll.ShowMessage(lblmsg, msg, false, Session);
+                Clear_contrls();
+                //bll.SendCredentialsToUser(aclient, Password);
+                bll.InsertIntoAuditLog("EDIT-USER", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER EDITED SUCCESSFULLY");
             }
-            msg = "SYSTEM USER DETAILS EDITED SUCCESSFULLY PENDING APPROVAL";
-            Clear_contrls();
-            bll.InsertIntoAuditLog("EDIT-USER", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER EDITED SUCCESSFULLY");
-            bll.ShowMessage(lblmsg, msg, false, Session);
+            
         }
         catch (Exception ex)
         {

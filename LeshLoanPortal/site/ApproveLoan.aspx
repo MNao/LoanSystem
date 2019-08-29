@@ -85,14 +85,11 @@
                             <HeaderStyle BackColor="#E44B4B" Font-Bold="false" ForeColor="white" Font-Italic="False"
                                 Font-Overline="False" Font-Strikeout="False" Font-Underline="False" Height="30px" />
                             <Columns>
-                                <%--<asp:TemplateField HeaderText="Details">
-                                    <ItemTemplate>
-                                        <asp:Button ID="btnMakeASale" runat="server" Text="Download KYC" CommandName="Download" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>--%>
                                 <asp:TemplateField HeaderText="Details">
                                     <ItemTemplate>
-                                        <asp:Button ID="btnApproveLoan" runat="server" Text="View Details" CommandName="Verify" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                                        <i style="color:dodgerblue;"><a class="fa fa-thumbs-o-up"><asp:Button runat="server" ID="btnApproveLoan" Text="Approve" ForeColor="dodgerblue" CommandName="Approve" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" BackColor="WhiteSmoke" BorderStyle="None"></asp:Button></a></i>
+                                        
+                                        <%--<asp:Button ID="btnApproveLoan" runat="server" Text="View Details" CommandName="Approve" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />--%>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <%--<asp:TemplateField HeaderText="IsActive">

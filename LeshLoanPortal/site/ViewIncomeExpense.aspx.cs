@@ -68,6 +68,11 @@ public partial class ViewIncomeExpense : System.Web.UI.Page
     {
         try
         {
+            if (ddType.SelectedValue == "")
+            {
+                ShowMessage("Please Select Type to View", true);
+                return;
+            }
             SearchDB();
 
         }
@@ -126,31 +131,47 @@ public partial class ViewIncomeExpense : System.Web.UI.Page
         GridView grid = sender as GridView;
         index = Convert.ToInt32(e.CommandArgument);
         row = grid.Rows[index];
-        string KYCID = row.Cells[2].Text;
-        string CustomerName = row.Cells[3].Text;
-        string PhoneNumber = row.Cells[4].Text;
-        string IDNumber = row.Cells[6].Text;
-        string status = row.Cells[8].Text;
+        string CompanyCode = row.Cells[1].Text;
+        string IncomeNo = row.Cells[2].Text;
+        string Amount = row.Cells[3].Text;
         Label lblmsg = (Label)Master.FindControl("lblmsg");
 
-        if (e.CommandName.Equals("VerifyKYC"))
+        
+        if (e.CommandName.Equals("DeleteRecord"))
         {
-            if (IDNumber != "")
+            lblID.Text = IncomeNo;
+            lblID.Visible = false;
+            MultiView2.SetActiveView(ConfirmView);
+        }
+        else if (e.CommandName.Equals("EditRecord"))
+        {
+            if (IncomeNo != "")
             {
-                Server.Transfer("~/KYCDetails.aspx?KYCID=" + KYCID + "&CustName=" + CustomerName + "&PhoneNo=" + PhoneNumber + "&Status=" + status);
-                //return;
+                if (ddType.SelectedValue == "Income")
+                {
+                    Server.Transfer("~/AddIncome.aspx?IncomeID=" + IncomeNo + "&CompanyCode=" + CompanyCode + "&Amount=" + Amount);
+                }
+                else if (ddType.SelectedValue == "Expense")
+                {
+                    Server.Transfer("~/AddExpense.aspx?ExpenseID=" + IncomeNo + "&CompanyCode=" + CompanyCode + "&Amount=" + Amount);
+                }
+                else
+                {
+                    ShowMessage("No Record To Edit", true);
+                }
             }
             else
             {
-                bll.ShowMessage(lblmsg, "KYC Missing details", true, Session);
+                bll.ShowMessage(lblmsg, "Income Missing details", true, Session);
             }
 
         }
-        if (e.CommandName.Equals("Download"))
+        else
         {
-
+            bll.ShowMessage(lblmsg, "Record Missing details", true, Session);
         }
     }
+
 protected void btnExport_Click(object sender, EventArgs e)
     {
         string[] searchParams = GetSearchParameters();
@@ -192,5 +213,24 @@ protected void btnExport_Click(object sender, EventArgs e)
                       string.Format("attachment;  filename={0}", "Report.xlsx"));
             Response.BinaryWrite(package.GetAsByteArray());
         }
+    }
+
+    protected void btnConfirm_Click(object sender, EventArgs e)
+    {
+        Entity result = bll.UpdateIncomeExpenseStatus(user.CompanyCode,ddType.SelectedValue,lblID.Text,user.UserId);
+        if (result.StatusCode != "0")
+        {
+            ShowMessage(result.StatusDesc, true);
+        }
+        else
+        {
+            ShowMessage("Record has been Deleted Successfully", false);
+            MultiView2.SetActiveView(EmptyView);
+        }
+    }
+
+    protected void btnCancel_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ViewIncomeExpense.aspx");
     }
 }

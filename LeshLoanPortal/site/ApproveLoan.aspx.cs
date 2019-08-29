@@ -362,7 +362,7 @@ public partial class ApproveLoan : Page
         string status = row.Cells[8].Text;
         Label lblmsg = (Label)Master.FindControl("lblmsg");
 
-        if (e.CommandName.Equals("Verify"))
+        if (e.CommandName.Equals("Approve"))
         {
             if (IDNumber != "")
             {

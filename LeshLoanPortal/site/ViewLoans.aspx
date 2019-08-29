@@ -87,19 +87,11 @@
                             <Columns>
                                <asp:TemplateField HeaderText="View Payments">
                                     <ItemTemplate>
-                                        <asp:Button ID="btnViewPayments" runat="server" Text="View Payments" CommandName="ViewPayments" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                                        <i style="color:dodgerblue;"><a class="fa fa-money"><asp:Button runat="server" ID="btnViewPayments" Text="View Payments" ForeColor="dodgerblue" CommandName="ViewPayments" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" BackColor="WhiteSmoke" BorderStyle="None"></asp:Button></a></i>
+                                        
+                                        <%--<asp:Button ID="btnViewPayments" runat="server" Text="View Payments" CommandName="ViewPayments" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />--%>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                 <%--<asp:TemplateField HeaderText="Details">
-                                    <ItemTemplate>
-                                        <asp:Button ID="btnDownloadKYC" runat="server" Text="View Details" CommandName="Verify" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>--%>
-                                <%--<asp:TemplateField HeaderText="IsActive">
-                                    <ItemTemplate>
-                                        <asp:CheckBox ID="chkbx" runat="server" Checked='<%#Convert.ToBoolean(Eval("IsActive")) %>'/>
-                                    </ItemTemplate>
-                               </asp:TemplateField>--%>
                             </Columns>
                         </asp:GridView>
                     </div>

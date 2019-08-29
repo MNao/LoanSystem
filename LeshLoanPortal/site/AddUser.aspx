@@ -39,9 +39,6 @@
                       Last Name
                       <asp:TextBox ID="txtlname" runat="server" CssClass="form-control"></asp:TextBox>
 
-                      <%--Telephone
-                      <asp:TextBox ID="txtphone" runat="server" CssClass="form-control"></asp:TextBox>--%>
-
                       Email
                       <asp:TextBox ID="txtemail" runat="server" CssClass="form-control"></asp:TextBox>
 
@@ -57,8 +54,8 @@
 
                       <asp:MultiView ID="MultiView2" runat="server">
                         <asp:View ID="View3" runat="server">
-                                    User Name
-                                    <asp:TextBox ID="txtUserName" runat="server" CssClass="form-control"></asp:TextBox>
+                                    User ID
+                                    <asp:TextBox ID="txtUserID" runat="server" CssClass="form-control"></asp:TextBox>
                                            
                         </asp:View>
                         <asp:View ID="View2" runat="server">

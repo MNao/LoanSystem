@@ -74,6 +74,45 @@ public class BusinessLogic
         }
     }
 
+    public Income GetIncome(string CompanyCode, string IncomeNo)
+    {
+        Income Inc = new Income();
+        string[] Params = { CompanyCode , IncomeNo};
+        DataTable dt = Client.ExecuteDataSet("GetIncomeDetails", Params).Tables[0];
+
+        Inc.CompanyCode = dt.Rows[0]["CompanyCode"].ToString();
+        Inc.IncomeID = dt.Rows[0]["IncomeNo"].ToString();
+        Inc.Amount = dt.Rows[0]["Amount"].ToString();
+        Inc.IncomeDate = dt.Rows[0]["IncomeDate"].ToString();
+        Inc.Description = dt.Rows[0]["IncomeDesc"].ToString();
+        Inc.Type = dt.Rows[0]["IncomeType"].ToString();
+        Inc.ModifiedBy = dt.Rows[0]["AddedBy"].ToString();
+        Inc.ModifiedOn = dt.Rows[0]["AddedOn"].ToString();
+        Inc.StatusCode = Globals.SUCCESS_STATUS_CODE;
+        Inc.StatusDesc = Globals.SUCCESS_STATUS_TEXT;
+        return Inc;
+    }
+
+    public Expense GetExpense(string CompanyCode, string ExpenseNo)
+    {
+        Expense Exp = new Expense();
+        string[] Params = { CompanyCode, ExpenseNo };
+        DataTable dt = Client.ExecuteDataSet("GetExpenseDetails", Params).Tables[0];
+
+        Exp.CompanyCode = dt.Rows[0]["CompanyCode"].ToString();
+        Exp.ExpenseID = dt.Rows[0]["ExpenseNo"].ToString();
+        Exp.Amount = dt.Rows[0]["Amount"].ToString();
+        Exp.ExpenseDate = dt.Rows[0]["ExpenseDate"].ToString();
+        Exp.Description = dt.Rows[0]["ExpenseDesc"].ToString();
+        Exp.Type = dt.Rows[0]["ExpenseType"].ToString();
+        Exp.ReceiptNumber = dt.Rows[0]["ReceiptNo"].ToString();
+        Exp.ModifiedBy = dt.Rows[0]["AddedBy"].ToString();
+        Exp.ModifiedOn = dt.Rows[0]["AddedOn"].ToString();
+        Exp.StatusCode = Globals.SUCCESS_STATUS_CODE;
+        Exp.StatusDesc = Globals.SUCCESS_STATUS_TEXT;
+        return Exp;
+    }
+
     public Result SaveInterestSetting(SystemUser user,SystemSetting setting)
     {
         Result res = new Result();
@@ -177,27 +216,40 @@ public class BusinessLogic
 
         Result result = new Result();
         try
-        {
-            //http://192.168.23.15:5099/MailApi/Messenger.asmx?WSDL
-            InterConnect.MailApi.Messenger mailApi = new InterConnect.MailApi.Messenger();
-            InterConnect.MailApi.Email email = new InterConnect.MailApi.Email();
-            email.From = "lensh.finance@gmail.com";
-            email.Subject = "LENSH LOAN SYSTEM USER CREDENTIALS";
-            email.Message = "Hi " + user.Name + "<br/>" +
+        {   //smtp creds
+            int smtpPort = 587;
+            string smtpServer = "smtp.gmail.com";
+            const string smtpPassword = "0701081899";
+            const string smtpUsername = "timothykasaga@gmail.com";
+            //email.From = "lensh.finance@gmail.com";
+
+            //BUILD EMAIL
+            MailMessage message = new MailMessage();
+            message.To.Clear();
+            message.To.Add(user.Email);
+            message.Subject = "LENSH LOAN SYSTEM USER CREDENTIALS";
+            message.Body = "Hi " + user.Name + "<br/>" +
                             "Your Credentials for The LENSH LOAN System are Below<br/>" +
                             "UserId: " + user.UserId + "<br/>" +
                             "Password: " + Password + "<br/>" +
                             "Role: " + UserType + "<br/>" +
                             "Thank you. <br/>";
-            InterConnect.MailApi.EmailAddress address = new InterConnect.MailApi.EmailAddress();
-            address.Address = user.Email;
-            address.AddressType = InterConnect.MailApi.EmailAddressType.To;
-            address.Name = user.Name;
+            message.IsBodyHtml = true;
+            message.From = new MailAddress(smtpUsername);
 
-            email.MailAddresses = new InterConnect.MailApi.EmailAddress[] { address };
-            InterConnect.MailApi.Result resp = mailApi.PostEmail(email);
-            result.StatusCode = resp.StatusCode;
-            result.StatusDesc = resp.StatusDesc;
+            NetworkCredential cred = new NetworkCredential(smtpUsername, smtpPassword);
+            SmtpClient mailClient = new SmtpClient(smtpServer, smtpPort);
+            mailClient.EnableSsl = true;
+            mailClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+            mailClient.UseDefaultCredentials = false;
+            mailClient.Timeout = 450000;
+            mailClient.Credentials = cred;
+
+            //SEND EMAIL
+            mailClient.Send(message);
+
+            result.StatusCode = Globals.SUCCESS_STATUS_CODE;
+            result.StatusDesc = "User Credentials Sent Successfully";
         }
         catch (Exception ex)
         {
@@ -205,6 +257,25 @@ public class BusinessLogic
             result.StatusDesc = "EXCEPTION: " + ex.Message;
         }
         return result;
+    }
+
+    public Entity UpdateIncomeExpenseStatus(string CompanyCode, string Type, string RecordNo, string UserID)
+    {
+        Entity Res = new Entity();
+        string [] Params = {CompanyCode, Type, RecordNo, UserID };
+        DataTable dt = Client.ExecuteDataSet("UpdateIncomeExpense",Params).Tables[0];
+
+        if(dt.Rows.Count > 0)
+        {
+            Res.StatusCode = Globals.SUCCESS_STATUS_CODE;
+            Res.StatusDesc = Globals.SUCCESS_STATUS_TEXT;
+        }
+        else
+        {
+            Res.StatusCode = "100";
+            Res.StatusDesc = "RECORD NOT DELETED";
+        }
+        return Res;
     }
 
     public Result SendCredentialsToClientUser(ClientDetails user, string Password)
@@ -2266,27 +2337,6 @@ public string SendMailMessageWithAttachment(SystemUser user)
         DataTable dt = Client.ExecuteDataSet("GetUserRoleCode", Params).Tables[0];
         RoleCode = dt.Rows[0]["RoleCode"].ToString();
         return RoleCode;
-    }
-
-    public Result AddEditedUserToTable(SystemUser Details, string AddedBy)
-    {
-        Result Res = new Result();
-        try
-        {
-            string[] Params = { Details.CompanyCode, Details.Name, Details.RoleCode, Details.Email, Details.IsActive, Details.ModifiedBy};
-            DataTable dt = Client.ExecuteDataSet("SaveSystemUsersToEdit", Params).Tables[0];
-            Res.LoanID = dt.Rows[0]["InsertedID"].ToString();
-            Res.StatusCode = Globals.SUCCESS_STATUS_CODE;
-            Res.StatusDesc = Globals.SUCCESS_STATUS_TEXT;
-        }
-        catch (Exception ex)
-        {
-            Res.StatusCode = "100";
-            Res.StatusDesc = "FAILED: INTERNAL ERROR WHEN TRYING TO EDIT USER DETAILS";
-            LogError(Details.CompanyCode, "", "ADD-EDITEDUSER" + ex.Message, "EXCEPTION", "", "");
-        }
-        
-        return Res;
     }
 
 }

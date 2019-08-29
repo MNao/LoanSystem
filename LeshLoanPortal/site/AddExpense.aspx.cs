@@ -1,6 +1,7 @@
 ﻿using InterConnect.LeshLaonApi;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -26,8 +27,8 @@ public partial class AddExpense : System.Web.UI.Page
 
 
                 string UserID = Request.QueryString["UserID"];
-                string BankCode = Request.QueryString["BankCode"];
-                string UserType = Request.QueryString["UserType"];
+                string CompanyCode = Request.QueryString["CompanyCode"];
+                string ExpenseID = Request.QueryString["ExpenseID"];
                 string Type = Request.QueryString["Type"];
                 string Status = Request.QueryString["Status"];
                 LoadData();
@@ -36,9 +37,9 @@ public partial class AddExpense : System.Web.UI.Page
                     //string UserCode = Encryption.encrypt.DecryptString(Request.QueryString["transferid"].ToString(), "25011Pegsms2322");
                     //LoadControls(UserCode);
                 }
-                else if (!string.IsNullOrEmpty(UserID))
+                else if (!string.IsNullOrEmpty(ExpenseID))
                 {
-                    //LoadEntityData(UserID, BankCode, UserType, Type, Status);
+                    LoadEntityData(CompanyCode, ExpenseID);
                 }
             }
         }
@@ -48,13 +49,34 @@ public partial class AddExpense : System.Web.UI.Page
         }
     }
 
+    private void LoadEntityData(string CompanyCode, string ExpenseNo)
+    {
+        btnSubmit.Visible = false;
+        btnEdit.Visible = true;
+        Expense Exp = bll.GetExpense(CompanyCode, ExpenseNo);
+        //ddCompany.SelectedItem.Text = Inc.CompanyCode;
+        txtExpNo.Text = Exp.ExpenseID;
+        txtAmount.Text = Exp.Amount;
+        txtExpDate.Text = Exp.ExpenseDate;
+        txtExpDesc.Text = Exp.Description;
+        txtExpType.Text = Exp.Type;
+        txtReceipt.Text = Exp.ReceiptNumber;
+
+        txtExpNo.Enabled = false;
+        //txtAmount.Enabled = false;
+        //txtExpDate.Enabled = false;
+        //txtExpDesc.Enabled = false;
+        //txtExpType.Enabled = false;
+
+    }
+
     private void LoadData()
     {
         txtExpNo.Text = bll.GenerateSystemCode("EXP");
         txtExpNo.Enabled = false;
         btnEdit.Visible = false;
     }
-
+    
     private void ShowMessage(string Message, bool Error)
     {
         Label lblmsg = (Label)Master.FindControl("lblmsg");
@@ -99,6 +121,7 @@ public partial class AddExpense : System.Web.UI.Page
                 Clear_contrls();
                 //bll.InsertIntoAuditLog("USER-CREATION", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER CREATED SUCCESSFULLY");
                 //MultiView1.SetActiveView(LoanDetails);
+                Response.Redirect("AddExpense.aspx");
 
             }
 
@@ -172,6 +195,40 @@ public partial class AddExpense : System.Web.UI.Page
 
     protected void btnEdit_Click(object sender, EventArgs e)
     {
+        try
+        {
+            Expense Exp = GetExpenseDetails();
+            //validate Injection details input
+            string check_status = validate_input(Exp.Amount, Exp.ExpenseDate, Exp.Description, Exp.Type, Exp.ReceiptNumber);
 
+
+            if (!check_status.Equals("OK"))
+            {
+                ShowMessage(check_status, true);
+            }
+            else
+            {
+                //save client additional details
+                Result user_save = Client.SaveExpense(Exp);
+
+                if (user_save.StatusCode != "0")
+                {
+                    //MultiView2.ActiveViewIndex = 0;
+                    ShowMessage(user_save.StatusDesc, true);
+                    return;
+                }
+                ShowMessage("EXPENSE DETAILS EDITED SUCCESSFULLY", false);
+                Clear_contrls();
+                //bll.InsertIntoAuditLog("USER-CREATION", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER CREATED SUCCESSFULLY");
+                //MultiView1.SetActiveView(LoanDetails);
+                Response.Redirect("AddExpense.aspx");
+
+            }
+
+        }
+        catch (Exception ex)
+        {
+
+        }
     }
 }
