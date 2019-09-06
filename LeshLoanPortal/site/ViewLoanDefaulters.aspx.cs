@@ -10,7 +10,7 @@ using System.IO;
 using InterConnect.LeshLaonApi;
 using Ionic.Zip;
 
-public partial class ViewLoanPayments : Page
+public partial class ViewLoanDefaulters : Page
 {
 
     FileUpload uploadedFile;
@@ -36,7 +36,11 @@ public partial class ViewLoanPayments : Page
             {
                 LoadEntityData(LoanID);
             }
-            
+            else
+            {
+                LoadData();
+            }
+
             //LoadMessageTemplates();
 
         }
@@ -46,21 +50,18 @@ public partial class ViewLoanPayments : Page
         }
     }
 
+    private void LoadData()
+    {
+        bll.LoadCompanysIntoDropDownALL(user, ddCompany);
+        SearchDB();
+    }
+
     protected void LoadEntityData(string LoanID)
     {
         //bll.LoadAgentsIntopDropDown(user, ddAgents);
         txtLoanNo.Text = LoanID;
         txtLoanNo.Enabled = false;
-
-        if (user.RoleCode == "003")
-        {
-            ddStatus.SelectedItem.Value = "PENDING";
-        }
-        else if (user.RoleCode == "004")
-        {
-            
-            //CEOSelect.Visible = false;
-        }
+        
         SearchDB();
     }
 
@@ -99,7 +100,7 @@ public partial class ViewLoanPayments : Page
     public void SearchDB()
     {
         string[] Params = GetSearchParameters();
-        DataTable dt = bll.SearchLoanPayments(Params);
+        DataTable dt = bll.SearchLoanDefaulters(Params);
         if (dt.Rows.Count > 0)
         {
             dataGridResults.DataSource = dt;
@@ -123,17 +124,21 @@ public partial class ViewLoanPayments : Page
     private string[] GetSearchParameters()
     {
         List<string> searchCriteria = new List<string>();
+        string CompanyCode = ddCompany.SelectedValue.ToString();
+        string ClientID = txtClientNo.Text.Trim();
         string LoanID = txtLoanNo.Text.Trim();
         string UserId = user.UserId;
-        string Status = ddStatus.SelectedValue;
-        string StartDate = txtStartDate.Text;
-        string EndDate = txtEndDate.Text;
-        
+        //string Status = ddStatus.SelectedValue;
+        //string StartDate = txtStartDate.Text;
+        //string EndDate = txtEndDate.Text;
+
+        searchCriteria.Add(CompanyCode);
+        searchCriteria.Add(ClientID);
         searchCriteria.Add(LoanID);
         searchCriteria.Add(UserId);
-        searchCriteria.Add(Status);
-        searchCriteria.Add(StartDate);
-        searchCriteria.Add(EndDate);
+        //searchCriteria.Add(Status);
+        //searchCriteria.Add(StartDate);
+        //searchCriteria.Add(EndDate);
         return searchCriteria.ToArray();
     }
 

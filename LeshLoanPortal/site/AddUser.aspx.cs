@@ -197,7 +197,7 @@ public partial class AddUser : System.Web.UI.Page
         SystemUser Details = new SystemUser();
 
             Details.CompanyCode = user.CompanyCode;
-            Details.UserId = txtUserID.Text.Trim();
+            Details.UserId = txtemail.Text.Trim();
             string fname = txtfname.Text.Trim();
             string lname = txtlname.Text.Trim();
             Details.Name = String.Concat(fname,' ', lname);
@@ -214,7 +214,7 @@ public partial class AddUser : System.Web.UI.Page
         SystemUser Details = new SystemUser();
 
         Details.CompanyCode = user.CompanyCode;
-        Details.UserId = txtemail.Text.Trim();
+        Details.UserId = txtUserID.Text.Trim();
         string fname = txtfname.Text.Trim();
         string lname = txtlname.Text.Trim();
         Details.Name = String.Concat(fname, ' ', lname);

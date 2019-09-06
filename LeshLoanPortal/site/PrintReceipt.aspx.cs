@@ -52,7 +52,7 @@ public partial class PrintReceipt : System.Web.UI.Page
 
         Receipt receipt = result as Receipt;
 
-        //string[] clientDetails = GetClientNameByCode(receipt.CompanyCode, ClientCode);
+        string[] clientDetails = GetClientNameByCode(receipt.CompanyCode, ClientCode);
         //string ClientName = clientDetails[0];
         string pdfFile = "E:\\Projects\\LeshLoanSystem\\LeshLoanPortal\\site\\Receipts\\" + ClientName + " Receipt.pdf";
         //string pdfFile = "C:\\Users\\MNO\\Desktop\\application\\apps\\Receipts\\Reciept.pdf";
@@ -84,9 +84,27 @@ public partial class PrintReceipt : System.Web.UI.Page
         //GenerateReceipt.ExportToHttpResponse
         //   (CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, Response, true, "PersonDetails");
 
-        //string mail = clientDetails[1];
-        //sendMail(mail, pdfFile);
+        string mail = clientDetails[1];
+        sendMail(mail, pdfFile);
         //MultiView1.SetActiveView(reportview);
+    }
+
+    private string[] GetClientNameByCode(string CompanyCode, string clientCode)
+    {
+        List<string> ClientDetails = new List<string>();
+        ClientDetails result = bll.GetClientDetails(user, clientCode);//api.GetById(CompanyCode, "CLIENTORSUPPLIER", clientCode);
+        if (result.StatusCode != Globals.SUCCESS_STATUS_CODE)
+        {
+            ClientDetails.Add("N/A");
+            return ClientDetails.ToArray();
+        }
+
+        //ClientDetails client = result as ClientDetails;
+        string Name = result.ClientName;
+        string Email = result.ClientEmail;
+        ClientDetails.Add(Name);
+        ClientDetails.Add(Email);
+        return ClientDetails.ToArray();
     }
 
     public Result sendMail(string mail, string pdfFile)
@@ -98,7 +116,7 @@ public partial class PrintReceipt : System.Web.UI.Page
             InterConnect.MailApi.Messenger mailApi = new InterConnect.MailApi.Messenger();
             InterConnect.MailApi.Email email = new InterConnect.MailApi.Email();
             InterConnect.MailApi.Attachment attachment = new InterConnect.MailApi.Attachment();
-            email.From = "notifications@pegasustechnologies.co.ug";
+            email.From = "lenshfinance@gmail.com";
             email.Subject = "CUSTOMER RECEIPT";
             email.Message = "Customer Receipt uptil " + DateTime.Now.ToString();
             InterConnect.MailApi.EmailAddress address = new InterConnect.MailApi.EmailAddress();

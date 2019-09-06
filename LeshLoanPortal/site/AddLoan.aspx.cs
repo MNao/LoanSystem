@@ -82,7 +82,7 @@ public partial class AddLoan : System.Web.UI.Page
     
     public void LoadData()
     {
-
+        ClientDetailsBtn.BackColor = System.Drawing.Color.LightSkyBlue;
         if (user.RoleCode != "001")
         {
             ddClientNo.SelectedItem.Value = user.UserId;
@@ -100,33 +100,6 @@ public partial class AddLoan : System.Web.UI.Page
         ListItemCollection ClientSearch = bll.GetClientSearchDetails(txtSearch.Text);
         ListView lvItem = new ListView();
         
-        //ddlSearch.Items.Add(ClientSearch.ToString());
-        //ddlSearch.Items.Add(new ListItem(ClientSearch));
-
-        //if (txtSearch.Text != "")
-        //{
-        //    foreach (ListViewItem item in listView1.Items)
-        //    {
-        //        if (item.Text.ToLower().Contains(txtSearch.Text.ToLower()))
-        //        {
-        //            item.Selected = true;
-        //        }
-        //        else
-        //        {
-        //            listView1.Items.Remove(item);
-        //        }
-
-        //    }
-        //    if (listView1.SelectedItems.Count == 1)
-        //    {
-        //        listView1.Focus();
-        //    }
-        //}
-        //else
-        //{
-        //    //LoadContacts();
-        //    //RefreshAll();
-        //}
     }
 
     protected void ddClientNoSelectedIndexChanged(object sender, EventArgs e)
@@ -218,8 +191,12 @@ public partial class AddLoan : System.Web.UI.Page
             ShowMessage("ADDITIONAL DETAILS SAVED SUCCESSFULLY", false);
             //Clear_contrls();
             //bll.InsertIntoAuditLog("USER-CREATION", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER CREATED SUCCESSFULLY");
-            MultiView1.SetActiveView(LoanDetails);
-            txtLoanNo.Text = bll.GenerateSystemCode("LOAN");
+                MultiView1.SetActiveView(LoanDetails);
+                LoanDetailsBtn.BackColor = System.Drawing.Color.LightSkyBlue;
+                ClientDetailsBtn.BackColor = System.Drawing.Color.White;
+                CollateralDetailsBtn.BackColor = System.Drawing.Color.White;
+                LoanAgmtBtn.BackColor = System.Drawing.Color.White;
+                txtLoanNo.Text = bll.GenerateSystemCode("LOAN");
 
              SystemSetting setting = bll.GetSystemSettingById("INTEREST_RATE", "Lesh");
              txtInterest.Text = setting.SettingValue;
@@ -295,6 +272,10 @@ public partial class AddLoan : System.Web.UI.Page
     protected void ClientDetailsBtn_Click(object sender, EventArgs e)
     {
         MultiView1.SetActiveView(ClientDetails);
+        ClientDetailsBtn.BackColor = System.Drawing.Color.LightSkyBlue;
+        LoanDetailsBtn.BackColor = System.Drawing.Color.White;
+        CollateralDetailsBtn.BackColor = System.Drawing.Color.White;
+        LoanAgmtBtn.BackColor = System.Drawing.Color.White;
     }
 
     protected void LoanDetailsBtn_Click(object sender, EventArgs e)
@@ -304,10 +285,18 @@ public partial class AddLoan : System.Web.UI.Page
         if (String.IsNullOrEmpty(txtLoanNo.Text))
         {
             MultiView1.SetActiveView(ClientDetails);
+            ClientDetailsBtn.BackColor = System.Drawing.Color.LightSkyBlue;
+            LoanDetailsBtn.BackColor = System.Drawing.Color.White;
+            CollateralDetailsBtn.BackColor = System.Drawing.Color.White;
+            LoanAgmtBtn.BackColor = System.Drawing.Color.White;
         }
         else
         {
             MultiView1.SetActiveView(LoanDetails);
+            LoanDetailsBtn.BackColor = System.Drawing.Color.LightSkyBlue;
+            ClientDetailsBtn.BackColor = System.Drawing.Color.White;
+            CollateralDetailsBtn.BackColor = System.Drawing.Color.White;
+            LoanAgmtBtn.BackColor = System.Drawing.Color.White;
         }
 
         //LoanDetailsBtn.BackColor = System.Drawing.Color.Blue;
@@ -317,6 +306,10 @@ public partial class AddLoan : System.Web.UI.Page
     protected void CollateralDetailsBtn_Click(object sender, EventArgs e)
     {
         MultiView1.SetActiveView(CollateralView);
+       CollateralDetailsBtn.BackColor = System.Drawing.Color.LightSkyBlue;
+        LoanDetailsBtn.BackColor = System.Drawing.Color.White;
+        ClientDetailsBtn.BackColor = System.Drawing.Color.White;
+        LoanAgmtBtn.BackColor = System.Drawing.Color.White;
     }
 
     protected void LoanAgmtBtn_Click(object sender, EventArgs e)
@@ -331,6 +324,10 @@ public partial class AddLoan : System.Web.UI.Page
     //        MultiView1.SetActiveView(LoanAgmtView);
     //    }
         MultiView1.SetActiveView(LoanAgmtView);
+        LoanAgmtBtn.BackColor = System.Drawing.Color.LightSkyBlue;
+        LoanDetailsBtn.BackColor = System.Drawing.Color.White;
+        ClientDetailsBtn.BackColor = System.Drawing.Color.White;
+        CollateralDetailsBtn.BackColor = System.Drawing.Color.White;
         FillLoanAgreement();
     }
 
@@ -365,6 +362,10 @@ public partial class AddLoan : System.Web.UI.Page
 
                 //redirect to Collateral view
                 MultiView1.SetActiveView(CollateralView);
+                CollateralDetailsBtn.BackColor = System.Drawing.Color.LightSkyBlue;
+                LoanDetailsBtn.BackColor = System.Drawing.Color.White;
+                ClientDetailsBtn.BackColor = System.Drawing.Color.White;
+                LoanAgmtBtn.BackColor = System.Drawing.Color.White;
 
             }
 
@@ -460,8 +461,13 @@ public partial class AddLoan : System.Web.UI.Page
     {
         LoanDetails Loan = GetApprovalLoanDetails();
 
+        if (string.IsNullOrEmpty(Loan.ImageProof))
+        {
+            ShowMessage("Please Provide Guarantoor Proof", true);
+            return;
+        }
         
-        Result Approval_save = bll.SaveLoanApproval(Loan.LoanNo, Loan.Approved, Loan.ApprovedAmount, Loan.ModifiedBy, Loan.MonthsToPayIn, Loan.EasyPaidAmountPerMonth, Loan.ImageProof);
+        Result Approval_save = bll.SaveLoanApproval(Loan.LoanNo, Loan.Approved, Loan.ApprovedAmount, Loan.ModifiedBy, Loan.MonthsToPayIn, Loan.EasyPaidAmountPerMonth, Loan.ImageProof, Loan.Observations);
 
         if (Approval_save.StatusCode != "0")
         {
@@ -489,6 +495,7 @@ public partial class AddLoan : System.Web.UI.Page
         ApprovalLoanDetails.MonthsToPayIn = txtMonths.Text;
         ApprovalLoanDetails.ModifiedBy = user.UserId;
         ApprovalLoanDetails.ImageProof = bll.GetImageUploadedInBase64String(ImgGuarantor);
+        ApprovalLoanDetails.Observations = txtComment.Text;
         return ApprovalLoanDetails;
     }
 
@@ -525,6 +532,10 @@ public partial class AddLoan : System.Web.UI.Page
 
                 //redirect to loan aggreement
                 MultiView1.SetActiveView(LoanAgmtView);
+                LoanAgmtBtn.BackColor = System.Drawing.Color.LightSkyBlue;
+                LoanDetailsBtn.BackColor = System.Drawing.Color.White;
+                ClientDetailsBtn.BackColor = System.Drawing.Color.White;
+                CollateralDetailsBtn.BackColor = System.Drawing.Color.White;
                 FillLoanAgreement();
 
             }

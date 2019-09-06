@@ -106,7 +106,7 @@
             <div class="row text-center" style="padding: 10px;">
                 <div class="col-md-6">
                     <input id="Button3" accesskey="P" class="btn btn-success" onclick="printDocument()"
-                        value="Print Schedule" />
+                        value="Print Summary" />
                 </div>
                 <div class="col-md-6">
                     <a href="ApproveLoan.aspx">
@@ -158,7 +158,7 @@
                             <div class="text-center">
                                 <CR:CrystalReportViewer ID="CrystalReportViewer1" runat="server" AutoDataBind="True" GroupTreeImagesFolderUrl="" Height="1202px" ReportSourceID="PaymentVoucher" ToolbarImagesFolderUrl="" ToolPanelWidth="200px" Width="1104px" DisplayStatusbar="False" EnableDatabaseLogonPrompt="False" EnableDrillDown="False" EnableParameterPrompt="False" EnableTheming="False" EnableToolTips="False" HasCrystalLogo="False" HasDrilldownTabs="False" HasDrillUpButton="False" HasExportButton="False" HasGotoPageButton="False" HasPageNavigationButtons="False" HasSearchButton="False" HasToggleGroupTreeButton="False" HasToggleParameterPanelButton="False" HasZoomFactorList="False" ToolPanelView="None" />
         <CR:CrystalReportSource ID="PaymentVoucher" runat="server">
-            <report filename="Bin\reports\LoanSummary.rpt">
+            <report filename="Bin\reports\LoanSummary_1.rpt">
             </report>
         </CR:CrystalReportSource>
                             </div>

@@ -40,7 +40,7 @@ public partial class PrintLoanSummary : System.Web.UI.Page
         
         if (LoanSummary.Rows.Count > 0)
         {
-            GenerateLoanSummary.Load(@"E:\Projects\LeshLoanSystem\LeshLoanPortal\site\bin\reports\LoanSummary.rpt");
+            GenerateLoanSummary.Load(@"E:\Projects\LeshLoanSystem\LeshLoanPortal\site\bin\reports\LoanSummary_1.rpt");
             GenerateLoanSummary.SetDataSource(LoanSummary);
             CrystalReportViewer1.ReportSource = GenerateLoanSummary;
         }

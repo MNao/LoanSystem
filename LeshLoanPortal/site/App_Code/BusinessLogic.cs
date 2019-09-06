@@ -219,8 +219,10 @@ public class BusinessLogic
         {   //smtp creds
             int smtpPort = 587;
             string smtpServer = "smtp.gmail.com";
-            const string smtpPassword = "0701081899";
-            const string smtpUsername = "timothykasaga@gmail.com";
+            //const string smtpPassword = "0701081899";
+            //const string smtpUsername = "timothykasaga@gmail.com";
+            const string smtpPassword = "2020mugabe";
+            const string smtpUsername = "omugabe2020@gmail.com";
             //email.From = "lensh.finance@gmail.com";
 
             //BUILD EMAIL
@@ -533,23 +535,14 @@ public string SendMailMessageWithAttachment(SystemUser user)
 
     }
 
-    public Result SaveLoanApproval(string LoanNo, string approved, string approvedAmount, string modifiedBy, string monthsToPayIn, string easyPaidAmountPerMonth, string GuarantorImageApprov)
+    public Result SaveLoanApproval(string LoanNo, string approved, string approvedAmount, string modifiedBy, string monthsToPayIn, string easyPaidAmountPerMonth, string GuarantorImageApprov, string ApproverComment)
     {
         Result result = new Result();
         try
         {
             //InsertIntoAuditLog("PASSWORD CHANGE", "SYSTEMUSERS", CompanyCode, Id, "Changed Password of " + Id);
-            DataTable datatable = Client.ExecuteDataSet("SaveLoanApproval",
-                                                           new string[]
-                                                           {    
-                                                            LoanNo,
-                                                             approved,
-                                                             approvedAmount,
-                                                             monthsToPayIn,
-                                                             easyPaidAmountPerMonth,
-                                                             GuarantorImageApprov,
-                                                             modifiedBy
-                                                           }).Tables[0];
+            string[] Params = { LoanNo, approved, approvedAmount, monthsToPayIn, easyPaidAmountPerMonth, GuarantorImageApprov, ApproverComment, modifiedBy};
+            DataTable datatable = Client.ExecuteDataSet("SaveLoanApprovals", Params).Tables[0];
             //return datatable.Rows[0].ToString();
 
             if (datatable.Rows.Count == 0)
@@ -567,7 +560,8 @@ public string SendMailMessageWithAttachment(SystemUser user)
         }
         catch (Exception ex)
         {
-
+            result.StatusCode = Globals.FAILURE_STATUS_CODE;
+            result.StatusDesc = ex.Message;
         }
         return result;
     }
@@ -1070,20 +1064,35 @@ public string SendMailMessageWithAttachment(SystemUser user)
     public void LoadClientsIntoDropDown(string CompanyCode, string user, DropDownList ddlst)
     {
         string[] parameters = { CompanyCode, user };
-        //DataSet ds = Client.ExecuteDataSet("GetClientsForDropDown", parameters);
-        //DataTable dt = ds.Tables[0];
         DataTable dt = Client.ExecuteDataSet("GetClientsForDropDown", parameters).Tables[0];
-        
+
         ddlst.Items.Clear();
         ddlst.Items.Add(new ListItem("--Select Client--", ""));
         foreach (DataRow dr in dt.Rows)
         {
-            string Text = dr["ClientName"].ToString() +"--"+ dr["ClientNo"].ToString();
+            string Text = dr["ClientName"].ToString() + "--" + dr["ClientNo"].ToString();
             string Value = dr["ClientNo"].ToString();
             ddlst.Items.Add(new ListItem(Text, Value));
         }
-        ddlst.Items.Add(new ListItem("Other", "Other"));
+        ddlst.Items.Add(new ListItem("other", "other"));
     }
+    
+    public List<string> LoadClientsforSearch(string CompanyCode, string SearchValue)
+    {
+        List<string> Clients = new List<string>();
+        string[] parameters = { CompanyCode, SearchValue };
+        DataTable dt = Client.ExecuteDataSet("GetClientName", parameters).Tables[0];
+        
+        
+        foreach (DataRow dr in dt.Rows)
+        {
+            string Text = dr["ClientName"].ToString() +"--"+ dr["ClientNo"].ToString();
+            string Value = dr["ClientNo"].ToString();
+            Clients.Add(Text);
+        }
+        return Clients;
+    }
+
 
     public void LoadClientsAndSuppliersIntoDropDown(string CompanyCode, SystemUser user, DropDownList ddlst)
     {
@@ -1594,6 +1603,11 @@ public string SendMailMessageWithAttachment(SystemUser user)
         return dt;
     }
 
+    public DataTable SearchLoanDefaulters(string[] searchParams)
+    {
+        DataTable dt = Client.ExecuteDataSet("SearchLoanDefaulters", searchParams).Tables[0];
+        return dt;
+    }
 
     public DataTable SearchKYCDetailsToApprove(string[] searchParams)
     {

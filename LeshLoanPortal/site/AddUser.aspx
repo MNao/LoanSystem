@@ -53,12 +53,11 @@
                       <%--<br/><asp:CheckBox ID="chkActive" runat="server" Text=" Is Active" /><br/>--%>
 
                       <asp:MultiView ID="MultiView2" runat="server">
-                        <asp:View ID="View3" runat="server">
-                                    User ID
-                                    <asp:TextBox ID="txtUserID" runat="server" CssClass="form-control"></asp:TextBox>
-                                           
+                        <asp:View ID="View3" runat="server">     
                         </asp:View>
                         <asp:View ID="View2" runat="server">
+                            User ID
+                                    <asp:TextBox ID="txtUserID" runat="server" CssClass="form-control"></asp:TextBox>
                          <br/><asp:CheckBox ID="chkActive" runat="server" Text=" Tick To Activate User Account" /><br/>
                          <br/><asp:CheckBox ID="ChkDeactivate" runat="server" Text="Tick To De-Activate User Account" /><br/>
                          <br/><asp:CheckBox ID="ChkReset" runat="server" Text=" Tick To Reset Password" /> <br/>

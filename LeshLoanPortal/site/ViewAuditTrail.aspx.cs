@@ -7,8 +7,8 @@ using System.Web.UI.WebControls;
 using System.Collections.Generic;
 using System.Web;
 using System.IO;
-using InterConnect.UBAApi;
 using OfficeOpenXml;
+using InterConnect.LeshLaonApi;
 
 public partial class ViewAuditTrail : System.Web.UI.Page
 {
@@ -41,10 +41,8 @@ public partial class ViewAuditTrail : System.Web.UI.Page
 
     protected void LoadData()
     {
-        bll.LoadBanksIntoDropDownALL(user, ddBank);
+        bll.LoadCompanysIntoDropDownALL(user, ddCompany);
         //bll.LoadAgentsIntopDropDown(user, ddAgents);
-        user.BranchCode = "";
-        //bll.LoadBranchesForSearchIntoDropDown(ddBank.SelectedValue, user, ddBranch);
 
         SearchDB();
     }
@@ -108,14 +106,14 @@ public partial class ViewAuditTrail : System.Web.UI.Page
     private string[] GetSearchParameters()
     {
         List<string> searchCriteria = new List<string>();
-        string BankCode = ddBank.SelectedValue.ToString();
+        string CompanyCode = ddCompany.SelectedValue.ToString();
         string table = ddtable.SelectedValue.ToString();
         string UserId = txtUserID.Text;
         //string Status = ddStatus.SelectedValue;
         string StartDate = txtStartDate.Text;
         string EndDate = txtEndDate.Text;
 
-        searchCriteria.Add(BankCode);
+        searchCriteria.Add(CompanyCode);
         searchCriteria.Add(table);
         searchCriteria.Add(UserId);
         searchCriteria.Add(StartDate);
@@ -158,7 +156,7 @@ public partial class ViewAuditTrail : System.Web.UI.Page
     protected void btnExport_Click(object sender, EventArgs e)
     {
         string[] searchParams = GetSearchParameters();
-        DataTable dt = bll.SearchKYCDetailsForreport(searchParams);
+        DataTable dt = bll.SearchAuditTrail(searchParams);
         if (dt.Rows.Count > 0)
         {
             ExcelPackage package = new ExcelPackage();

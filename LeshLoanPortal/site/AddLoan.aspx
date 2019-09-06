@@ -6,10 +6,8 @@
  <%@ Import
   Namespace="System.Threading" %>
 
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-
-
+   
     <ajaxToolkit:ToolkitScriptManager runat="Server" EnableScriptGlobalization="true"
         EnableScriptLocalization="true" ID="ScriptManager1" />
 
@@ -67,16 +65,9 @@
                         </asp:DropDownList></div>
                     <div class="col-sm-6">   
                         Search
-                        <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control" AutoCompleteMode="" AutoPostBack="true" onkeyup="GetClient(this.value);" OnTextChanged="txtSearch_TextChanged"></asp:TextBox>
-                        <asp:ListView ID="listView1" runat="server"></asp:ListView>
-                        <asp:UpdatePanel ID="Update" runat="server">
-                            <ContentTemplate>
-                                <asp:DropDownList runat="server" ID="ddlSearch" />
-                            </ContentTemplate>
-                            <Triggers>
-                                <asp:AsyncPostBackTrigger ControlID="txtSearch" />
-                            </Triggers>
-                        </asp:UpdatePanel>
+                        <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control"></asp:TextBox>
+                        
+                        
                     </div>
                         </div>
                       Client Name
@@ -146,18 +137,16 @@
                     <div class="modal-footer">
                         <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="SUBMIT DETAILS"  OnClick="btnSubmit_Click" />
                     </div>
+                    
+                    
                     <script type="text/javascript">
-                        function GetClient(value) {
-                            $.ajax({
-                                type: "GET",
-                                url: "AddLoan.aspx",
-                                data: { 'search_keyword': value },
-                                dataType: "text",
-                                success: function (msg) {
-                                    //Receiving the result of search here
-                                }
+
+                        $(document).ready(function () {
+                            $("#txtSearch").autocomplete({
+                                source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"]
+                                //source: 'GetClientName.ashx'
                             });
-                        }
+                        });
                     </script>
                 </div>
                     
@@ -208,6 +197,9 @@
 
                              Proof from Guarantor
                       <asp:FileUpload ID="ImgGuarantor" runat="server" CssClass="form-control"/>
+
+                            Approver's Comment
+                      <asp:TextBox ID="txtComment" runat="server" Textmode="MultiLine" Columns="5" Rows="2" CssClass="form-control"></asp:TextBox>
                         </div>
                        <%-- 
                       How much can you easily pay per month
