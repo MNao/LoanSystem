@@ -6,7 +6,7 @@
  <%@ Import
   Namespace="System.Threading" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Content ID="ContentPlaceHolder1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
    
     <ajaxToolkit:ToolkitScriptManager runat="Server" EnableScriptGlobalization="true"
         EnableScriptLocalization="true" ID="ScriptManager1" />
@@ -24,21 +24,6 @@
         </div>
         <div class="card-body">
             <div class="row clearfix">
-
-<%--               
-                <asp:Menu  
-                  ID="menuTabs"  
-                  Orientation="Horizontal"  
-                  Width="100%"  
-                  runat="server" 
-                   OnMenuItemClick="menuTabs_MenuItemClick" 
-                  >  
-                  <Items>  
-                      <asp:MenuItem Text="Employee Info" Value="0" Selected="true"/>  
-                      <asp:MenuItem Text="Contact Info" Value="1" />  
-                      <asp:MenuItem Text="Salary Info" Value="2" />  
-                  </Items>  
-              </asp:Menu> --%>
                 <div class="col-lg-12" style=" padding-bottom: 20px;">
                 <ul class="nav nav-tabs nav-justified" >
                         <li id="ClientDetailsLink" runat="server" class="nav-item">
@@ -57,16 +42,15 @@
                 <div class="modal-content col-md-6  col-sm-6 col-xs-10"  style="margin:0 auto;">
 		            <div class="modal-body">
                         <div class="row">
-                        <div class="col-sm-6">
+                        <%--<div class="col-sm-6">
                         Client Number
                         <asp:DropDownList runat="server" ID="ddClientNo" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddClientNoSelectedIndexChanged">
                             <asp:ListItem>YES</asp:ListItem>
                             <asp:ListItem>NO</asp:ListItem>
-                        </asp:DropDownList></div>
+                        </asp:DropDownList></div>--%>
                     <div class="col-sm-6">   
                         Search
-                        <asp:TextBox ID="txtSearch" runat="server" CssClass="form-control"></asp:TextBox>
-                        
+                        <asp:TextBox ID="txtSearch" runat="server" ClientIdMode="Static" CssClass="form-control" OnTextChanged="txtSearch_TextChanged"></asp:TextBox>
                         
                     </div>
                         </div>
@@ -75,7 +59,7 @@
                        
                         
                       Date Of Birth
-                      <asp:TextBox ID="txtBirthDate" runat="server"  CssClass="form-control"  placeholder="Date of Birth"></asp:TextBox>
+                      <asp:TextBox ID="txtBirthDate" runat="server"  CssClass="form-control" AutoComplete="off"  placeholder="Date of Birth"></asp:TextBox>
 
                       Gender
                                             <asp:DropDownList ID="ddGender" runat="server" CssClass="form-control">
@@ -88,31 +72,31 @@
                       <asp:TextBox ID="txtNameofReferee" runat="server" CssClass="form-control"  placeholder="Referee Name"></asp:TextBox>
                         
                       Business Location
-                      <asp:TextBox ID="txtBusLoc" runat="server" CssClass="form-control"  placeholder="Client's Business Location"></asp:TextBox>
+                      <asp:TextBox ID="txtBusLoc" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Client's Business Location"></asp:TextBox>
 
                       Occupation
-                      <asp:TextBox ID="txtOccup" runat="server" CssClass="form-control"  placeholder="Client's Location"></asp:TextBox>
+                      <asp:TextBox ID="txtOccup" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Client's Location"></asp:TextBox>
 
                     Monthly Income
-                      <asp:TextBox ID="txtMonthlyInc" runat="server" CssClass="form-control"  placeholder="Client's Monthly Income" onkeyup="javascript:this.value=Comma(this.value);"></asp:TextBox>
+                      <asp:TextBox ID="txtMonthlyInc" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Client's Monthly Income" onkeyup="javascript:this.value=Comma(this.value);"></asp:TextBox>
                         
                       ID Number
-                      <asp:TextBox ID="txtIDNumber" runat="server" CssClass="form-control" placeholder="Identification Number"></asp:TextBox>
+                      <asp:TextBox ID="txtIDNumber" runat="server" AutoComplete="off" CssClass="form-control" placeholder="Identification Number"></asp:TextBox>
                         
                       Mobile No. Own
-                      <asp:TextBox ID="txtMobileNo" runat="server" CssClass="form-control"  placeholder="Client's Own Mobile Number"></asp:TextBox>
+                      <asp:TextBox ID="txtMobileNo" runat="server" CssClass="form-control" AutoComplete="off"  placeholder="Client's Own Mobile Number"></asp:TextBox>
 
                       Email
-                      <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control"  placeholder="Client's Email"></asp:TextBox>
+                      <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" AutoComplete="off"  placeholder="Client's Email"></asp:TextBox>
                         
                       Home Address
-                      <asp:TextBox ID="txtHomeAddress" runat="server" CssClass="form-control"  placeholder="Client's Home Address"></asp:TextBox>
+                      <asp:TextBox ID="txtHomeAddress" runat="server" CssClass="form-control" AutoComplete="off"  placeholder="Client's Home Address"></asp:TextBox>
 
                       Number of Beneficials
-                      <asp:TextBox ID="txtBenf" runat="server" CssClass="form-control"  placeholder="How many Beneficials"></asp:TextBox>
+                      <asp:TextBox ID="txtBenf" runat="server" CssClass="form-control" AutoComplete="off"  placeholder="How many Beneficials"></asp:TextBox>
                         
                       Education Level
-                      <asp:TextBox ID="txtEduc" runat="server" CssClass="form-control"  placeholder="Education Level"></asp:TextBox>
+                      <asp:TextBox ID="txtEduc" runat="server" CssClass="form-control" AutoComplete="off"  placeholder="Education Level"></asp:TextBox>
 
                       <%--Vendor
                       <asp:DropDownList ID="ddlAreas" runat="server" OnDataBound="ddlAreas_DataBound" CssClass="form-control">
@@ -138,16 +122,6 @@
                         <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="SUBMIT DETAILS"  OnClick="btnSubmit_Click" />
                     </div>
                     
-                    
-                    <script type="text/javascript">
-
-                        $(document).ready(function () {
-                            $("#txtSearch").autocomplete({
-                                source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"]
-                                //source: 'GetClientName.ashx'
-                            });
-                        });
-                    </script>
                 </div>
                     
                 <ajaxToolkit:CalendarExtender ID="CalendarExtender1" runat="server" CssClass="cal_Theme1"

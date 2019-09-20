@@ -1,12 +1,8 @@
 ﻿<%@ WebHandler Language="C#" Class="GetClientName" %>
 
-using System;
 using System.Web;
 using System.Collections.Generic;
 using InterConnect.LeshLaonApi;
-using System.Linq;
-using System.Configuration;
-using System.Data;
 using System.Web.Script.Serialization;
 
 public class GetClientName : IHttpHandler {
@@ -14,13 +10,11 @@ public class GetClientName : IHttpHandler {
     BusinessLogic bll = new BusinessLogic();
 
     public void ProcessRequest (HttpContext context) {
-
-
         //context.Response.ContentType = "text/plain";
         //context.Response.Write("Hello World");
-
-        string CompanyCode = context.Request["CompanyCode"] ?? "";
-        string Name = context.Request["Name"];
+        
+        string Name = context.Request["term"];
+        string CompanyCode = "";
         List<string> ClientNames = bll.LoadClientsforSearch(CompanyCode,Name);
 
         JavaScriptSerializer js = new JavaScriptSerializer();

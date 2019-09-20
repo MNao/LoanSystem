@@ -26,10 +26,20 @@
     <!-- Custom styles for this template -->
     <link href="css/sb-admin.css" rel="stylesheet" type="text/css"/>
     <link href="css/jquery-ui.css" type="text/css" rel="stylesheet"/>
-       
-       
-       <script src="js/jquery-1.11.js" type="text/javascript"></script>
-       <script src="js/jquery-ui.js" type="text/javascript"></script>
+    
+     <script src="js/jquery-1.11.js" type="text/javascript"></script>
+     <script src="js/jquery-ui.js" type="text/javascript"></script>
+
+                    <script type="text/javascript">
+
+                        $(document).ready(function () {
+                            $("#txtSearch").autocomplete({
+                                minLength: 3,
+                                //source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"]
+                                source: 'GetClientName.ashx'
+                            });
+                        });
+                    </script>
         
   </head>
 <body class="fixed-nav sticky-footer " id="page-top">
@@ -185,13 +195,13 @@
                    <% if (Session["RoleCode"].ToString() == "001" || Session["RoleCode"].ToString() == "002")
     {%>
 				  <li>
-					<a href="ViewKYCReports.aspx"><i class="fa fa-caret-right"></i> Client Report</a>
+					<a href="ViewClientReport.aspx"><i class="fa fa-caret-right"></i> Client Report</a>
 				  </li>
                     <li>
 					<a href="ViewLoanPayments.aspx"><i class="fa fa-caret-right"></i>Loan Payment Report</a>
 				  </li>
                     <li>
-					<a href="ViewLoanDefaulters.aspx"><i class="fa fa-caret-right"></i>Loan Defaulters Report</a>
+					<a href="ViewLoanDefaulters.aspx"><i class="fa fa-caret-right"></i>Loan Due/Defaulters</a>
 				  </li>
                    <%}%>
                    <% if (Session["RoleCode"].ToString() == "001" || Session["RoleCode"].ToString() == "002")
@@ -308,7 +318,7 @@
         <asp:Label ID="lblmsg" runat="server" Font-Bold="True" Font-Names="Courier New" ForeColor="Red" Text=""></asp:Label>
         <div class="row">
             
-             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" ClientIDMode="Static" runat="server">
             </asp:ContentPlaceHolder>  
             <asp:Label ID="lblMainStatus" runat="server" Text="0" Visible="False"></asp:Label>
         </div>

@@ -56,7 +56,7 @@ namespace InterConnect.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:53722/LeshLoanAPI.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://leontymo-001-site2.itempurl.com/LeshLoanAPI.asmx")]
         public string InterConnect_UBAApi_UBAKYCAPI {
             get {
                 return ((string)(this["InterConnect_UBAApi_UBAKYCAPI"]));

@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterMain.master" AutoEventWireup="true" CodeFile="ApproveLoan.aspx.cs" Inherits="ApproveLoan" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Content ID="ContentPlaceHolder1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <%--<%@ Register 
  Assembly="AjaxControlToolkit" 
  Namespace="AjaxControlToolkit" 
@@ -31,7 +31,8 @@
                 <label>
                     Client Number
                 </label>
-                <asp:TextBox ID="txtClientNo" runat="server" CssClass="form-control"></asp:TextBox>
+                <%--<asp:TextBox ID="txtClientNo" runat="server" CssClass="form-control"></asp:TextBox>--%>
+                <asp:TextBox ID="txtSearch" runat="server" ClientIdMode="Static" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="col-lg-2">
                 <label>

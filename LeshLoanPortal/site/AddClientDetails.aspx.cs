@@ -120,7 +120,11 @@ public partial class AddClientDetails : System.Web.UI.Page
         try
         {
             InterConnect.LeshLaonApi.ClientDetails clientDet = GetClientDetails();
-
+            if(string.IsNullOrEmpty(clientDet.ClientPhoto) || string.IsNullOrEmpty(clientDet.IDPhoto))
+            {
+                ShowMessage("Please Upload Photo(s)", true);
+                return;
+            }
             string Password = clientDet.ClientPassword;
             clientDet.ClientPassword = SharedCommons.GenerateUserPassword(clientDet.ClientPassword);
             Result client_save = Client.SaveClientDetails(clientDet);

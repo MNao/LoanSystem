@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Results>
-    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.DiscoveryDocumentReference" url="http://localhost:53722/LeshLoanAPI.asmx?disco" filename="LeshLoanAPI.disco" />
-    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://localhost:53722/LeshLoanAPI.asmx?wsdl" filename="LeshLoanAPI.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://leontymo-001-site2.itempurl.com/LeshLoanAPI.asmx?wsdl" filename="LeshLoanAPI.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.DiscoveryDocumentReference" url="http://leontymo-001-site2.itempurl.com/LeshLoanAPI.asmx?disco" filename="LeshLoanAPI.disco" />
   </Results>
 </DiscoveryClientResultsFile>

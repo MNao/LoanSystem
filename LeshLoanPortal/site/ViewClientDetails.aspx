@@ -40,21 +40,19 @@
                     <asp:ListItem Value="">--Select Status--</asp:ListItem>
                     <asp:ListItem Value="PENDING">PENDING</asp:ListItem>
                      <asp:ListItem Value="VERIFIED">VERIFIED</asp:ListItem>
-                    <asp:ListItem Value="APPROVED">APPROVED</asp:ListItem>
-                     <asp:ListItem Value="REJECTED">REJECTED</asp:ListItem>
                 </asp:DropDownList>
             </div>
             <div class="col-lg-2">
                 <label>
                     Start Date
                 </label>
-                <asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" placeholder="Select Date" />
+                <asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" AutoComplete="Off" placeholder="Select Date" />
             </div>
             <div class="col-lg-2">
                 <label>
                     End Date
                 </label>
-                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" placeholder="Select Date"/>
+                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" AutoComplete="Off" placeholder="Select Date"/>
             </div>
             <div class="col-lg-2" style="padding-top: 15px;">
             

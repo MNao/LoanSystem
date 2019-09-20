@@ -48,6 +48,7 @@ public partial class ApproveLoan : Page
         {
             ddStatus.SelectedItem.Value = "PENDING";
         }
+        txtSearch.Text = " - ";
         SearchDB();
     }
 
@@ -110,7 +111,7 @@ public partial class ApproveLoan : Page
     private string[] GetSearchParameters()
     {
         List<string> searchCriteria = new List<string>();
-        string ClientNo = txtClientNo.Text.Trim();
+        string ClientNo = txtSearch.Text.Split('-')[1];
         string UserId = user.UserId;
         string Status = ddStatus.SelectedValue;
         string StartDate = txtStartDate.Text;

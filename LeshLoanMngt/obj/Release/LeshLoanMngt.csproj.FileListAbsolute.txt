@@ -1,0 +1,9 @@
+E:\Projects\LeshLoanSystem\LeshLoanMngt\bin\Release\LeshLoanMngt.dll.config
+E:\Projects\LeshLoanSystem\LeshLoanMngt\bin\Release\LeshLoanMngt.dll
+E:\Projects\LeshLoanSystem\LeshLoanMngt\bin\Release\LeshLoanMngt.pdb
+E:\Projects\LeshLoanSystem\LeshLoanMngt\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+E:\Projects\LeshLoanSystem\LeshLoanMngt\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+E:\Projects\LeshLoanSystem\LeshLoanMngt\bin\Release\Microsoft.Practices.ObjectBuilder.dll
+E:\Projects\LeshLoanSystem\LeshLoanMngt\obj\Release\LeshLoanMngt.csprojResolveAssemblyReference.cache
+E:\Projects\LeshLoanSystem\LeshLoanMngt\obj\Release\LeshLoanMngt.dll
+E:\Projects\LeshLoanSystem\LeshLoanMngt\obj\Release\LeshLoanMngt.pdb

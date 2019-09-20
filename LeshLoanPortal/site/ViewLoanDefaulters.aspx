@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterMain.master" AutoEventWireup="true" CodeFile="ViewLoanDefaulters.aspx.cs" Inherits="ViewLoanDefaulters" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Content ID="ContentPlaceHolder1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <div class="col-lg-12">
 
 <asp:MultiView ID="MultiView1" ActiveViewIndex="0" runat="server">
@@ -18,40 +18,35 @@
                     <asp:ListItem>False</asp:ListItem>
                 </asp:DropDownList>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
+                <label>
+                    Report
+                </label>
+                <asp:DropDownList ID="ddLoanReport" runat="server" CssClass="form-control">
+                    <asp:ListItem Value="">--Select Loan Report--</asp:ListItem>
+                    <asp:ListItem Value="Due">Due</asp:ListItem>
+                    <asp:ListItem Value="Defaulters">Defaulters</asp:ListItem>
+                </asp:DropDownList>
+            </div>
+            <div class="col-lg-2">
                 <label>
                     Client Number
                 </label>
-                <asp:TextBox ID="txtClientNo" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-            <div class="col-lg-3">
-                <label>
-                    Loan Number
-                </label>
-                <asp:TextBox ID="txtLoanNo" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-            <%--<div class="col-lg-2">
-                <label>
-                    Status
-                </label>
-                <asp:DropDownList ID="ddStatus" runat="server" CssClass="form-control">
-                    <asp:ListItem Value="">--Select Status--</asp:ListItem>
-                    <asp:ListItem Value="COMPLETED">COMPLETED</asp:ListItem>
-                     <asp:ListItem Value="NOTCOMPLETED">NOT COMPLETED</asp:ListItem>
-                </asp:DropDownList>
+                <%--<asp:TextBox ID="txtClientNo" runat="server" CssClass="form-control"></asp:TextBox>--%>
+                <asp:TextBox ID="txtSearch" runat="server" ClientIdMode="Static" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="col-lg-2">
                 <label>
                     Start Date
                 </label>
-                <asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" placeholder="Select Date" />
+                <asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" AutoComplete="off"></asp:TextBox>
             </div>
             <div class="col-lg-2">
                 <label>
                     End Date
                 </label>
-                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" placeholder="Select Date"/>
-            </div>--%>
+                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" AutoComplete="off"></asp:TextBox>
+            </div>
             <div class="col-lg-2" style="padding-top: 30px;">
                 
                 <asp:Button ID="btnSubmit" runat="server" Text="Search DB" CssClass="btn btn-success btn-md"
@@ -62,12 +57,12 @@
             EnableScriptLocalization="true">
         </ajaxToolkit:ToolkitScriptManager>
         <br />
-        <%--<ajaxToolkit:CalendarExtender ID="CalendarExtender1" runat="server" CssClass="cal_Theme1"
+        <ajaxToolkit:CalendarExtender ID="CalendarExtender1" runat="server" CssClass="cal_Theme1"
             Format="yyyy-MM-dd" PopupPosition="BottomRight" TargetControlID="txtStartDate">
         </ajaxToolkit:CalendarExtender>
         <ajaxToolkit:CalendarExtender ID="CalendarExtender2" runat="server" CssClass="cal_Theme1"
             Format="yyyy-MM-dd" PopupPosition="BottomRight" TargetControlID="txtEndDate">
-        </ajaxToolkit:CalendarExtender>--%>
+        </ajaxToolkit:CalendarExtender>
         <hr />
         <%------------------------------------------- Search Results  -----------------------------------%>
         <asp:MultiView runat="server" ID="MultiView2" ActiveViewIndex="0">

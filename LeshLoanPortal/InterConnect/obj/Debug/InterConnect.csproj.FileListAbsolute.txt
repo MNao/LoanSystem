@@ -22,5 +22,6 @@ E:\Projects\LeshLoanSystem\LeshLoanPortal\InterConnect\bin\Debug\InterConnect.dl
 E:\Projects\LeshLoanSystem\LeshLoanPortal\InterConnect\bin\Debug\InterConnect.dll
 E:\Projects\LeshLoanSystem\LeshLoanPortal\InterConnect\bin\Debug\InterConnect.pdb
 E:\Projects\LeshLoanSystem\LeshLoanPortal\InterConnect\bin\Debug\Encryption.dll
+E:\Projects\LeshLoanSystem\LeshLoanPortal\InterConnect\obj\Debug\InterConnect.csprojResolveAssemblyReference.cache
 E:\Projects\LeshLoanSystem\LeshLoanPortal\InterConnect\obj\Debug\InterConnect.dll
 E:\Projects\LeshLoanSystem\LeshLoanPortal\InterConnect\obj\Debug\InterConnect.pdb

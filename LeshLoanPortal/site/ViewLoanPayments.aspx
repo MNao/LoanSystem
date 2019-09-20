@@ -29,13 +29,13 @@
                 <label>
                     Start Date
                 </label>
-                <asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" placeholder="Select Date" />
+                <asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Select Date" />
             </div>
             <div class="col-lg-2">
                 <label>
                     End Date
                 </label>
-                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" placeholder="Select Date"/>
+                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Select Date"/>
             </div>
             <div class="col-lg-2" style="padding-top: 30px;">
                 

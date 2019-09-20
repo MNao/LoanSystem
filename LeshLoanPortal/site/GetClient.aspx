@@ -10,12 +10,10 @@
        <script src="js/jquery-ui.js" type="text/javascript"></script>
         <script>
             $(document).ready(function () {
-                var SearchParam = $(".txtSearch").val();
-                var params = { Name: SearchParam, param2: "bar" };
-                var str = jQuery.param(params);
-            $("#txtSearch").autocomplete({
+                $("#txtSearch").autocomplete({
+                    minLength: 3,
                 //source:  [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ] 
-                source: "GetClientName.ashx?"+str
+                source: 'GetClientName.ashx'
             });
         });
                     </script>

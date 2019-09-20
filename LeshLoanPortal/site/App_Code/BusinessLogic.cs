@@ -1086,7 +1086,7 @@ public string SendMailMessageWithAttachment(SystemUser user)
         
         foreach (DataRow dr in dt.Rows)
         {
-            string Text = dr["ClientName"].ToString() +"--"+ dr["ClientNo"].ToString();
+            string Text = dr["ClientName"].ToString() +"-"+ dr["ClientNo"].ToString();
             string Value = dr["ClientNo"].ToString();
             Clients.Add(Text);
         }
@@ -2240,6 +2240,8 @@ public string SendMailMessageWithAttachment(SystemUser user)
             Det.ModifiedOn = dt.Rows[0]["CreatedOn"].ToString();
             Det.ClientPhoto = dt.Rows[0]["ClientImage"].ToString();
             Det.IDPhoto = dt.Rows[0]["IDImage"].ToString();
+            Det.StatusCode = Globals.SUCCESS_STATUS_CODE;
+            Det.StatusDesc = "Success";
             //return Det;
         }
         else

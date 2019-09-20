@@ -171,7 +171,7 @@ public partial class ViewInjections : Page
 
     private void PDF_Export()
     {
-        throw new NotImplementedException();
+        ShowMessage("Kindly Wait, Its Under Implementation", true);
     }
 
     protected void Excel_Export()

@@ -34,7 +34,7 @@ public partial class ViewLoanDefaulters : Page
             string LoanID = Request.QueryString["LoanID"];
             if (!string.IsNullOrEmpty(LoanID))
             {
-                LoadEntityData(LoanID);
+                //LoadEntityData(LoanID);
             }
             else
             {
@@ -53,16 +53,12 @@ public partial class ViewLoanDefaulters : Page
     private void LoadData()
     {
         bll.LoadCompanysIntoDropDownALL(user, ddCompany);
-        SearchDB();
+        txtSearch.Text = " - ";
+        //SearchDB();
     }
 
     protected void LoadEntityData(string LoanID)
     {
-        //bll.LoadAgentsIntopDropDown(user, ddAgents);
-        txtLoanNo.Text = LoanID;
-        txtLoanNo.Enabled = false;
-        
-        SearchDB();
     }
 
     private void ShowMessage(string Message, bool Error)
@@ -88,7 +84,12 @@ public partial class ViewLoanDefaulters : Page
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
         try
-        {
+        {   
+            if(ddLoanReport.SelectedValue == "")
+            {
+                ShowMessage("Please Select Loan Report to View", true);
+                return;
+            }
             SearchDB();
         }
         catch (Exception ex)
@@ -125,20 +126,22 @@ public partial class ViewLoanDefaulters : Page
     {
         List<string> searchCriteria = new List<string>();
         string CompanyCode = ddCompany.SelectedValue.ToString();
-        string ClientID = txtClientNo.Text.Trim();
-        string LoanID = txtLoanNo.Text.Trim();
+        string Report = ddLoanReport.SelectedValue.ToString();
+        string ClientID = txtSearch.Text.Trim().Split('-')[1];
+        string LoanID = "";
         string UserId = user.UserId;
         //string Status = ddStatus.SelectedValue;
-        //string StartDate = txtStartDate.Text;
-        //string EndDate = txtEndDate.Text;
+        string StartDate = txtStartDate.Text;
+        string EndDate = txtEndDate.Text;
 
         searchCriteria.Add(CompanyCode);
+        searchCriteria.Add(Report);
         searchCriteria.Add(ClientID);
         searchCriteria.Add(LoanID);
         searchCriteria.Add(UserId);
         //searchCriteria.Add(Status);
-        //searchCriteria.Add(StartDate);
-        //searchCriteria.Add(EndDate);
+        searchCriteria.Add(StartDate);
+        searchCriteria.Add(EndDate);
         return searchCriteria.ToArray();
     }
 

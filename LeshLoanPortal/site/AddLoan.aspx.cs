@@ -83,62 +83,82 @@ public partial class AddLoan : System.Web.UI.Page
     public void LoadData()
     {
         ClientDetailsBtn.BackColor = System.Drawing.Color.LightSkyBlue;
-        if (user.RoleCode != "001")
-        {
-            ddClientNo.SelectedItem.Value = user.UserId;
-            ddClientNo.SelectedItem.Text = user.UserId;
-            //ddClientNo.Enabled = false;
-        }
-        else
-        {
-            bll.LoadClientsIntoDropDown(user.CompanyCode, "", ddClientNo);
-        }
-        ddClientNoSelectedIndexChanged(null,null);
+        //if (user.RoleCode != "001")
+        //{
+        //    ddClientNo.SelectedItem.Value = user.UserId;
+        //    ddClientNo.SelectedItem.Text = user.UserId;
+        //    //ddClientNo.Enabled = false;
+        //}
+        //else
+        //{
+        //    bll.LoadClientsIntoDropDown(user.CompanyCode, "", ddClientNo);
+        //}
+        //ddClientNoSelectedIndexChanged(null,null);
     }
     protected void txtSearch_TextChanged(object sender, EventArgs e)
     {
-        ListItemCollection ClientSearch = bll.GetClientSearchDetails(txtSearch.Text);
-        ListView lvItem = new ListView();
-        
+        //ListItemCollection ClientSearch = bll.GetClientSearchDetails(txtSearch.Text);
+        //ListView lvItem = new ListView();
+        string Value = txtSearch.Text;
+
+        InterConnect.LeshLaonApi.ClientDetails GetClient = bll.GetClientDetails(user, Value.Split('-')[1]);
+
+        txtClientname.Text = GetClient.ClientName;
+        ddGender.SelectedItem.Value = GetClient.Gender;
+        ddGender.SelectedItem.Text = GetClient.Gender;
+        txtIDNumber.Text = GetClient.IDNumber;
+        txtEmail.Text = GetClient.ClientEmail;
+        txtHomeAddress.Text = GetClient.ClientAddress;
+        txtMobileNo.Text = GetClient.ClientPhoneNumber;
+        txtNameofReferee.Text = GetClient.Referee;
+
+
+        ddGender.Enabled = false;
+        txtClientname.Enabled = false;
+        txtIDNumber.Enabled = false;
+        txtEmail.Enabled = false;
+        txtHomeAddress.Enabled = false;
+        txtMobileNo.Enabled = false;
+        txtNameofReferee.Enabled = false;
     }
 
-    protected void ddClientNoSelectedIndexChanged(object sender, EventArgs e)
-    {
-       if(ddClientNo.SelectedValue == "")
-        {
+    //protected void ddClientNoSelectedIndexChanged(object sender, EventArgs e)
+    //{
+    //   if(ddClientNo.SelectedValue == "")
+    //    {
 
-        }
-        else
-        {
-            if (user.RoleCode != "001")
-            {
-                ddClientNo.SelectedItem.Value = user.UserId;
-                ddClientNo.SelectedItem.Text = user.UserId;
-                ddClientNo.Enabled = false;
-            }
+    //    }
+    //    else
+    //    {
+    //        if (user.RoleCode != "001")
+    //        {
+    //            ddClientNo.SelectedItem.Value = user.UserId;
+    //            ddClientNo.SelectedItem.Text = user.UserId;
+    //            ddClientNo.Enabled = false;
+    //        }
 
-            InterConnect.LeshLaonApi.ClientDetails GetClient = bll.GetClientDetails(user, ddClientNo.SelectedValue);
+    //        InterConnect.LeshLaonApi.ClientDetails GetClient = bll.GetClientDetails(user, ddClientNo.SelectedValue);
 
-            txtClientname.Text = GetClient.ClientName;
-            ddGender.SelectedItem.Value = GetClient.Gender;
-            ddGender.SelectedItem.Text = GetClient.Gender;
-            txtIDNumber.Text = GetClient.IDNumber;
-            txtEmail.Text = GetClient.ClientEmail;
-            txtHomeAddress.Text = GetClient.ClientAddress;
-            txtMobileNo.Text = GetClient.ClientPhoneNumber;
-            txtNameofReferee.Text = GetClient.Referee;
+    //        txtClientname.Text = GetClient.ClientName;
+    //        ddGender.SelectedItem.Value = GetClient.Gender;
+    //        ddGender.SelectedItem.Text = GetClient.Gender;
+    //        txtIDNumber.Text = GetClient.IDNumber;
+    //        txtEmail.Text = GetClient.ClientEmail;
+    //        txtHomeAddress.Text = GetClient.ClientAddress;
+    //        txtMobileNo.Text = GetClient.ClientPhoneNumber;
+    //        txtNameofReferee.Text = GetClient.Referee;
 
 
-            ddGender.Enabled = false;
-            txtClientname.Enabled = false;
-            txtIDNumber.Enabled = false;
-            txtEmail.Enabled = false;
-            txtHomeAddress.Enabled = false;
-            txtMobileNo.Enabled = false;
-            txtNameofReferee.Enabled = false;
+    //        ddGender.Enabled = false;
+    //        txtClientname.Enabled = false;
+    //        txtIDNumber.Enabled = false;
+    //        txtEmail.Enabled = false;
+    //        txtHomeAddress.Enabled = false;
+    //        txtMobileNo.Enabled = false;
+    //        txtNameofReferee.Enabled = false;
 
-        }
-    }
+    //    }
+    //}
 
     private void ShowMessage(string Message, bool Error)
     {
@@ -216,7 +236,7 @@ public partial class AddLoan : System.Web.UI.Page
     protected InterConnect.LeshLaonApi.ClientDetails GetAddnClientDetails()
     {
         InterConnect.LeshLaonApi.ClientDetails AddnClient = new InterConnect.LeshLaonApi.ClientDetails();
-        AddnClient.ClientNo = ddClientNo.SelectedValue;
+        AddnClient.ClientNo = txtSearch.Text.Split('-')[1];//ddClientNo.SelectedValue;
         AddnClient.DOB = txtBirthDate.Text.ToString();
         AddnClient.BusinessLoc = txtBusLoc.Text.Trim().ToString();
         AddnClient.Occupation = txtOccup.Text.Trim().ToString();
@@ -380,7 +400,7 @@ public partial class AddLoan : System.Web.UI.Page
     protected InterConnect.LeshLaonApi.LoanDetails GetLoanDetails()
     {
         LoanDetails Loan = new LoanDetails();
-        Loan.ClientID = ddClientNo.SelectedValue;
+        Loan.ClientID = txtSearch.Text.Split('-')[1]; //ddClientNo.SelectedValue;
         Loan.LoanNo = txtLoanNo.Text;
         Loan.LoanDate = txtLoanDate.Text.ToString();
         Loan.LoanAmount = txtLoanAmount.Text.Trim().ToString().Replace(",", "");
@@ -439,7 +459,7 @@ public partial class AddLoan : System.Web.UI.Page
         if (Tc)
         {
             string LoanNo = txtLoanNo.Text;
-            string ClientID = ddClientNo.SelectedValue;
+            string ClientID = txtSearch.Text.Split('-')[1]; //ddClientNo.SelectedValue;
             bll.UpdateLoanStatus(LoanNo, ClientID, user.RoleCode, user.UserId);
 
             ShowMessage("YOUR LOAN HAS BEEN ACCEPTED FOR REVIEW, WE WILL SHORTLY GET BACK TO YOU AFTER REVIEW.", false);

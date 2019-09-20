@@ -44,9 +44,11 @@ public partial class ViewClientDetails : Page
     {
         //bll.LoadAgentsIntopDropDown(user, ddAgents);
 
-        if (user.RoleCode == "003")
+        if (user.RoleCode != "")
         {
             ddStatus.SelectedItem.Value = "PENDING";
+            ddStatus.SelectedItem.Text = "PENDING";
+            ddStatus.Enabled = false;
         }
         else
         {

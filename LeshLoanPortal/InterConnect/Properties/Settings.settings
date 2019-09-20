@@ -12,7 +12,7 @@
       <Value Profile="(Default)">http://192.168.23.15:5099/mailapi/Messenger.asmx</Value>
     </Setting>
     <Setting Name="InterConnect_UBAApi_UBAKYCAPI" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://localhost:53722/LeshLoanAPI.asmx</Value>
+      <Value Profile="(Default)">http://leontymo-001-site2.itempurl.com/LeshLoanAPI.asmx</Value>
     </Setting>
   </Settings>
 </SettingsFile>

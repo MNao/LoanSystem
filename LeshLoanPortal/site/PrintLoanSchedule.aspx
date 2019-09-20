@@ -93,6 +93,23 @@
             document.getElementById('Button4').style.visibility = 'visible';
         }
 
+        function printSummary() {
+            document.getElementById('Button5').style.visibility = 'hidden';
+            window.print();
+            document.getElementById('Button5').style.visibility = 'visible';
+        }
+
+        function printCollateral() {
+            document.getElementById('Button6').style.visibility = 'hidden';
+            window.print();
+            document.getElementById('Button6').style.visibility = 'visible';
+        }
+
+        function printAgreement() {
+            document.getElementById('Button7').style.visibility = 'hidden';
+            window.print();
+            document.getElementById('Button7').style.visibility = 'visible';
+        }
 
     </script>
 </head>
@@ -103,16 +120,22 @@
             <asp:MultiView ID="MultiView1" ActiveViewIndex="0" runat="server">
                 <asp:View ID="btnView" runat="server">
                     <div class="row text-center">
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                             <asp:Button CssClass="btn-success btn-sm" runat="server" ID="btnLoanSch" Text="View Loan Schedule" OnClick="btnLoanSch_Click"/>
                         </div>
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                 <asp:Button CssClass="btn-success btn-sm" runat="server" ID="btnLoanDet" Text="View Loan Details" OnClick="btnLoanDet_Click"/>
                     </div>
-                        <div class="col-lg-3">
-                <asp:Button CssClass="btn-success btn-sm" runat="server" ID="btnOtherDet" Text="View Other Details"/>
+                        <div class="col-lg-2">
+                <asp:Button CssClass="btn-success btn-sm" runat="server" ID="btnLoanSumm" Text="View Loan Summary" OnClick="btnLoanSumm_Click"/>
                             </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
+                <asp:Button CssClass="btn-success btn-sm" runat="server" ID="btnLoanCollateral" Text="View Loan Collateral" OnClick="btnLoanCollateral_Click"/>
+                            </div>
+                        <div class="col-lg-2">
+                <asp:Button CssClass="btn-success btn-sm" runat="server" ID="btnLoanAgmt" Text="View Loan Agreement" OnClick="btnLoanAgmt_Click"/>
+                            </div>
+                        <div class="col-lg-2">
                     <asp:Button CssClass="btn-danger btn-sm" runat="server" ID="btnBack" Text="Back" OnClick="btnBack_Click"/>
                             </div>
                     </div>
@@ -123,12 +146,12 @@
                     <%-- Print Button --%>
             <div class="row text-center" style="padding: 10px;">
                 <div class="col-md-6">
-                    <input id="Button3" accesskey="P" class="btn btn-success" onclick="printDocument()"
+                    <input id="Button3" accesskey="P" class="btn btn-success" onclick="printDocument()" readonly="readonly"
                         value="Print Schedule" />
                 </div>
                 <div class="col-md-6">
                     <a href="ViewLoans.aspx">
-                        <input id="Button4" accesskey="P" class="btn btn-primary"
+                        <input id="Button4" accesskey="P" class="btn btn-primary" readonly="readonly"
                             value="Return" /></a>
                 </div>
                     
@@ -187,12 +210,116 @@
                 </asp:View>
 
                 <asp:View ID="LoanDetails" runat="server">
-                    <%--<div class="row" style="padding:15px;>--%>
+                    
                         <asp:Label ID="imgUrlGuarantoorProof" runat="server"></asp:Label>
                     <asp:Button ID="btnGuaratorProof" runat="server" CssClass="btn btn-success btn-sm" Text="View Guarantor Proof" OnClick="btnGuaratorProof_Click"/>
                     <br /><br />
                     <asp:image ID="Image1" runat="server"/>
-                        <%--</div>--%>
+                </asp:View>
+
+                    <asp:View ID="LoanSummary" runat="server">
+                    <div class="row text-center" style="padding: 10px;">
+                <div class="col-md-6">
+                    <input id="Button5" accesskey="P" class="btn btn-success" onclick="printSummary()" readonly="readonly"
+                        value="Print Loan Summary" />
+                </div>
+                    
+            </div>
+            <%-- title section --%>
+            <div class="row" style="padding: 15px; /*border: 1px solid gray;*/ border-top: none;">
+                <div class="text-center">
+                    <h4>
+                        <asp:Label ID="Label2" runat="server"></asp:Label></h4>
+                </div>
+            </div>
+
+            <%-- data set section --%>
+            <div class="row" style="padding: 15px; border: 1px solid gray; border-top: none;">
+                <div class="table-responsive">
+                    <div class="container">
+                        
+                        <div class="row">
+                            <div class="text-center">
+                                <CR:CrystalReportViewer ID="CrystalReportViewer2" runat="server" AutoDataBind="True" GroupTreeImagesFolderUrl="" Height="1202px" ReportSourceID="PaymentVoucher" ToolbarImagesFolderUrl="" ToolPanelWidth="200px" Width="1104px" DisplayStatusbar="False" EnableDatabaseLogonPrompt="False" EnableDrillDown="False" EnableParameterPrompt="False" EnableTheming="False" EnableToolTips="False" HasCrystalLogo="False" HasDrilldownTabs="False" HasDrillUpButton="False" HasExportButton="False" HasGotoPageButton="False" HasPageNavigationButtons="False" HasSearchButton="False" HasToggleGroupTreeButton="False" HasToggleParameterPanelButton="False" HasZoomFactorList="False" ToolPanelView="None" />
+        <CR:CrystalReportSource ID="CrystalReportSource1" runat="server">
+            <report filename="Bin\reports\LoanSummary_1.rpt">
+            </report>
+        </CR:CrystalReportSource>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </asp:View>
+
+                <asp:View ID="CollateralView" runat="server">
+                    <div class="row text-center" style="padding: 10px;">
+                <div class="col-md-6">
+                    <input id="Button6" accesskey="P" class="btn btn-success" onclick="printCollateral()" readonly="readonly"
+                        value="Print Loan Collateral" />
+                </div>
+                    
+            </div>
+            <%-- title section --%>
+            <div class="row" style="padding: 15px; /*border: 1px solid gray;*/ border-top: none;">
+                <div class="text-center">
+                    <h4>
+                        <asp:Label ID="Label1" runat="server"></asp:Label></h4>
+                </div>
+            </div>
+
+            <%-- data set section --%>
+            <div class="row" style="padding: 15px; border: 1px solid gray; border-top: none;">
+                <div class="table-responsive">
+                    <div class="container">
+                        
+                        <div class="row">
+                            <div class="text-center">
+                                <CR:CrystalReportViewer ID="CrystalReportViewer3" runat="server" AutoDataBind="True" GroupTreeImagesFolderUrl="" Height="1202px" ReportSourceID="PaymentVoucher" ToolbarImagesFolderUrl="" ToolPanelWidth="200px" Width="1104px" DisplayStatusbar="False" EnableDatabaseLogonPrompt="False" EnableDrillDown="False" EnableParameterPrompt="False" EnableTheming="False" EnableToolTips="False" HasCrystalLogo="False" HasDrilldownTabs="False" HasDrillUpButton="False" HasExportButton="False" HasGotoPageButton="False" HasPageNavigationButtons="False" HasSearchButton="False" HasToggleGroupTreeButton="False" HasToggleParameterPanelButton="False" HasZoomFactorList="False" ToolPanelView="None" />
+        <CR:CrystalReportSource ID="CrystalReportSource2" runat="server">
+            <report filename="Bin\reports\LoanCollateral.rpt">
+            </report>
+        </CR:CrystalReportSource>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </asp:View>
+
+                <asp:View ID="AgmtView" runat="server">
+                    <div class="row text-center" style="padding: 10px;">
+                <div class="col-md-6">
+                    <input id="Button7" accesskey="P" class="btn btn-success" onclick="printAgreement()" readonly="readonly"
+                        value="Print Loan Agremment" />
+                </div>
+                    
+            </div>
+            <%-- title section --%>
+            <div class="row" style="padding: 15px; /*border: 1px solid gray;*/ border-top: none;">
+                <div class="text-center">
+                    <h4>
+                        <asp:Label ID="Label3" runat="server"></asp:Label></h4>
+                </div>
+            </div>
+
+            <%-- data set section --%>
+            <div class="row" style="padding: 15px; border: 1px solid gray; border-top: none;">
+                <div class="table-responsive">
+                    <div class="container">
+                        
+                        <div class="row">
+                            <div class="text-center">
+                                <CR:CrystalReportViewer ID="CrystalReportViewer4" runat="server" AutoDataBind="True" GroupTreeImagesFolderUrl="" Height="1202px" ReportSourceID="PaymentVoucher" ToolbarImagesFolderUrl="" ToolPanelWidth="200px" Width="1104px" DisplayStatusbar="False" EnableDatabaseLogonPrompt="False" EnableDrillDown="False" EnableParameterPrompt="False" EnableTheming="False" EnableToolTips="False" HasCrystalLogo="False" HasDrilldownTabs="False" HasDrillUpButton="False" HasExportButton="False" HasGotoPageButton="False" HasPageNavigationButtons="False" HasSearchButton="False" HasToggleGroupTreeButton="False" HasToggleParameterPanelButton="False" HasZoomFactorList="False" ToolPanelView="None" />
+        <CR:CrystalReportSource ID="CrystalReportSource3" runat="server">
+            <report filename="Bin\reports\LoanAgreement.rpt">
+            </report>
+        </CR:CrystalReportSource>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 </asp:View>
             </asp:MultiView>
             

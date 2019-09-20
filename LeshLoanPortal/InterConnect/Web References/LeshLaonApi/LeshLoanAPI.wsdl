@@ -842,10 +842,10 @@
   </wsdl:binding>
   <wsdl:service name="LeshLoanAPI">
     <wsdl:port name="LeshLoanAPISoap" binding="tns:LeshLoanAPISoap">
-      <soap:address location="http://localhost:53722/LeshLoanAPI.asmx" />
+      <soap:address location="http://leontymo-001-site2.itempurl.com/LeshLoanAPI.asmx" />
     </wsdl:port>
     <wsdl:port name="LeshLoanAPISoap12" binding="tns:LeshLoanAPISoap12">
-      <soap12:address location="http://localhost:53722/LeshLoanAPI.asmx" />
+      <soap12:address location="http://leontymo-001-site2.itempurl.com/LeshLoanAPI.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

@@ -25,6 +25,10 @@ public partial class MasterMain : System.Web.UI.MasterPage
                 
                 //TogglePermissions();
             }
+            else if ((Session["Username"] == null) || (Session["RoleCode"] == null))
+            {
+                Response.Redirect("Default.aspx");
+            }
             else
             {
                 Response.Redirect("Default.aspx", false);

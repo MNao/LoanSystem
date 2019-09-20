@@ -14,12 +14,22 @@ public partial class PrintLoanSchedule : System.Web.UI.Page
     BusinessLogic bll = new BusinessLogic();
     SystemUser user;
     ReportDocument GenerateVoucher = new ReportDocument();
+    ReportDocument GenerateLoanSummary = new ReportDocument();
+    ReportDocument GenerateLoanCollateral = new ReportDocument();
+    ReportDocument GenerateLoanAgreement = new ReportDocument();
     protected void Page_Load(object sender, EventArgs e)
     {
         try
         {
             user = Session["User"] as SystemUser;
-            LoadLoanDetails();
+
+            string LoanId = Request.QueryString["Id"];
+            string CompanyCode = Request.QueryString["CompanyCode"];
+            string ClientCode = Request.QueryString["ClientCode"];
+            LoadLoanDetails(LoanId, CompanyCode,ClientCode);
+            LoadLoanSummaryDetails(LoanId, CompanyCode, ClientCode);
+            LoadCollateralDetails(LoanId, CompanyCode, ClientCode);
+            LoadAgreementDetails(LoanId, CompanyCode, ClientCode);
         }
         catch (Exception ex)
         {
@@ -28,16 +38,12 @@ public partial class PrintLoanSchedule : System.Web.UI.Page
         }
     }
 
-    private void LoadLoanDetails()
+    private void LoadLoanDetails(string LoanId, string CompanyCode, string ClientCode)
     {
-        string LoanId = Request.QueryString["Id"];
-        string CompanyCode = Request.QueryString["CompanyCode"];
-        string ClientCode = Request.QueryString["ClientCode"];
-
         string[] Params = { ClientCode, LoanId };
         DataSet ds = new DataSet();
         //ds.Reset();
-        DataTable Loan = api.ExecuteDataSet("GetLoanDetailsForSchedule", Params).Tables[0];//bll.GetLoanDetails(user, LoanId, ClientCode);
+        DataTable Loan = api.ExecuteDataSet("GetLoanDetailsForSchedule", Params).Tables[0];
         LoanDetails response = GetClientNameByCode(CompanyCode, ClientCode);
 
         imgUrlGuarantoorProof.Text = Loan.Rows[0]["GuarantorProof"].ToString();
@@ -95,13 +101,49 @@ public partial class PrintLoanSchedule : System.Web.UI.Page
         }
     }
 
+    private void LoadLoanSummaryDetails(string LoanId, string CompanyCode, string ClientCode)
+    {
+        string[] Params = { ClientCode, LoanId };
+
+        DataTable LoanSummary = api.ExecuteDataSet("GetLoanSummaryDetails", Params).Tables[0];
+
+        if (LoanSummary.Rows.Count > 0)
+        {
+            GenerateLoanSummary.Load(@"E:\Projects\LeshLoanSystem\LeshLoanPortal\site\bin\reports\LoanSummary_1.rpt");
+            GenerateLoanSummary.SetDataSource(LoanSummary);
+            CrystalReportViewer2.ReportSource = GenerateLoanSummary;
+        }
+    }
+
+    private void LoadCollateralDetails(string LoanId, string CompanyCode, string ClientCode)
+    {
+        string[] Params = { ClientCode, LoanId };
+
+        DataTable LoanSummary = api.ExecuteDataSet("GetLoanSummaryDetails", Params).Tables[0];
+
+        if (LoanSummary.Rows.Count > 0)
+        {
+            GenerateLoanCollateral.Load(@"E:\Projects\LeshLoanSystem\LeshLoanPortal\site\bin\reports\LoanCollateral.rpt");
+            GenerateLoanCollateral.SetDataSource(LoanSummary);
+            CrystalReportViewer3.ReportSource = GenerateLoanCollateral;
+        }
+    }
+
+    private void LoadAgreementDetails(string LoanId, string CompanyCode, string ClientCode)
+    {
+        string[] Params = { ClientCode, LoanId };
+
+        DataTable LoanSummary = api.ExecuteDataSet("GetLoanSummaryDetails", Params).Tables[0];
+
+        if (LoanSummary.Rows.Count > 0)
+        {
+            GenerateLoanAgreement.Load(@"E:\Projects\LeshLoanSystem\LeshLoanPortal\site\bin\reports\LoanAgreement.rpt");
+            GenerateLoanAgreement.SetDataSource(LoanSummary);
+            CrystalReportViewer4.ReportSource = GenerateLoanAgreement;
+        }
+    }
     private LoanDetails GetClientNameByCode(string CompanyCode, string clientCode)
     {
-        //Entity result = api.GetById(CompanyCode, "CLIENTORSUPPLIER", clientCode);
-        //if (result.StatusCode != Globals.SUCCESS_STATUS_CODE)
-        //{
-        //    return result as LoanDetails;
-        //}
         LoanDetails aclient = new LoanDetails();// result as LoanDetails;
         return aclient;
     }
@@ -129,18 +171,12 @@ public partial class PrintLoanSchedule : System.Web.UI.Page
         {
 
             byte[] imageBytes = Convert.FromBase64String(BaseText[1]);
-            //MemoryStream ms = new MemoryStream(imageBytes, 0,
-            //  imageBytes.Length);
-
-            //// Convert byte[] to Image
-            //ms.Write(imageBytes, 0, imageBytes.Length);
 
             Response.Clear();
             Response.ContentType = "application/pdf";
             Response.AppendHeader("Content-Disposition", "inline;filename=data.pdf");
             Response.BufferOutput = true;
-
-            ////Response.AddHeader("Content-Length", response.Length.ToString());
+            
             Response.BinaryWrite(imageBytes);
             Response.End();
         }
@@ -152,5 +188,20 @@ public partial class PrintLoanSchedule : System.Web.UI.Page
         Image1.Width = Unit.Percentage(50);
         Image1.Height = Unit.Percentage(50);
     }
-        
+
+
+    protected void btnLoanSumm_Click(object sender, EventArgs e)
+    {
+        MultiView2.SetActiveView(LoanSummary);
+    }
+
+    protected void btnLoanCollateral_Click(object sender, EventArgs e)
+    {
+        MultiView2.SetActiveView(CollateralView);
+    }
+
+    protected void btnLoanAgmt_Click(object sender, EventArgs e)
+    {
+        MultiView2.SetActiveView(AgmtView);
+    }
 }

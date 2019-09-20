@@ -92,7 +92,7 @@ public partial class PrintReceipt : System.Web.UI.Page
     private string[] GetClientNameByCode(string CompanyCode, string clientCode)
     {
         List<string> ClientDetails = new List<string>();
-        ClientDetails result = bll.GetClientDetails(user, clientCode);//api.GetById(CompanyCode, "CLIENTORSUPPLIER", clientCode);
+        InterConnect.LeshLaonApi.ClientDetails result = bll.GetClientDetails(user, clientCode);//api.GetById(CompanyCode, "CLIENTORSUPPLIER", clientCode);
         if (result.StatusCode != Globals.SUCCESS_STATUS_CODE)
         {
             ClientDetails.Add("N/A");
