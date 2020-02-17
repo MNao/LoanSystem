@@ -13,7 +13,7 @@
                 <label>
                     Loan Number
                 </label>
-                <asp:TextBox ID="txtLoanNo" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="txtLoanNo" AutoComplete="Off" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="col-lg-2">
                 <label>

@@ -25,15 +25,12 @@ public partial class AddInjection : System.Web.UI.Page
                 //MultiView2.ActiveViewIndex = -1;
 
 
-                string UserID = Request.QueryString["UserID"];
-                string CompanyCode = Request.QueryString["BankCode"];
-                string UserType = Request.QueryString["UserType"];
-                string Type = Request.QueryString["Type"];
-                string Status = Request.QueryString["Status"];
+                string InjectionID = Request.QueryString["InjectionID"];
+                string CompanyCode = Request.QueryString["CompanyCode"];
                 LoadData();
-                if (!string.IsNullOrEmpty(UserID))
+                if (!string.IsNullOrEmpty(InjectionID))
                 {
-                    //LoadEntityData(UserID, BankCode, UserType, Type, Status);
+                    LoadEntityData(InjectionID, CompanyCode);
                 }
                 else if (Request.QueryString["transferid"] != null)
                 {
@@ -49,12 +46,33 @@ public partial class AddInjection : System.Web.UI.Page
         }
     }
 
+    private void LoadEntityData(string injectionID, string companyCode)
+    {
+        btnSubmit.Visible = false;
+        btnEdit.Visible = true;
+        btnBack.Visible = true;
+
+        InterConnect.LeshLaonApi.Injection InjectionDet = bll.GetInjectionDetails(user, injectionID);
+        txtInjectionNo.Text = injectionID;
+        txtname.Text = InjectionDet.InjectorName;
+        txtInjectedAmount.Text = InjectionDet.Amount;
+        txtInjectionDate.Text = InjectionDet.InjectionDate;
+        txtInjRepayAmnt.Text = InjectionDet.RepaymentAmount;
+        txtInjRepayDate.Text = InjectionDet.RepaymentDate;
+        txtEmail.Text = InjectionDet.Email;
+        txtPhoneNo.Text = InjectionDet.PhoneNo;
+        
+
+        txtInjectionNo.Enabled = false;
+    }
+
     public void LoadData()
     {
 
         txtInjectionNo.Text = bll.GenerateSystemCode("INJ");
         txtInjectionNo.Enabled = false;
         btnEdit.Visible = false;
+        btnBack.Visible = false;
     }
 
     private void ShowMessage(string Message, bool Error)
@@ -99,6 +117,7 @@ public partial class AddInjection : System.Web.UI.Page
                 }
                 ShowMessage("INJECTION DETAILS SAVED SUCCESSFULLY", false);
                 Clear_contrls();
+                btnBack.Visible = true;
                 //bll.InsertIntoAuditLog("USER-CREATION", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER CREATED SUCCESSFULLY");
                 //MultiView1.SetActiveView(LoanDetails);
 
@@ -176,6 +195,45 @@ public partial class AddInjection : System.Web.UI.Page
 
     protected void btnEdit_Click(object sender, EventArgs e)
     {
+        try
+        {
 
+            Injection Inj = GetInjectionDetails();
+            //validate Injection details input
+            string check_status = validate_input(Inj.InjectorName, Inj.Amount, Inj.InjectionDate, Inj.RepaymentAmount, Inj.RepaymentDate);
+
+
+            if (!check_status.Equals("OK"))
+            {
+                ShowMessage(check_status, true);
+            }
+            else
+            {
+                //save client additional details
+                Result user_save = Client.SaveInjection(Inj);
+
+                if (user_save.StatusCode != "0")
+                {
+                    //MultiView2.ActiveViewIndex = 0;
+                    ShowMessage(user_save.StatusDesc, true);
+                    return;
+                }
+                ShowMessage("INJECTION DETAILS EDITED SUCCESSFULLY", false);
+                Clear_contrls();
+                btnBack.Visible = true;
+                //bll.InsertIntoAuditLog("USER-CREATION", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER CREATED SUCCESSFULLY");
+                //MultiView1.SetActiveView(LoanDetails);
+
+            }
+
+        }
+        catch (Exception ex)
+        {
+        }
+        }
+
+    protected void btnBack_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ViewInjections.aspx");
     }
 }

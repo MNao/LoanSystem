@@ -21,6 +21,7 @@ namespace LeshLoanMngt.Entities
         public string EasyPaidAmountPerMonth = "";
         public string Approved = "";
         public string AgreeToLoanAggreement = "";
+        public string ProcessingFee = "";
 
         //collateral Details
         public string Name = "";

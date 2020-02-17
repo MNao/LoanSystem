@@ -239,6 +239,7 @@
               <s:element minOccurs="0" maxOccurs="1" name="EasyPaidAmountPerMonth" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Approved" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="AgreeToLoanAggreement" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ProcessingFee" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Model" type="s:string" />

@@ -74,6 +74,28 @@ public class BusinessLogic
         }
     }
 
+    public Injection GetInjectionDetails(SystemUser user, string injectionID)
+    {
+        Injection Injection = new Injection();
+        string[] Params = { user.CompanyCode, injectionID };
+        DataTable dt = Client.ExecuteDataSet("GetInjectionDetails", Params).Tables[0];
+
+        Injection.CompanyCode = dt.Rows[0]["CompanyCode"].ToString();
+        Injection.InjectionNumber = dt.Rows[0]["InjectionNo"].ToString();
+        Injection.Amount = dt.Rows[0]["InjectionAmount"].ToString();
+        Injection.InjectionDate = dt.Rows[0]["InjectionDate"].ToString();
+        Injection.InjectionDesc = dt.Rows[0]["InjectionDesc"].ToString();
+        Injection.InjectorName = dt.Rows[0]["InjectorName"].ToString();
+        Injection.RepaymentAmount = dt.Rows[0]["InjectionPayAmount"].ToString();
+        Injection.RepaymentDate = dt.Rows[0]["InjectionPayDate"].ToString();
+        Injection.Email = dt.Rows[0]["Email"].ToString();
+        Injection.PhoneNo = dt.Rows[0]["PhoneNo"].ToString();
+        Injection.ModifiedBy = dt.Rows[0]["AddedBy"].ToString();
+        Injection.StatusCode = Globals.SUCCESS_STATUS_CODE;
+        Injection.StatusDesc = Globals.SUCCESS_STATUS_TEXT;
+        return Injection;
+    }
+
     public Income GetIncome(string CompanyCode, string IncomeNo)
     {
         Income Inc = new Income();
@@ -153,6 +175,25 @@ public class BusinessLogic
 
         //make this null since it has been read / consumed / acted upon
         Session["ExternalMsg"] = null;
+    }
+
+    public Entity UpdateInjectionStatus(string CompanyCode, string InjectionId, string UserId)
+    {
+        Entity Res = new Entity();
+        string[] Params = { CompanyCode, InjectionId, UserId };
+        DataTable dt = Client.ExecuteDataSet("UpdateInjectionStatus", Params).Tables[0];
+
+        if (dt.Rows.Count > 0)
+        {
+            Res.StatusCode = Globals.SUCCESS_STATUS_CODE;
+            Res.StatusDesc = Globals.SUCCESS_STATUS_TEXT;
+        }
+        else
+        {
+            Res.StatusCode = "100";
+            Res.StatusDesc = "INJECTION NOT DELETED";
+        }
+        return Res;
     }
 
     public void ShowMessage(Label lblmsg, string msg, bool IsError)
@@ -535,13 +576,13 @@ public string SendMailMessageWithAttachment(SystemUser user)
 
     }
 
-    public Result SaveLoanApproval(string LoanNo, string approved, string approvedAmount, string modifiedBy, string monthsToPayIn, string easyPaidAmountPerMonth, string GuarantorImageApprov, string ApproverComment)
+    public Result SaveLoanApproval(string LoanNo, string approved, string approvedAmount, string modifiedBy, string monthsToPayIn, string easyPaidAmountPerMonth, string ProcessingFee, string GuarantorImageApprov, string ApproverComment)
     {
         Result result = new Result();
         try
         {
             //InsertIntoAuditLog("PASSWORD CHANGE", "SYSTEMUSERS", CompanyCode, Id, "Changed Password of " + Id);
-            string[] Params = { LoanNo, approved, approvedAmount, monthsToPayIn, easyPaidAmountPerMonth, GuarantorImageApprov, ApproverComment, modifiedBy};
+            string[] Params = { LoanNo, approved, approvedAmount, monthsToPayIn, easyPaidAmountPerMonth, ProcessingFee, GuarantorImageApprov, ApproverComment, modifiedBy};
             DataTable datatable = Client.ExecuteDataSet("SaveLoanApprovals", Params).Tables[0];
             //return datatable.Rows[0].ToString();
 
@@ -1421,6 +1462,7 @@ public string SendMailMessageWithAttachment(SystemUser user)
         return setting;
     }
 
+
     public SystemSetting GetInterestSetting(string companyCode, string InterestCode)
     {
         SystemSetting setting = new SystemSetting();
@@ -2232,6 +2274,7 @@ public string SendMailMessageWithAttachment(SystemUser user)
             Det.IDNumber = dt.Rows[0]["IDNumber"].ToString();
             Det.ClientEmail = dt.Rows[0]["Email"].ToString();
             Det.IDType = dt.Rows[0]["IDType"].ToString();
+            Det.DOB = dt.Rows[0]["DOB"].ToString();
 
             Det.Referee = dt.Rows[0]["RefereeName"].ToString();
             Det.RefrereePhoneNo = dt.Rows[0]["RefereePhoneNo"].ToString();

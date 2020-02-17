@@ -41,6 +41,8 @@ public partial class LoanRepayment : System.Web.UI.Page
                 {
                     //LoadEntityData(UserID, BankCode, UserType, Type, Status);
                 }
+                txtSearch.Text = " - ";
+                SearchDB();
             }
         }
         catch (Exception ex)
@@ -103,7 +105,7 @@ public partial class LoanRepayment : System.Web.UI.Page
     private string[] GetSearchParameters()
     {
         List<string> searchCriteria = new List<string>();
-        string ClientNo = txtClientNoSearch.Text.Trim();
+        string ClientNo = txtSearch.Text.Split('-')[1];
         string LoanNo = txtLoanNoSearch.Text.Trim();
         string UserId = user.UserId;
         string Status = ddStatus.SelectedValue;

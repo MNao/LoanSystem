@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Collections;
 using System.Drawing;
@@ -13,7 +13,7 @@ using OfficeOpenXml;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
-public partial class ViewClientReport : Page
+public partial class ViewAllClientDetails : Page
 {
 
     FileUpload uploadedFile;
@@ -150,27 +150,16 @@ public partial class ViewClientReport : Page
         string CustomerName = row.Cells[2].Text;
         string PhoneNumber = row.Cells[4].Text;
         string IDNumber = row.Cells[6].Text;
+       
         string status = row.Cells[11].Text;
         string Gender = row.Cells[8].Text;
         Label lblmsg = (Label)Master.FindControl("lblmsg");
 
-        if (e.CommandName.Equals("Details"))
+        if (e.CommandName.Equals("Edit"))
         {
             if (IDNumber != "")
             {
-                MultiView2.SetActiveView(DetailsView);
-                exportSec.Visible = false;
-
-                InterConnect.LeshLaonApi.ClientDetails Cli = bll.GetClientDetails(user, ClientID);
-                imgUrlClientPhoto.Text = Cli.ClientPhoto;
-                ImgUrlIDPhoto.Text = Cli.IDPhoto;
-                imgUrlClientPhoto.Visible = false;
-                ImgUrlIDPhoto.Visible = false;
-
-                lblClientNo.Text = ClientID;
-                lblClientName.Text = CustomerName;
-                lblTelNo.Text = PhoneNumber;
-                lblGender.Text = Gender;
+                Server.Transfer("~/AddClientDetails.aspx?CompanyCode=" + CompanyCode + "&ClientID=" + ClientID + "&PhoneNo=" + PhoneNumber + "&Action="+"Edit");
             }
             else
             {
@@ -233,7 +222,7 @@ public partial class ViewClientReport : Page
         else
         {
             Image2.Visible = true;
-            Image2.ImageUrl = ImgUrlIDPhoto.Text;
+            Image2.ImageUrl = imgUrlClientPhoto.Text;
         }
         Image2.Width = Unit.Percentage(50);
         Image2.Height = Unit.Percentage(50);

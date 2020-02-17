@@ -1,0 +1,524 @@
+
+
+
+
+body /* this is to set the body element, but mostly used for removing margins. */ {
+	margin-top: 200px;
+	padding: 0px;
+	background-color: black;
+}
+
+.cssPager td
+            {
+                  padding-left: 4px;     
+                  padding-right: 4px;    
+              }
+              
+ .cssPager span { background-color:#4f6b72; font-size:18px;}
+
+input[type=button] {
+	display: block;
+	vertical-align: middle;
+}
+
+.button-wrapper {
+	vertical-align: middle;
+}
+
+
+.navbar-center {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	top: 0;
+	padding-left: 225px;
+	padding-top: 15px;
+	text-align: left;
+	margin: auto;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.428571429;
+	color: white;
+}
+
+
+.thumbnail {
+	width: 700px;
+	height: 200px;
+}
+
+	.thumbnail img {
+	}
+
+
+.outer {
+	outline: 1px solid #eee;
+}
+
+	.outer > p {
+		display: table-cell;
+		height: 200px;
+		vertical-align: middle;
+	}
+
+img.bg {
+	/* Set rules to fill background */
+	min-height: 100%;
+	min-width: 1024px;
+	/* Set up proportionate scaling */
+	width: 100%;
+	height: auto;
+	/* Set up positioning */
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+@media screen and (max-width: 1024px) { /* Specific to this particular image */
+	img.bg {
+		left: 50%;
+		margin-left: -512px; /* 50% */
+	}
+
+	.navbar-center {
+		display: none;
+	}
+	/*hide on smaller screens*/
+}
+
+.form-signin {
+	max-width: 330px;
+	padding: 15px;
+	margin: 0 auto;
+}
+
+	.form-signin .form-signin-heading, .form-signin .checkbox {
+		margin-bottom: 10px;
+	}
+
+	.form-signin .checkbox {
+		font-weight: normal;
+	}
+
+	.form-signin .form-control {
+		position: relative;
+		font-size: 16px;
+		height: auto;
+		padding: 10px;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+		.form-signin .form-control:focus {
+			z-index: 2;
+		}
+
+	.form-signin input[type="text"] {
+		margin-bottom: -1px;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	.form-signin input[type="password"] {
+		margin-bottom: 10px;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+
+.account-wall {
+	margin-top: 20px;
+	padding: 40px 0px 20px 0px;
+	background-color: #f7f7f7;
+	-moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+	-moz-border-radius: 10%;
+	-webkit-border-radius: 2%;
+}
+
+.login-title {
+	color: #555;
+	font-size: 18px;
+	font-weight: 400;
+	display: block;
+}
+
+.profile-img {
+	width: 220px;
+	height: 100px;
+	margin: 0 auto 10px;
+	display: block;
+	border: solid;
+	border-width: 1px;
+	border-color: grey;
+	-moz-border-radius: 20%;
+	-webkit-border-radius: 4%;
+}
+
+.need-help {
+	margin-top: 10px;
+}
+
+.new-account {
+	display: block;
+	margin-top: 10px;
+}
+
+#watermarkCont {
+	width: 100%;
+	height: 100%; /*//or if you want to just make this a px amount, it might not take 100% height*/
+	position: absolute;
+	top: 0;
+}
+
+#watermark {
+	background-image: url("/Images/StanbicLogo.png");
+	width: 100%; /*whatever the image width is*/
+	;
+	height: 100%; /*whatever the image height is*/
+	;
+	position: absolute;
+}
+
+@media(min-width:768px) {
+	body {
+		margin-top: 50px;
+	}
+}
+
+#wrapper {
+	padding-left: 0;
+}
+
+
+#page-wrapper {
+	width: 100%;
+	display: block;
+	padding: 0;
+	background-color: #fff;
+}
+
+.huge {
+	font-size: 50px;
+	line-height: normal;
+}
+
+@media(min-width:768px) {
+	#wrapper {
+		padding-left: 225px;
+	}
+
+	#page-wrapper {
+		padding: 10px;
+	}
+}
+
+/* Top Navigation */
+
+.top-nav {
+	padding: 0 0;
+}
+
+	.top-nav > li {
+		display: inline-block;
+		float: left;
+	}
+
+		.top-nav > li > a {
+			padding-top: 15px;
+			padding-bottom: 15px;
+			line-height: 20px;
+			color: white;
+		}
+
+			.top-nav > li > a:hover,
+			.top-nav > li > a:focus,
+			.top-nav > .open > a,
+			.top-nav > .open > a:hover,
+			.top-nav > .open > a:focus {
+				color: #fff;
+				background-color: #059211;
+			}
+
+	.top-nav > .open > .dropdown-menu {
+		float: left;
+		position: absolute;
+		margin-top: 0;
+		border: 1px solid rgba(0,0,0,.15);
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		background-color: #fff;
+		-webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+		box-shadow: 0 6px 12px rgba(0,0,0,.175);
+	}
+
+		.top-nav > .open > .dropdown-menu > li > a {
+			white-space: normal;
+		}
+
+ul.message-dropdown {
+	padding: 0;
+	max-height: 250px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+li.message-preview {
+	width: 275px;
+	border-bottom: 1px solid rgba(0,0,0,.15);
+}
+
+	li.message-preview > a {
+		padding-top: 15px;
+		padding-bottom: 15px;
+	}
+
+li.message-footer {
+	margin: 5px 0;
+}
+
+ul.alert-dropdown {
+	width: 200px;
+}
+
+
+/* Side bar Navigation */
+@media(min-width:768px) {
+	.side-nav {
+		position: fixed;
+		top: 51px;
+		left: 225px;
+		width: 225px;
+		margin-left: -225px;
+		border: none;
+		border-radius: 0;
+		overflow-y: auto;
+		background-color: #F5F5F5;
+		border: solid;
+		border-color: gray;
+		border-top: none;
+		border-bottom: hidden;
+		border-width: 1.9px;
+		bottom: 0;
+		overflow-x: hidden;
+		padding-bottom: 40px;
+	}
+
+		.side-nav > li > a {
+			width: 225px;
+		}
+
+		.side-nav li a:hover,
+		.side-nav li a:focus {
+			outline: none;
+			background-color: #5cb85c !important;
+		}
+}
+
+.UserProfileSection {
+	display: block;
+	padding: 5px 65px 10px 28px;
+	text-decoration: none;
+	color: black;
+	border-left: hidden;
+	border-width: 0.5px;
+	border-bottom: double;
+	border-color: black;
+}
+
+.side-nav > li > ul {
+	padding: 0;
+}
+
+	.side-nav > li > ul > li > a {
+		display: block;
+		padding: 10px 15px 10px 38px;
+		text-decoration: none;
+		color: black;
+		border: dotted;
+		border-left: hidden;
+		border-width: 1px;
+		border-bottom: hidden;
+		border-color: black;
+	}
+
+
+
+		.side-nav > li > ul > li > a:hover {
+			color: #fff;
+		}
+
+
+
+/* Flot Chart Containers */
+
+.flot-chart {
+	display: block;
+	height: 400px;
+}
+
+.flot-chart-content {
+	width: 100%;
+	height: 100%;
+}
+
+/* Custom Colored Panels */
+
+.huge {
+	font-size: 40px;
+}
+
+.panel-green {
+	border-color: #5cb85c;
+}
+
+	.panel-green > .panel-heading {
+		border-color: #5cb85c;
+		color: #fff;
+		background-color: #5cb85c;
+	}
+
+	.panel-green > a {
+		color: #5cb85c;
+	}
+
+		.panel-green > a:hover {
+			color: #3d8b3d;
+		}
+
+.panel-red {
+	border-color: #d9534f;
+}
+
+	.panel-red > .panel-heading {
+		border-color: #d9534f;
+		color: #fff;
+		background-color: #d9534f;
+	}
+
+	.panel-red > a {
+		color: #d9534f;
+	}
+
+		.panel-red > a:hover {
+			color: #b52b27;
+		}
+
+.panel-yellow {
+	border-color: #f0ad4e;
+}
+
+	.panel-yellow > .panel-heading {
+		border-color: #f0ad4e;
+		color: #fff;
+		background-color: #f0ad4e;
+	}
+
+	.panel-yellow > a {
+		color: #f0ad4e;
+	}
+
+		.panel-yellow > a:hover {
+			color: #df8a13;
+		}
+
+/*Calendar Control CSS*/
+.cal_Theme1 .ajax__calendar_container {
+	background-color: #DEF1F4;
+	border: solid 1px #77D5F7;
+}
+
+.cal_Theme1 .ajax__calendar_header {
+	background-color: #ffffff;
+	margin-bottom: 4px;
+}
+
+.cal_Theme1 .ajax__calendar_title,
+.cal_Theme1 .ajax__calendar_next,
+.cal_Theme1 .ajax__calendar_prev {
+	color: #004080;
+	padding-top: 3px;
+}
+
+.cal_Theme1 .ajax__calendar_body {
+	background-color: #ffffff;
+	border: solid 1px #77D5F7;
+}
+
+.cal_Theme1 .ajax__calendar_dayname {
+	text-align: center;
+	font-weight: bold;
+	margin-bottom: 4px;
+	margin-top: 2px;
+	color: #004080;
+}
+
+.cal_Theme1 .ajax__calendar_day {
+	color: #004080;
+	text-align: center;
+}
+
+.cal_Theme1 .ajax__calendar_hover .ajax__calendar_day,
+.cal_Theme1 .ajax__calendar_hover .ajax__calendar_month,
+.cal_Theme1 .ajax__calendar_hover .ajax__calendar_year,
+.cal_Theme1 .ajax__calendar_active {
+	color: #004080;
+	font-weight: bold;
+	background-color: #DEF1F4;
+}
+
+.cal_Theme1 .ajax__calendar_today {
+	font-weight: bold;
+}
+
+.cal_Theme1 .ajax__calendar_other,
+.cal_Theme1 .ajax__calendar_hover .ajax__calendar_today,
+.cal_Theme1 .ajax__calendar_hover .ajax__calendar_title {
+	color: #bbbbbb;
+}
+
+body /* this is to set the body element, but mostly used for removing margins. */ {
+	background-color: white;
+	font-size: 16px;
+	zoom: 100%;
+	margin: 0;
+}
+
+/*top menu */
+.navbar-inverse {
+	background-color: #115E9B;
+	border-color: inherit;
+	color: white;
+	/*border-width:5px;*/
+}
+
+
+	.navbar-inverse .navbar-nav > li > a {
+		color: white;
+	}
+
+	/*company logo*/
+	.navbar-inverse .navbar-brand {
+		color: white;
+	}
+
+	/*Sidebar menu text color*/
+	.navbar-inverse .navbar-nav > li > a {
+		color: black;
+		border: dotted;
+		border-left: hidden;
+		border-width: 1px;
+		border-bottom: hidden;
+		border-color: black;
+		/*border-bottom-right-radius: 20px;*/
+	}
+
+div#watermark {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: 99999;
+	background: url('Images/StanbicLogo.png') center center no-repeat;
+	pointer-events: none;
+}

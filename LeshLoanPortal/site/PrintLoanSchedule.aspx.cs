@@ -67,9 +67,9 @@ public partial class PrintLoanSchedule : System.Web.UI.Page
 
         double Interest = (InterestIn / 100);
 
-        double top = (Principal * Interest * (Math.Pow((1 + Interest), NOofMonths)));
-        double bottom = ((Math.Pow((1 + Interest), NOofMonths)) - 1);
-        double EMI = Math.Round(top / bottom);
+        //double top = (Principal * Interest * (Math.Pow((1 + Interest), NOofMonths)));
+        //double bottom = ((Math.Pow((1 + Interest), NOofMonths)) - 1);
+        //double EMI = Math.Round(top / bottom);
 
         DataTable LoanSchedule = new DataTable();
         LoanSchedule.Clear();
@@ -78,14 +78,26 @@ public partial class PrintLoanSchedule : System.Web.UI.Page
         LoanSchedule.Columns.Add("InterestPerInstallment");
         LoanSchedule.Columns.Add("EMI");
 
+        double TotalInterestAmount = (Interest * Principal * NOofMonths);
+        double LoanAmountPerMonth = Math.Round(((Principal + TotalInterestAmount) / NOofMonths), MidpointRounding.ToEven);
+        double InterestPerMonth = Math.Round(Interest * Principal);
+        
+
         for (int i = 1; i <= NOofMonths; i++)
         {
-            double InterestPerMonth = Math.Round(Interest * Principal);
-            double PrincipalPerMonth = Math.Round(EMI - InterestPerMonth);
-            Principal = Math.Round((Principal - PrincipalPerMonth), MidpointRounding.ToEven);
-            //double LoanBalance = ;
-            LoanSchedule.Rows.Add(i, PrincipalPerMonth.ToString("#,##0"), InterestPerMonth.ToString("#,##0"), EMI.ToString("#,##0"));
+            LoanSchedule.Rows.Add(i, Principal.ToString("#,##0"), InterestPerMonth.ToString("#,##0"), LoanAmountPerMonth.ToString("#,##0"));
+            Principal = Math.Round((Principal - (LoanAmountPerMonth - InterestPerMonth)), MidpointRounding.ToEven);
         }
+
+
+        //for (int i = 1; i <= NOofMonths; i++)
+        //{
+        //    double InterestPerMonth = Math.Round(Interest * Principal);
+        //    double PrincipalPerMonth = Math.Round(EMI - InterestPerMonth);
+        //    Principal = Math.Round((Principal - PrincipalPerMonth), MidpointRounding.ToEven);
+        //    //double LoanBalance = ;
+        //    LoanSchedule.Rows.Add(i, PrincipalPerMonth.ToString("#,##0"), InterestPerMonth.ToString("#,##0"), EMI.ToString("#,##0"));
+        //}
 
         ds.Tables.Add(Loan.Copy());
         ds.Tables.Add(LoanSchedule);
@@ -203,5 +215,12 @@ public partial class PrintLoanSchedule : System.Web.UI.Page
     protected void btnLoanAgmt_Click(object sender, EventArgs e)
     {
         MultiView2.SetActiveView(AgmtView);
+    }
+
+    protected void LinkButton1_Click(object sender, EventArgs e)
+    {
+        Session.Clear();
+        Session.Abandon();
+        Response.Redirect("./Default.aspx");
     }
 }

@@ -142,10 +142,10 @@
                       </asp:DropDownList>--%>
                         
                       Loan Date
-                      <asp:TextBox ID="txtLoanDate" runat="server" CssClass="form-control"  placeholder="Loan Date"></asp:TextBox>
+                      <asp:TextBox ID="txtLoanDate" runat="server" CssClass="form-control" AutoComplete="off"  placeholder="Loan Date"></asp:TextBox>
 
                         Loan Amount
-                      <asp:TextBox ID="txtLoanAmount" runat="server" CssClass="form-control LoanAmnt" onchange="CalculateTotalLoanAmt();" onkeyup="javascript:this.value=Comma(this.value);"></asp:TextBox>
+                      <asp:TextBox ID="txtLoanAmount" runat="server" CssClass="form-control LoanAmnt" AutoComplete="off" onchange="CalculateTotalLoanAmt();" onkeyup="javascript:this.value=Comma(this.value);"></asp:TextBox>
 
                       Interest Rate (%)
                       <asp:TextBox ID="txtInterest" runat="server" CssClass="form-control Interest" onchange="CalculateTotalLoanAmt();"></asp:TextBox>
@@ -154,14 +154,17 @@
                       <asp:TextBox ID="txtLoanPurp" runat="server"  CssClass="form-control" TextMode="multiline" Columns="10" Rows="2"></asp:TextBox>
                         
                       Organization
-                      <asp:TextBox ID="txtorg" runat="server"  CssClass="form-control"></asp:TextBox>
+                      <asp:TextBox ID="txtorg" runat="server" AutoComplete="off"  CssClass="form-control"></asp:TextBox>
 
                       <%--Approved Amount
                       <asp:TextBox ID="txtApprov" runat="server" CssClass="form-control TotalAmnt"></asp:TextBox>--%>
                         
                         <div runat="server" id="LoanDets">
+                        Processing Fee(3%)
+                            <asp:TextBox ID="txtProcFee" runat="server" Text="0" CssClass="form-control ProcFee"></asp:TextBox>
+
                         Months To Pay In
-                      <asp:TextBox ID="txtMonths" runat="server"  CssClass="form-control months" onchange="CalculateTotalLoanAmt();"></asp:TextBox>
+                      <asp:TextBox ID="txtMonths" runat="server" AutoComplete="off"  CssClass="form-control months" onchange="CalculateTotalLoanAmt();"></asp:TextBox>
 
                         Amount to Pay Per Month
                       <asp:TextBox ID="txtAmountToPayPerMonth" runat="server" Text="0"  CssClass="form-control AmntPerMonth"></asp:TextBox>
@@ -193,36 +196,34 @@
 
                     <script type="text/javascript">
 
-            //function CalculateSubtotal() {
-            //    try {
-            //        var LoanAmnt = $(".LoanAmnt").val();
-            //        var Interest = $(".Interest").val();
-            //        var result = parseInt(removeCommas(LoanAmnt)) + parseInt((removeCommas(LoanAmnt) * (removeCommas(Interest)/100)));
-            //        $(".TotalAmnt").val(Comma(result));
-            //    }
-            //    catch (err) {
-            //        alert("EXCEPTION raised: ");
-            //    }
-            //}
-            
-
             function CalculateTotalLoanAmt() {
                 try {
                     var LoanAmnt = $(".LoanAmnt").val();
                     var InterestIn = $(".Interest").val();
                     var Months = $(".months").val();
 
+                    //get reducing balance loan amount
+                    //var Interest = (parseInt(InterestIn) / 100);
+                    //var InterestPlus = (1 + parseFloat(Interest));
+                    //var InterestPow = Math.pow(InterestPlus, Months);
+                    //var top = (parseFloat(removeCommas(LoanAmnt)) * parseFloat(Interest) * parseFloat(InterestPow));//(Math.Pow((1 + Interest) , Months));
+                    //var bottom = (parseFloat(InterestPow)) - 1;
+                    //var result = Math.round(parseFloat(top) / parseFloat(bottom));
+                    //var WholeAmnt = (parseFloat(result) * parseFloat(Months));
+
+                    //get fixed interest loan amount
                     var Interest = (parseInt(InterestIn) / 100);
-                    var InterestPlus = (1 + parseFloat(Interest));
-                    var InterestPow = Math.pow(InterestPlus, Months);
-                    var top = (parseFloat(removeCommas(LoanAmnt)) * parseFloat(Interest) * parseFloat(InterestPow));//(Math.Pow((1 + Interest) , Months))
-                    
-                    var bottom = (parseFloat(InterestPow)) - 1;
-                    var result = Math.round(parseFloat(top) / parseFloat(bottom));
-                    
-                    var WholeAmnt = (parseFloat(result) * parseFloat(Months));
+                    var TotalInterest = (Interest * parseFloat(removeCommas(LoanAmnt)) * Months);
+                    var AmountPerMonth = ((parseFloat(removeCommas(LoanAmnt)) + TotalInterest) / Months)
+                    var result = Math.round(parseFloat(AmountPerMonth));
+
+                    var WholeAmnt = (parseFloat(removeCommas(LoanAmnt)) + parseFloat(TotalInterest));
+
+                    var ProcFee = (parseFloat(removeCommas(LoanAmnt)) * (3 / 100));
+
                     $(".AmntPerMonth").val(Comma(result))
                     $(".AppLoanAmnt").val(Comma(WholeAmnt));
+                    $(".ProcFee").val(Comma(ProcFee));
                 }
                 catch (err) {
                     alert("EXCEPTION raised: " + err.Message);
@@ -244,29 +245,29 @@
                    
 		            <div class="modal-body">
                         Name
-                      <asp:TextBox ID="txtColName" runat="server" CssClass="form-control"  placeholder="Collateral Name"></asp:TextBox>
+                      <asp:TextBox ID="txtColName" runat="server" AutoComplete="off" CssClass="form-control"  placeholder="Collateral Name"></asp:TextBox>
 
                         <%--Loan Type
                       <asp:DropDownList ID="ddlLoanType" runat="server" CssClass="form-control">
                       </asp:DropDownList>--%>
                         
                       Type of Collateral
-                      <asp:TextBox ID="txtColType" runat="server" CssClass="form-control"  placeholder="Collateral Type"></asp:TextBox>
+                      <asp:TextBox ID="txtColType" runat="server" AutoComplete="off" CssClass="form-control"  placeholder="Collateral Type"></asp:TextBox>
 
                         Model
-                      <asp:TextBox ID="txtColModel" runat="server" CssClass="form-control"></asp:TextBox>
+                      <asp:TextBox ID="txtColModel" runat="server" AutoComplete="off" CssClass="form-control"></asp:TextBox>
 
                       Make
-                      <asp:TextBox ID="txtColMake" runat="server" CssClass="form-control"></asp:TextBox>
+                      <asp:TextBox ID="txtColMake" runat="server" AutoComplete="off" CssClass="form-control"></asp:TextBox>
 
                         Serial Number
-                      <asp:TextBox ID="txtColSerialNo" runat="server"  CssClass="form-control"></asp:TextBox>
+                      <asp:TextBox ID="txtColSerialNo" runat="server" AutoComplete="off"  CssClass="form-control"></asp:TextBox>
                         
                      Estimated Price
-                      <asp:TextBox ID="txtColEstPrice" runat="server"  CssClass="form-control"></asp:TextBox>
+                      <asp:TextBox ID="txtColEstPrice" runat="server" AutoComplete="off" CssClass="form-control"></asp:TextBox>
 
                       Proof of Ownership
-                        <asp:FileUpload ID="txtColImgProof" runat="server" CssClass="form-control"/>
+                        <asp:FileUpload ID="txtColImgProof" runat="server" AutoComplete="off" CssClass="form-control"/>
                        
                         Observations
                       <asp:TextBox ID="txtColObsv" runat="server"  CssClass="form-control" TextMode="MultiLine" Columns="5" Rows="2"></asp:TextBox>

@@ -33,7 +33,7 @@ namespace LeshLoanMngt.Entities
 
         public override bool IsValid()
         {
-            string propertiesThatCanBeNull = "ClientAddress|ClientEmail|Gender|DOB|BusinessLoc|Occupation|NoOfBeneficiaries|EducLevel|MonthlyIncome";
+            string propertiesThatCanBeNull = "ClientAddress|ClientEmail|Gender|BusinessLoc|Occupation|NoOfBeneficiaries|EducLevel|MonthlyIncome";
             string nullCheckResult = SharedCommons.CheckForNulls(this, propertiesThatCanBeNull);
             if (nullCheckResult != Globals.SUCCESS_STATUS_TEXT)
             {

@@ -35,19 +35,19 @@
                 <label>
                     User ID
                 </label>
-                <asp:TextBox ID="txtUserID" runat="server" CssClass="form-control" placeholder="Enter UserID" />
+                <asp:TextBox ID="txtUserID" runat="server" AutoComplete="Off" CssClass="form-control" placeholder="Enter UserID" />
             </div>
             <div class="col-lg-2">
                 <label>
                     Start Date
                 </label>
-                <asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" placeholder="Select Date" />
+                <asp:TextBox ID="txtStartDate" runat="server" AutoComplete="Off" CssClass="form-control" placeholder="Select Date" />
             </div>
             <div class="col-lg-2">
                 <label>
                     End Date
                 </label>
-                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" placeholder="Select Date"/>
+                <asp:TextBox ID="txtEndDate" runat="server" AutoComplete="Off" CssClass="form-control" placeholder="Select Date"/>
             </div>
             <div class="col-lg-3" style="padding-top: 15px;">
             

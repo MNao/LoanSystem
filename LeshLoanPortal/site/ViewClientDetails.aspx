@@ -28,9 +28,9 @@
         <div class="row">
             <div class="col-lg-3">
                 <label>
-                    Client Number
+                    Client Number/Name
                 </label>
-                <asp:TextBox ID="txtClientNo" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="txtSearch" runat="server" ClientIdMode="Static" CssClass="form-control" placeholder="Search"></asp:TextBox>
             </div>
             <div class="col-lg-2">
                 <label>

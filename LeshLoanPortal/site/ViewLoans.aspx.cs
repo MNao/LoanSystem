@@ -43,17 +43,18 @@ public partial class ViewLoans : Page
     protected void LoadData()
     {
         //bll.LoadAgentsIntopDropDown(user, ddAgents);
-
+        txtSearch.Text = " - ";
         if (user.RoleCode == "003")
         {
             ddStatus.SelectedItem.Value = "PENDING";
         }
         else if (user.RoleCode == "004")
         {
-            txtClientNo.Text = user.UserId;
-            txtClientNo.Enabled = false;
+            txtSearch.Text = " -" + user.UserId;
+            txtSearch.Enabled = false;
             //CEOSelect.Visible = false;
         }
+        
         SearchDB();
     }
 
@@ -116,7 +117,7 @@ public partial class ViewLoans : Page
     private string[] GetSearchParameters()
     {
         List<string> searchCriteria = new List<string>();
-        string ClientNo = txtClientNo.Text.Trim();
+        string ClientNo = txtSearch.Text.Split('-')[1];
         string UserId = user.UserId;
         string Status = ddStatus.SelectedValue;
         string StartDate = txtStartDate.Text;
@@ -323,37 +324,6 @@ public partial class ViewLoans : Page
     //}
 
 
-
-    //protected void ddlReceipient_SelectedIndexChanged(object sender, EventArgs e)
-    //{
-    //    var prefix = ddlReceipient.SelectedValue;
-    //    if (prefix.Equals("0")){
-    //        MultiView2.ActiveViewIndex = 0;
-    //    }
-    //    else if (prefix.Equals("1"))
-    //    {
-    //        //lblMessageLength.Text = "SMS MESSAGE LENGTH : 155";
-    //        //LoadActivelists();
-    //        MultiView2.ActiveViewIndex = 1;
-    //    }
-    //    else if (prefix.Equals("2"))
-    //    {
-    //        //lblMessageLength.Text = "SMS MESSAGE LENGTH : 154";
-    //        MultiView2.ActiveViewIndex = 2;
-    //    }
-    //    lblMessageLength.Text = "SMS MESSAGE LENGTH : 160";
-    //}
-
-
-    //protected void ddlMessageTemplates_SelectedIndexChanged(object sender, EventArgs e)
-    //{
-
-    //    var messageTemplate = ddlMessageTemplates.SelectedValue;
-    //    txtMessage.Text = messageTemplate;
-
-    //}
-
-
     protected void dataGridResults_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         int index = 0;
@@ -361,9 +331,9 @@ public partial class ViewLoans : Page
         GridView grid = sender as GridView;
         index = Convert.ToInt32(e.CommandArgument);
         row = grid.Rows[index];
-        string ClientID = row.Cells[1].Text;
-        string LoanID = row.Cells[2].Text;
-        string AmountPerMonth = row.Cells[8].Text;
+        string ClientID = row.Cells[2].Text;
+        string LoanID = row.Cells[3].Text;
+        string AmountPerMonth = row.Cells[9].Text;
         Label lblmsg = (Label)Master.FindControl("lblmsg");
 
         if (e.CommandName.Equals("ViewPayments"))
@@ -405,12 +375,12 @@ public partial class ViewLoans : Page
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             //e.Row.Cells[2].Text = "<i>" + e.Row.Cells[2].Text + "</i>";
-            string LoanId = e.Row.Cells[2].Text;
-            string ClientID = e.Row.Cells[1].Text;
+            string LoanId = e.Row.Cells[3].Text;
+            string ClientID = e.Row.Cells[2].Text;
             HyperLink Link = new HyperLink();
             Link.NavigateUrl = "PrintLoanSchedule.aspx?CompanyCode=" + user.CompanyCode + "&Id=" + LoanId + "&ClientCode=" + ClientID;
             Link.Text = LoanId;
-            e.Row.Cells[2].Controls.Add(Link);
+            e.Row.Cells[3].Controls.Add(Link);
         }
     }
 }

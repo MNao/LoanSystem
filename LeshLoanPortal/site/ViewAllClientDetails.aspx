@@ -1,4 +1,4 @@
-<%@ Page Language="C#" MasterPageFile="~/MasterMain.master" AutoEventWireup="true" CodeFile="ViewClientReport.aspx.cs" Inherits="ViewClientReport" Title="Client Details" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterMain.master" AutoEventWireup="true" CodeFile="ViewAllClientDetails.aspx.cs" Inherits="ViewAllClientDetails" Title="Client Details" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <div class="col-lg-12">
@@ -43,7 +43,7 @@
             </div>
         </div>
         <hr />
-        <div class="row" id="exportSec" runat="server">
+        <div class="row">
                 <div class="col-md-4"> 
                         <asp:RadioButton runat="server" ID="rdExcel" Text="Excel" GroupName="btnCheck" CssClass="form-control" />
                 </div>
@@ -77,9 +77,9 @@
                             <HeaderStyle BackColor="#E44B4B" Font-Bold="false" ForeColor="white" Font-Italic="False"
                                 Font-Overline="False" Font-Strikeout="False" Font-Underline="False" Height="30px" />
                             <Columns>
-                                <asp:TemplateField HeaderText="Details">
+                                <asp:TemplateField HeaderText="Edit">
                                     <ItemTemplate>
-                                        <i style="color:dodgerblue;"><a class="fa fa-info"><asp:Button runat="server" ID="btnDetails" Text="Details" ForeColor="dodgerblue" CommandName="Details" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" BackColor="WhiteSmoke" BorderStyle="None"></asp:Button></a></i>
+                                        <i style="color:dodgerblue;"><a class="fa fa-info"><asp:Button runat="server" ID="btnEdit" Text="Edit" ForeColor="dodgerblue" CommandName="Edit" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" BackColor="WhiteSmoke" BorderStyle="None"></asp:Button></a></i>
                                         
                                       </ItemTemplate>
                                 </asp:TemplateField>
@@ -145,5 +145,6 @@
     }
 </script>
 </asp:Content>
+
 
 

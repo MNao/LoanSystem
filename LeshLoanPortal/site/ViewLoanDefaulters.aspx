@@ -33,7 +33,7 @@
                     Client Number
                 </label>
                 <%--<asp:TextBox ID="txtClientNo" runat="server" CssClass="form-control"></asp:TextBox>--%>
-                <asp:TextBox ID="txtSearch" runat="server" ClientIdMode="Static" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="txtSearch" runat="server" ClientIdMode="Static" placeholder="search" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="col-lg-2">
                 <label>

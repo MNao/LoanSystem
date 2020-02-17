@@ -73,27 +73,12 @@ public partial class AddLoan : System.Web.UI.Page
         txtLoanAmount.Enabled = false;
         txtLoanPurp.Enabled = false;
         txtorg.Enabled = false;
-        //txtApprov.Enabled = false;
         txtInterest.Enabled = false;
-
-        //txtAmountToPayPerMonth.Enabled = false;
-        //txtAppLoanAmount.Enabled = false;
     }
     
     public void LoadData()
     {
         ClientDetailsBtn.BackColor = System.Drawing.Color.LightSkyBlue;
-        //if (user.RoleCode != "001")
-        //{
-        //    ddClientNo.SelectedItem.Value = user.UserId;
-        //    ddClientNo.SelectedItem.Text = user.UserId;
-        //    //ddClientNo.Enabled = false;
-        //}
-        //else
-        //{
-        //    bll.LoadClientsIntoDropDown(user.CompanyCode, "", ddClientNo);
-        //}
-        //ddClientNoSelectedIndexChanged(null,null);
     }
     protected void txtSearch_TextChanged(object sender, EventArgs e)
     {
@@ -111,6 +96,7 @@ public partial class AddLoan : System.Web.UI.Page
         txtHomeAddress.Text = GetClient.ClientAddress;
         txtMobileNo.Text = GetClient.ClientPhoneNumber;
         txtNameofReferee.Text = GetClient.Referee;
+        txtBirthDate.Text = GetClient.DOB;
 
 
         ddGender.Enabled = false;
@@ -120,6 +106,7 @@ public partial class AddLoan : System.Web.UI.Page
         txtHomeAddress.Enabled = false;
         txtMobileNo.Enabled = false;
         txtNameofReferee.Enabled = false;
+        txtBirthDate.Enabled = false;
     }
 
     //protected void ddClientNoSelectedIndexChanged(object sender, EventArgs e)
@@ -190,7 +177,7 @@ public partial class AddLoan : System.Web.UI.Page
 
         InterConnect.LeshLaonApi.ClientDetails AddnClient = GetAddnClientDetails();
         //validate client details input
-        string check_status = validate_input(AddnClient.DOB, AddnClient.BusinessLoc, AddnClient.Occupation, AddnClient.NoOfBeneficiaries, AddnClient.EducLevel, AddnClient.MonthlyIncome);
+        string check_status = validate_input(AddnClient.BusinessLoc, AddnClient.Occupation, AddnClient.NoOfBeneficiaries, AddnClient.EducLevel, AddnClient.MonthlyIncome);
 
 
         if (!check_status.Equals("OK"))
@@ -218,7 +205,7 @@ public partial class AddLoan : System.Web.UI.Page
                 LoanAgmtBtn.BackColor = System.Drawing.Color.White;
                 txtLoanNo.Text = bll.GenerateSystemCode("LOAN");
 
-             SystemSetting setting = bll.GetSystemSettingById("INTEREST_RATE", "Lesh");
+             SystemSetting setting = bll.GetInterestSetting("Lensh", "GeneralInterest");
              txtInterest.Text = setting.SettingValue;
             txtLoanNo.Enabled = false;
             txtInterest.Enabled = false;
@@ -237,7 +224,7 @@ public partial class AddLoan : System.Web.UI.Page
     {
         InterConnect.LeshLaonApi.ClientDetails AddnClient = new InterConnect.LeshLaonApi.ClientDetails();
         AddnClient.ClientNo = txtSearch.Text.Split('-')[1];//ddClientNo.SelectedValue;
-        AddnClient.DOB = txtBirthDate.Text.ToString();
+        //AddnClient.DOB = txtBirthDate.Text.ToString();
         AddnClient.BusinessLoc = txtBusLoc.Text.Trim().ToString();
         AddnClient.Occupation = txtOccup.Text.Trim().ToString();
         AddnClient.NoOfBeneficiaries = txtBenf.Text.Trim().ToString();
@@ -248,15 +235,10 @@ public partial class AddLoan : System.Web.UI.Page
     }
 
     
-    private string validate_input(string DOB, string BusiLoc, string Occup, string NoofBen, string EducLv, string MonthlyInc)
+    private string validate_input(string BusiLoc, string Occup, string NoofBen, string EducLv, string MonthlyInc)
     {
         string output = "";
-        if (DOB.Equals(""))
-        {
-            output = "Date of Birth Required";
-            txtBirthDate.Focus();
-        }
-        else if (BusiLoc.Equals(""))
+        if (BusiLoc.Equals(""))
         {
             output = "Business Location Required";
             txtBusLoc.Focus();
@@ -487,7 +469,7 @@ public partial class AddLoan : System.Web.UI.Page
             return;
         }
         
-        Result Approval_save = bll.SaveLoanApproval(Loan.LoanNo, Loan.Approved, Loan.ApprovedAmount, Loan.ModifiedBy, Loan.MonthsToPayIn, Loan.EasyPaidAmountPerMonth, Loan.ImageProof, Loan.Observations);
+        Result Approval_save = bll.SaveLoanApproval(Loan.LoanNo, Loan.Approved, Loan.ApprovedAmount, Loan.ModifiedBy, Loan.MonthsToPayIn, Loan.EasyPaidAmountPerMonth, Loan.ProcessingFee, Loan.ImageProof, Loan.Observations);
 
         if (Approval_save.StatusCode != "0")
         {
@@ -516,6 +498,7 @@ public partial class AddLoan : System.Web.UI.Page
         ApprovalLoanDetails.ModifiedBy = user.UserId;
         ApprovalLoanDetails.ImageProof = bll.GetImageUploadedInBase64String(ImgGuarantor);
         ApprovalLoanDetails.Observations = txtComment.Text;
+        ApprovalLoanDetails.ProcessingFee = txtProcFee.Text.Replace(",", "");
         return ApprovalLoanDetails;
     }
 

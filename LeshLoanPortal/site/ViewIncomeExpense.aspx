@@ -39,22 +39,22 @@
                 <label>
                     Start Date
                 </label>
-                <asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" placeholder="Select Date" />
+                <asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Select Date" />
             </div>
             <div class="col-lg-2">
                 <label>
                     End Date
                 </label>
-                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" placeholder="Select Date"/>
+                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Select Date"/>
             </div>
             <div class="col-lg-2" style="padding-top: 15px;">
             
-                <asp:Button ID="btnSubmit" runat="server" Text="Search" CssClass="btn btn-success btn-lg"
+                <asp:Button ID="btnSubmit" runat="server" Text="Search" CssClass="btn btn-success btn-md"
                     OnClick="btnSubmit_Click" />
             </div>
             <div class="col-lg-2" style="padding-top: 15px;">
             
-                <asp:Button ID="btnExport" runat="server" Text="Export" CssClass="btn btn-success btn-lg"
+                <asp:Button ID="btnExport" runat="server" Text="Export" CssClass="btn btn-success btn-md"
                     OnClick="btnExport_Click" />
             </div>
         </div>
@@ -92,7 +92,25 @@
                             </Columns>
                         </asp:GridView>
                     </div>
+
+                    <div class="table-responsive">
+                        <asp:GridView runat="server" Width="100%" CssClass="table table-bordered table-hover"
+                            ID="dataGridResultsIncomeStat" AutoGenerateColumns="true" OnRowDataBound="dataGridResultsIncomeStat_RowDataBound" ShowFooter="True" ><%--OnRowCreated="dataGridResults_RowCreated" arBFE4FF hc115E9B  --%>
+                            <AlternatingRowStyle BackColor="#FFF9FB" /> <%--DE6868--%>
+                            <HeaderStyle BackColor="#E44B4B" Font-Bold="false" ForeColor="white" Font-Italic="False"
+                                Font-Overline="False" Font-Strikeout="False" Font-Underline="False" Height="30px" />
+                            <FooterStyle BackColor="#E44B4B" Font-Bold="false" ForeColor="white" Font-Italic="False"
+                                Font-Overline="False" Font-Strikeout="False" Font-Underline="False" Height="30px" />
+                        </asp:GridView>
+                        <%--<asp:Label ID="lblIncomeStat" CssClass="form-control" runat="server" Text="0"></asp:Label>--%>
+                    </div>
+                    
                 </div>
+            </asp:View>
+            <asp:View runat="server" ID="IncomeStateView">
+                <div class="row" style="overflow-x:auto;">
+                    
+                        </div>
             </asp:View>
             <asp:View runat="server" ID="ConfirmView">
                 <div class="container">

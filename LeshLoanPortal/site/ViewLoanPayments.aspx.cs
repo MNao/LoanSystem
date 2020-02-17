@@ -36,9 +36,9 @@ public partial class ViewLoanPayments : Page
             {
                 LoadEntityData(LoanID);
             }
-            
-            //LoadMessageTemplates();
 
+            //LoadMessageTemplates();
+            SearchDB();
         }
         catch (Exception ex)
         {

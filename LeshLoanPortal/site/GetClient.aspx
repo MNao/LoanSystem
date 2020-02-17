@@ -14,7 +14,9 @@
                     minLength: 3,
                 //source:  [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ] 
                 source: 'GetClientName.ashx'
-            });
+                });
+                $("#txtSearch").autocomplete("option", "position",
+                                {my: "right bottom", at: "left bottom", collision: "flip" });
         });
                     </script>
 </head>

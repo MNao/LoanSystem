@@ -45,24 +45,31 @@
                         <div class="row">
                                         <div class="col-lg-6">
                                             <label>Client Name</label>
-                                            <asp:TextBox ID="txtName" runat="server" CssClass="form-control" placeholder="Enter Client Name"></asp:TextBox>
+                                            <asp:TextBox ID="txtName" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Enter Client Name"></asp:TextBox>
                                             <p class="help-block"></p>
                                         </div>
                                         <div class="col-lg-6">
                                             <label>Client PhoneNo</label>
-                                            <asp:TextBox ID="txtPhoneNo" runat="server" CssClass="form-control" placeholder="Enter Phone Number" />
+                                            <asp:TextBox ID="txtPhoneNo" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Enter Phone Number" />
                                             <p class="help-block"></p>
                                         </div>
                                     </div>
                         <div class="row">
                                         <div class="col-lg-6">
-                                            <label>Referee Name</label>
-                                            <asp:TextBox ID="txtReferee" runat="server" CssClass="form-control" placeholder="Enter Referee Name"></asp:TextBox>
+                                            <label>Date of Birth</label>
+                                            <asp:TextBox ID="txtDOB" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Enter Date of Birth(yyyy-mm-dd)"></asp:TextBox>
+                                            <p class="help-block"></p>
+                                        </div>
+                        </div>
+                        <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>Guarantor Name</label>
+                                            <asp:TextBox ID="txtReferee" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Enter Referee Name"></asp:TextBox>
                                             <p class="help-block"></p>
                                         </div>
                                         <div class="col-lg-6">
-                                            <label>Referee PhoneNo</label>
-                                            <asp:TextBox ID="txtRefereePhone" runat="server" CssClass="form-control" placeholder="Enter Referee Phone Number" />
+                                            <label>Guarantor PhoneNo</label>
+                                            <asp:TextBox ID="txtRefereePhone" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Enter Referee Phone Number" />
                                             <p class="help-block"></p>
                                         </div>
                         </div>
@@ -76,7 +83,7 @@
                       <div class="row">
                                         <div class="col-lg-6">
                                             <label>Client  Email</label>
-                                            <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" placeholder="Enter Client Email Address" />
+                                            <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Enter Client Email Address" />
                                             <p class="help-block"></p>
                                         </div>
                                         <div class="col-lg-6">
@@ -103,7 +110,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <label>ID Number</label>
-                                            <asp:TextBox ID="txtIDNo" Style="z-index: 10000;" runat="server" CssClass="form-control" placeholder="Enter ID No" />
+                                            <asp:TextBox ID="txtIDNo" Style="z-index: 10000;" runat="server" autocomplete="off" CssClass="form-control" placeholder="Enter ID No" />
                                             <p class="help-block"></p>
                                         </div>
                                     </div>
@@ -121,7 +128,7 @@
                                     </div>
                         <div class="row" id="Reason" runat="server">
                                         <div class="col-lg-6">
-                                            <label>Reason for Rejection</label>
+                                            <label>Reason in Case of Rejection</label>
                                             <asp:TextBox ID="txtReasonforRejection" TextMode="MultiLine" runat="server" CssClass="form-control" placeholder="Enter Reason" />
                                             <p class="help-block"></p>
                                         </div>
@@ -166,22 +173,27 @@
                     </div>
                     <div class="modal-footer">
                         <div class="row">
-                        <asp:Button ID="btnSubmit" runat="server" Text="Submit Details" Width="200px" CssClass="btn btn-success btn-lg" OnClick="btnSubmit_Click" />
-                        <asp:Button ID="btnEdit" runat="server" Text="Approve Client" Width="200px" CssClass="btn btn-success btn-lg" OnClick="btnEdit_Click" />
-                        <asp:Button ID="btnReject" runat="server" Text="Reject" Width="200px" CssClass="btn btn-danger btn-lg" OnClick="btnReject_Click"/>
-                        <asp:Button ID="btnRejectWithReason" runat="server" Text="Reject" Width="200px" CssClass="btn btn-danger btn-lg" OnClick="btnRejectWithReason_Click"/>
+                                    <asp:Button ID="btnSubmit" runat="server" Text="Submit Details" Width="200px" CssClass="btn btn-success btn-md" OnClick="btnSubmit_Click" />
+                                
+                                    <asp:Button ID="btnEdit" runat="server" Text="Approve Client" Width="200px" CssClass="btn btn-success btn-md" OnClick="btnEdit_Click" />
+                                    
+                                        <asp:Button ID="btnReject" runat="server" Text="Reject" Width="200px" CssClass="btn btn-danger btn-md" OnClick="btnReject_Click"/>
+                                    
+                                   <asp:Button ID="btnBack" runat="server" Text="Back" Width="200px" CssClass="btn btn-danger btn-md" OnClick="btnBack_Click"/>
+                                
+                                    <asp:Button ID="btnEditDetails" runat="server" Text="Edit" Width="200px" CssClass="btn btn-success btn-md" OnClick="btnEditDetails_Click"/>
+                                
                         </div>
-                    </div>
                 </div>
 
 
-        <div id="page-wrapper">
+        <%--<div id="page-wrapper">
 
             <div class="container-fluid">
 
                 <div class="row">
 
-                    <%------------------------------------------ Message Label ----------------------------------------%>
+                    
                     <div class="row">
                         <div class="col-lg-1"></div>
                         <div class="col-lg-10 text-center">
@@ -209,23 +221,10 @@
                         </div>
                         <div class="col-lg-1"></div>
                     </div>
-
-                    <%--<div class="container">
-                        <div class="col-lg-2"></div>
-
-                        <div class="col-lg-8">
-
-                            <div class="card-footer">
-                                <div class="text-center">
-                                </div>
-                            </div>
-                            </div>
-                            <div class="col-lg-2"></div>
-                        </div>--%>
                     <div class="col-lg-2"></div>
                 </div>
             </div>
-        </div>
+        </div>--%>
 
 <%--        <ajaxToolkit:ToolkitScriptManager ID="ScriptManager1" runat="Server" EnableScriptGlobalization="true"
             EnableScriptLocalization="true">

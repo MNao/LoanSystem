@@ -31,13 +31,13 @@
                 <label>
                     Start Date
                 </label>
-                <asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" placeholder="Select Date" />
+                <asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Select Date" />
             </div>
             <div class="col-md-3">
                 <label>
                     End Date
                 </label>
-                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" placeholder="Select Date"/>
+                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Select Date"/>
             </div>
             <div class="col-md-3" style="padding-top: 15px;">
             
@@ -45,7 +45,7 @@
                     OnClick="btnSubmit_Click" />
             </div>
         </div>
-        <hr />
+        <br />
         <div class="row">
                 <div class="col-md-4"> 
                         <asp:RadioButton runat="server" ID="rdExcel" Text="Excel" GroupName="btnCheck" CssClass="form-control" />
@@ -74,22 +74,44 @@
                 <div class="row" style="overflow-x:auto;">
                     <div class="table-responsive">
                         <asp:GridView runat="server" Width="100%" CssClass="table table-bordered table-hover"
-                            ID="dataGridResults" AutoGenerateColumns="true">
+                            ID="dataGridResults" AutoGenerateColumns="true" OnRowCommand="dataGridResults_RowCommand">
                             <AlternatingRowStyle BackColor="#FFF9FB" />
                             <HeaderStyle BackColor="#E44B4B" Font-Bold="false" ForeColor="white" Font-Italic="False"
                                 Font-Overline="False" Font-Strikeout="False" Font-Underline="False" Height="30px" />
                             <Columns>
-                                <%--<asp:TemplateField HeaderText="Details">
+                                <asp:TemplateField HeaderText="Actions">
                                     <ItemTemplate>
-                                        <asp:Button ID="btnMakeASale" runat="server" Text="Download KYC" CommandName="Download" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                                        <i style="color:dodgerblue;"><a class="fa fa-edit"> <asp:Button runat="server" ID="btnEdit" Text="Edit" ForeColor="dodgerblue" CommandName="EditRecord" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" BackColor="WhiteSmoke" BorderStyle="None"></asp:Button></a></i> |
+                                        <i style="color:dodgerblue;"><a class="fa fa-trash"> <asp:Button runat="server" ID="btnDelete" Text="Delete" CommandName="DeleteRecord" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" ForeColor="dodgerblue" BackColor="WhiteSmoke" BorderStyle="None"></asp:Button></a></i>
                                     </ItemTemplate>
-                                </asp:TemplateField>--%>
+                                </asp:TemplateField>
                             </Columns>
                         </asp:GridView>
                     </div>
                 </div>
             </asp:View>
             <asp:View runat="server" ID="EmptyView">
+            </asp:View>
+            <asp:View runat="server" ID="ConfirmView">
+                <div class="container">
+            <div class="text-center">
+                <div class="row" style="padding-top: 30px;">
+                    <div class="col-lg-2"><asp:Label ID="lblID" runat="server"></asp:Label></div>
+                    <div class="col-lg-8">
+                        <div class="alert alert-info">
+                            You are about to Delete a Record !! Are you sure you want to Proceed?.
+                        </div>
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+                <hr />
+                <div class="row" style="justify-content:center">
+                    <asp:Button ID="btnConfirm" runat="server" CssClass="btn btn-success" Text="Confirm Operation" OnClick="btnConfirm_Click" />
+                    <asp:Button ID="btnCancel" runat="server" CssClass="btn btn-danger" Text="Cancel Operation" OnClick="btnCancel_Click" />
+                </div>
+            </div>
+            <hr />
+        </div>
             </asp:View>
         </asp:MultiView>
 

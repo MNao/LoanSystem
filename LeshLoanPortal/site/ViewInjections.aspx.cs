@@ -119,6 +119,63 @@ public partial class ViewInjections : Page
         return searchCriteria.ToArray();
     }
 
+    protected void dataGridResults_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+        int index = 0;
+        GridViewRow row;
+        GridView grid = sender as GridView;
+        index = Convert.ToInt32(e.CommandArgument);
+        row = grid.Rows[index];
+        string CompanyCode = row.Cells[1].Text;
+        string InjectionID = row.Cells[2].Text;
+        string Amount = row.Cells[4].Text;
+        Label lblmsg = (Label)Master.FindControl("lblmsg");
+
+
+        if (e.CommandName.Equals("DeleteRecord"))
+        {
+            lblID.Text = InjectionID;
+            lblID.Visible = false;
+            MultiView2.SetActiveView(ConfirmView);
+        }
+        else if (e.CommandName.Equals("EditRecord"))
+        {
+            if (InjectionID != "")
+            {
+                    Server.Transfer("~/AddInjection.aspx?InjectionID=" + InjectionID + "&CompanyCode=" + CompanyCode + "&Amount=" + Amount);
+               
+            }
+            else
+            {
+                bll.ShowMessage(lblmsg, "Injection Missing details", true, Session);
+            }
+
+        }
+        else
+        {
+            bll.ShowMessage(lblmsg, "Injection Missing details", true, Session);
+        }
+    }
+
+    protected void btnConfirm_Click(object sender, EventArgs e)
+    {
+        Entity result = bll.UpdateInjectionStatus(user.CompanyCode, lblID.Text, user.UserId);
+        if (result.StatusCode != "0")
+        {
+            ShowMessage(result.StatusDesc, true);
+        }
+        else
+        {
+            ShowMessage("Injection has been Deleted Successfully", false);
+            MultiView2.SetActiveView(EmptyView);
+        }
+    }
+
+    protected void btnCancel_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ViewInjections.aspx");
+    }
+
     protected void ddExportType_SelectedIndexChanged(object sender, EventArgs e)
     {
         try

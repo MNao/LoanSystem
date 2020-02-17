@@ -46,26 +46,34 @@
 
 <body style="background-color: #9EB7E5;">
  <form id="form1" runat="server">
+
+     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="margin-bottom: 0; background:#cc0000;">  <%--8B0000 4380B8--%>
+      <!--<a class="navbar-brand" href="#">Start Bootstrap</a>-->
+      <img src="Images/Lenshlogo1.png" width='200' height='40' alt="logo"/>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarResponsive" >
+        
+        <ul class="navbar-nav ml-auto" >
+		
+		 
+		
+		<%--<li class="nav-item">
+            <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+              <i class="fa fa-fw fa-user-circle"></i><asp:Label ID="lbluserid" runat="server" Text="."></asp:Label></a>
+          </li>
+
+          <li class="nav-item">
+              <asp:LinkButton ID="LinkButton1" CssClass="nav-link" runat="server" OnClick="LinkButton1_Click"><i class="fa fa-fw fa-sign-out"></i> Logout</asp:LinkButton>
+          </li>--%>
+        </ul>
+      </div>
+    </nav>
 <%--<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">--%>
 <ajaxToolkit:ToolkitScriptManager runat="Server" EnableScriptGlobalization="true"
         EnableScriptLocalization="true" ID="ScriptManager1" />
-<%--<!DOCTYPE html>
-<html>
-         <script type="text/javascript">
-        function printDocument() {
-            document.getElementById('Button3').style.visibility = 'hidden';
-            document.getElementById('Button4').style.visibility = 'hidden';
-            //document.getElementById('MsgDiv').style.visibility = 'hidden';
-            window.print();
-            document.getElementById('Button3').style.visibility = 'visible';
-            document.getElementById('Button4').style.visibility = 'visible';
-        }
-    </script>
-    <body>
-        <div class="container" style="padding: 10px;">
-            </div>
-        </body>
-     </html>--%>
 
      <div class="container col-md-8 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 ">
                 <div class="row " style="padding-top:100px;">
@@ -124,7 +132,7 @@
 
 <div class="col-lg-12">
     <div class="card mb-3">
-        <div class="card-header bg-primary">
+        <div class="card-header bg-danger">
         <i class="fa fa fa-group"></i> Register Client Details
         </div>
         <div class="card-body">
@@ -152,6 +160,13 @@
                                             <p class="help-block"></p>
                                         </div>
                                     </div>
+                        <div class="row">
+                                        <div class="col-lg-6">
+                                            <label>Date of Birth</label>
+                                            <asp:TextBox ID="txtDOB" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Enter Date of Birth(yyyy-mm-dd)"></asp:TextBox>
+                                            <p class="help-block"></p>
+                                        </div>
+                        </div>
                         <div class="row">
                                         <div class="col-lg-6">
                                             <label>Referee Name</label>

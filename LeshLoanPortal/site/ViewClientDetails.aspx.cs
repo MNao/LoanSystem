@@ -54,6 +54,7 @@ public partial class ViewClientDetails : Page
         {
             //CEOSelect.Visible = false;
         }
+        txtSearch.Text = " - ";
         SearchDB();
     }
     
@@ -116,7 +117,7 @@ public partial class ViewClientDetails : Page
     private string[] GetSearchParameters()
     {
         List<string> searchCriteria = new List<string>();
-        string ClientNo = txtClientNo.Text.Trim();
+        string ClientNo = txtSearch.Text.Split('-')[1];
         string UserId = user.UserId;
         string Status = ddStatus.SelectedValue;
         string StartDate = txtStartDate.Text;
@@ -155,7 +156,7 @@ public partial class ViewClientDetails : Page
         {
             if (IDNumber != "")
             {
-                Server.Transfer("~/AddClientDetails.aspx?CompanyCode=" + CompanyCode +"&ClientID=" + ClientID + "&PhoneNo=" + PhoneNumber + "&Status=" + status);
+                Server.Transfer("~/AddClientDetails.aspx?CompanyCode=" + CompanyCode +"&ClientID=" + ClientID + "&PhoneNo=" + PhoneNumber + "&Action=" + "Verify");
                 //return;
             }
             else

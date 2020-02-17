@@ -86,24 +86,55 @@ public partial class ViewIncomeExpense : System.Web.UI.Page
     {
         string[] Params = GetSearchParameters();
         DataTable dt = bll.SearchIncomeExpenseDetailsForreport(Params);
-        if (dt.Rows.Count > 0)
+
+        if(ddType.SelectedValue == "IncomeExpense")
         {
-            dataGridResults.DataSource = dt;
-            dataGridResults.DataBind();
-            string msg = "Found " + dt.Rows.Count + " Records Matching Search Criteria";
-            MultiView2.ActiveViewIndex = 0;
-            Label lblmsg = (Label)Master.FindControl("lblmsg");
-            bll.ShowMessage(lblmsg, msg, false, Session);
+            dataGridResultsIncomeStat.Visible = true;
+            dataGridResults.Visible = false;
+            if (dt.Rows.Count > 0)
+            {
+                dataGridResultsIncomeStat.DataSource = dt;
+                dataGridResultsIncomeStat.DataBind();
+                string msg = "Found " + dt.Rows.Count + " Records Matching Search Criteria";
+                MultiView2.ActiveViewIndex = 0;
+                Label lblmsg = (Label)Master.FindControl("lblmsg");
+                bll.ShowMessage(lblmsg, msg, false, Session);
+            }
+            else
+            {
+                dataGridResultsIncomeStat.DataSource = null;
+                dataGridResultsIncomeStat.DataBind();
+                MultiView2.ActiveViewIndex = -1;
+                string msg = "No Records Found Matching Search Criteria";
+                Label lblmsg = (Label)Master.FindControl("lblmsg");
+                bll.ShowMessage(lblmsg, msg, true, Session);
+            }
+            
         }
         else
         {
-            dataGridResults.DataSource = null;
-            dataGridResults.DataBind();
-            MultiView2.ActiveViewIndex = -1;
-            string msg = "No Records Found Matching Search Criteria";
-            Label lblmsg = (Label)Master.FindControl("lblmsg");
-            bll.ShowMessage(lblmsg, msg, true, Session);
+            dataGridResults.Visible = true;
+            dataGridResultsIncomeStat.Visible = false;
+            if (dt.Rows.Count > 0)
+            {
+                dataGridResults.DataSource = dt;
+                dataGridResults.DataBind();
+                string msg = "Found " + dt.Rows.Count + " Records Matching Search Criteria";
+                MultiView2.ActiveViewIndex = 0;
+                Label lblmsg = (Label)Master.FindControl("lblmsg");
+                bll.ShowMessage(lblmsg, msg, false, Session);
+            }
+            else
+            {
+                dataGridResults.DataSource = null;
+                dataGridResults.DataBind();
+                MultiView2.ActiveViewIndex = -1;
+                string msg = "No Records Found Matching Search Criteria";
+                Label lblmsg = (Label)Master.FindControl("lblmsg");
+                bll.ShowMessage(lblmsg, msg, true, Session);
+            }
         }
+
     }
     private string[] GetSearchParameters()
     {
@@ -136,7 +167,6 @@ public partial class ViewIncomeExpense : System.Web.UI.Page
         string Amount = row.Cells[3].Text;
         Label lblmsg = (Label)Master.FindControl("lblmsg");
 
-        
         if (e.CommandName.Equals("DeleteRecord"))
         {
             lblID.Text = IncomeNo;
@@ -232,5 +262,29 @@ protected void btnExport_Click(object sender, EventArgs e)
     protected void btnCancel_Click(object sender, EventArgs e)
     {
         Response.Redirect("ViewIncomeExpense.aspx");
+    }
+
+    int Total = 0;
+    protected void dataGridResultsIncomeStat_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+
+        int val;
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            //e.Row.Cells[1].Text = "<i>" + e.Row.Cells[1].Text + "</i>";
+            val = int.Parse(e.Row.Cells[2].Text);
+            Total += val;
+            
+        }
+        //lblIncomeStat.Text = Total.ToString();
+
+        if (e.Row.RowType == DataControlRowType.Footer)
+        {
+            //e.Row.Cells[0].Text = "";
+            e.Row.Cells[1].Text = "Total Income-Expenditure";
+            e.Row.Cells[2].Text = Total.ToString();
+        }
+
     }
 }

@@ -19,15 +19,15 @@
         <div class="row">
             <div class="col-lg-2">
                 <label>
-                    Client Number
+                    Client Name/Number
                 </label>
-                <asp:TextBox ID="txtClientNoSearch" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="txtSearch" runat="server" ClientIdMode="Static" placeholder="Search" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="col-lg-2">
                 <label>
                     Loan Number
                 </label>
-                <asp:TextBox ID="txtLoanNoSearch" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="txtLoanNoSearch" AutoComplete="Off" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="col-lg-2">
                 <label>
@@ -45,13 +45,13 @@
                 <label>
                     Start Date
                 </label>
-                <asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" placeholder="Select Date" />
+                <asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Select Date" />
             </div>
             <div class="col-lg-2">
                 <label>
                     End Date
                 </label>
-                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" placeholder="Select Date"/>
+                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Select Date"/>
             </div>
             <div class="col-lg-2" style="padding-top: 15px;">
             

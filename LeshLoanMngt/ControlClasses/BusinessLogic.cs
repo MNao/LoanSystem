@@ -135,7 +135,7 @@ namespace LeshLoanMngt.ControlClasses
                 //req.KeyFactsPhoto = GetBase64String(req.KeyFactsPhoto);
 
 
-                DataTable dt = dh.ExecuteDataSet("SaveClientsDetails", req.ClientNo, req.ClientName, req.ClientAddress, req.ClientPhoneNumber, req.Gender, req.IDType, req.IDNumber, req.ClientPhoto, req.IDPhoto, req.Referee, req.RefrereePhoneNo, req.ClientEmail, req.ModifiedBy, req.ClientPassword).Tables[0];
+                DataTable dt = dh.ExecuteDataSet("SaveClientsDetails", req.ClientNo, req.ClientName, req.ClientAddress, req.ClientPhoneNumber, req.Gender, req.IDType, req.IDNumber, req.DOB, req.ClientPhoto, req.IDPhoto, req.Referee, req.RefrereePhoneNo, req.ClientEmail, req.ModifiedBy, req.ClientPassword).Tables[0];
                 if (dt.Rows.Count <= 0)
                 {
                     result.StatusCode = Globals.FAILURE_STATUS_CODE;
@@ -154,7 +154,7 @@ namespace LeshLoanMngt.ControlClasses
             Result result = new Result();
 
 
-            DataTable dt = dh.ExecuteDataSet("UpdatewithAdditionalClientsDetails", req.ClientNo, req.DOB, req.BusinessLoc, req.Occupation, req.NoOfBeneficiaries, req.EducLevel, req.MonthlyIncome, req.ModifiedBy).Tables[0];
+            DataTable dt = dh.ExecuteDataSet("UpdatewithAdditionalClientsDetails", req.ClientNo, req.BusinessLoc, req.Occupation, req.NoOfBeneficiaries, req.EducLevel, req.MonthlyIncome, req.ModifiedBy).Tables[0];
             if (dt.Rows.Count <= 0)
             {
                 result.StatusCode = Globals.FAILURE_STATUS_CODE;

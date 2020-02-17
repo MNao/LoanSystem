@@ -29,25 +29,25 @@
                       <asp:TextBox ID="txtInjectionNo" runat="server" CssClass="form-control"  placeholder="Injection Number"></asp:TextBox>
 
                       Name
-                      <asp:TextBox ID="txtname" runat="server" CssClass="form-control"  placeholder="Injector Name"></asp:TextBox>
+                      <asp:TextBox ID="txtname" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Injector Name"></asp:TextBox>
                        
                         Amount Injected
-                      <asp:TextBox ID="txtInjectedAmount" runat="server" CssClass="form-control"  placeholder="Injected Amount"></asp:TextBox>
+                      <asp:TextBox ID="txtInjectedAmount" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Injected Amount"></asp:TextBox>
 
                       Injection Date
-                      <asp:TextBox ID="txtInjectionDate" runat="server" CssClass="form-control" placeholder="Injection Date"></asp:TextBox>
+                      <asp:TextBox ID="txtInjectionDate" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Injection Date"></asp:TextBox>
                         
                       Injector's Phone Number
-                      <asp:TextBox ID="txtPhoneNo" runat="server" CssClass="form-control"  placeholder="Injector's Phone Number"></asp:TextBox>
+                      <asp:TextBox ID="txtPhoneNo" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Injector's Phone Number"></asp:TextBox>
 
                       Injector's Email
-                      <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control"  placeholder="Injector's Email"></asp:TextBox>
+                      <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" AutoComplete="off"  placeholder="Injector's Email"></asp:TextBox>
                         
                         Repayment Date
-                      <asp:TextBox ID="txtInjRepayDate" runat="server" CssClass="form-control"  placeholder="Expected Repayment Date"></asp:TextBox>
+                      <asp:TextBox ID="txtInjRepayDate" runat="server" CssClass="form-control" AutoComplete="off"  placeholder="Expected Repayment Date"></asp:TextBox>
 
                         Repayment Amount
-                      <asp:TextBox ID="txtInjRepayAmnt" runat="server" CssClass="form-control"  placeholder="Expected Repayment Amount"></asp:TextBox>
+                      <asp:TextBox ID="txtInjRepayAmnt" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Expected Repayment Amount"></asp:TextBox>
 
 
                       <%--<br/><asp:CheckBox ID="chkActive" runat="server" Text=" Is Active" /><br/>--%>
@@ -56,6 +56,7 @@
                     <div class="modal-footer">
                         <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="SUBMIT DETAILS" onclick="btnSubmit_Click"/>
                         <asp:Button ID="btnEdit" runat="server" CssClass="btn btn-success" Text="EDIT" OnClick="btnEdit_Click"/>
+                        <asp:Button ID="btnBack" runat="server" CssClass="btn btn-danger" Text="Back" OnClick="btnBack_Click"/>
                     </div>
                 </div>
                     

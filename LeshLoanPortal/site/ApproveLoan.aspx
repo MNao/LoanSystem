@@ -2,15 +2,8 @@
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="ContentPlaceHolder1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<%--<%@ Register 
- Assembly="AjaxControlToolkit" 
- Namespace="AjaxControlToolkit" 
- TagPrefix="ajaxToolkit" %>--%>
- <%--<asp:ScriptManager runat="Server" EnableScriptGlobalization="true"
-        EnableScriptLocalization="true" ID="ScriptManager1" 
-        />--%>
+
 <div class="col-lg-12">
-   
     <%--<div class="card mb-3">
         <div class="card-header">
         <i class="fa fa fa-envelope"></i> Verification <i class='fa fa-arrow-right'></i> Verify KYC Details
@@ -29,10 +22,10 @@
         <div class="row">
             <div class="col-lg-3">
                 <label>
-                    Client Number
+                    Client Number/Name
                 </label>
                 <%--<asp:TextBox ID="txtClientNo" runat="server" CssClass="form-control"></asp:TextBox>--%>
-                <asp:TextBox ID="txtSearch" runat="server" ClientIdMode="Static" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="txtSearch" runat="server" ClientIdMode="Static" placeholder="Search" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="col-lg-2">
                 <label>
@@ -50,13 +43,13 @@
                 <label>
                     Start Date
                 </label>
-                <asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" placeholder="Select Date" />
+                <asp:TextBox ID="txtStartDate" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Select Date" />
             </div>
             <div class="col-lg-2">
                 <label>
                     End Date
                 </label>
-                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" placeholder="Select Date"/>
+                <asp:TextBox ID="txtEndDate" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Select Date"/>
             </div>
             <div class="col-lg-2" style="padding-top: 15px;">
             

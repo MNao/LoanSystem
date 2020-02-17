@@ -183,7 +183,7 @@ public partial class AddUser : System.Web.UI.Page
                     ShowMessage("USER SAVED SUCCESSFULLY", false);
                     Clear_contrls();
                 //bll.SendCredentialsToUser(RegUser, Password);
-                bll.InsertIntoAuditLog("USER-CREATION","SYSTEMUSERS", user.CompanyCode, user.UserId, "USER CREATED SUCCESSFULLY");
+                bll.InsertIntoAuditLog("USER-CREATION","SYSTEMUSERS", user.CompanyCode, user.UserId, "USER "+ RegUser.UserId +" CREATED SUCCESSFULLY");
             }
         }
         catch (Exception ex)
@@ -307,7 +307,7 @@ public partial class AddUser : System.Web.UI.Page
                 bll.ShowMessage(lblmsg, msg, false, Session);
                 Clear_contrls();
                 bll.SendCredentialsToUser(aclient, Password);
-                bll.InsertIntoAuditLog("RESET-USER", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER PASSWORD RESET SUCCESSFULLY");
+                bll.InsertIntoAuditLog("RESET-USER", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER " + aclient.UserId +" PASSWORD RESET SUCCESSFULLY");
                 //return;
             }
 
@@ -325,7 +325,7 @@ public partial class AddUser : System.Web.UI.Page
                 bll.ShowMessage(lblmsg, msg, false, Session);
                 Clear_contrls();
                 bll.SendCredentialsToUser(aclient, Password);
-                bll.InsertIntoAuditLog("ACTIVATE-USER", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER ACTIVATED SUCCESSFULLY");
+                bll.InsertIntoAuditLog("ACTIVATE-USER", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER " + aclient.UserId +" ACTIVATED SUCCESSFULLY");
                 //return;
             }
             else if (ChkDeactivate.Checked)
@@ -342,7 +342,7 @@ public partial class AddUser : System.Web.UI.Page
                 bll.ShowMessage(lblmsg, msg, false, Session);
                 Clear_contrls();
                 //bll.SendCredentialsToUser(aclient, Password);
-                bll.InsertIntoAuditLog("DEACTIVATE-USER", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER DE-ACTIVATED SUCCESSFULLY");
+                bll.InsertIntoAuditLog("DEACTIVATE-USER", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER " + aclient.UserId +" DE-ACTIVATED SUCCESSFULLY");
                 //return;
             }
             else
@@ -359,7 +359,7 @@ public partial class AddUser : System.Web.UI.Page
                 bll.ShowMessage(lblmsg, msg, false, Session);
                 Clear_contrls();
                 //bll.SendCredentialsToUser(aclient, Password);
-                bll.InsertIntoAuditLog("EDIT-USER", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER EDITED SUCCESSFULLY");
+                bll.InsertIntoAuditLog("EDIT-USER", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER " + aclient.UserId + " EDITED SUCCESSFULLY");
             }
             
         }
@@ -393,7 +393,7 @@ public partial class AddUser : System.Web.UI.Page
                 bll.ShowMessage(lblmsg, msg, false, Session);
                 Clear_contrls();
                 bll.SendCredentialsToUser(aclient, Password);
-                bll.InsertIntoAuditLog("APPROVE-USER", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER ACTIVATED AND APPROVED SUCCESSFULLY");
+                bll.InsertIntoAuditLog("APPROVE-USER", "SYSTEMUSERS", user.CompanyCode, user.UserId, "USER " + aclient.UserId + " ACTIVATED AND APPROVED SUCCESSFULLY");
                 return;
             }
 

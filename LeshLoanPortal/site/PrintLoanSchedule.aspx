@@ -116,6 +116,31 @@
 
 <body style="font-size: 12px;">
     <form runat="server">
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="margin-bottom: 0; background:#cc0000;">  <%--8B0000 4380B8--%>
+      <!--<a class="navbar-brand" href="#">Start Bootstrap</a>-->
+      <img src="Images/Lenshlogo1.png" width='200' height='40' alt="logo"/>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarResponsive" >
+        
+        <ul class="navbar-nav ml-auto" >
+		
+		 
+		
+		<li class="nav-item">
+            <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+              <i class="fa fa-fw fa-user-circle"></i><asp:Label ID="lbluserid" runat="server" Text="."></asp:Label></a>
+          </li>
+
+          <li class="nav-item">
+              <asp:LinkButton ID="LinkButton1" CssClass="nav-link" runat="server" OnClick="LinkButton1_Click"><i class="fa fa-fw fa-sign-out"></i> Logout</asp:LinkButton>
+          </li>
+        </ul>
+      </div>
+    </nav>
+        <br />
         <div class="container" style="padding: 10px;">
             <asp:MultiView ID="MultiView1" ActiveViewIndex="0" runat="server">
                 <asp:View ID="btnView" runat="server">

@@ -72,7 +72,7 @@ public partial class RegisterClient : System.Web.UI.Page
             lblmsg.ForeColor = System.Drawing.Color.Green; lblmsg.Font.Bold = true;
             Clear_controls();
             bll.SendCredentialsToClientUser(clientDet, Password);
-            bll.InsertIntoAuditLog("USER-CREATION", "SYSTEMUSERS", "Lensh", txtClientNo.Text, "USER CREATED SUCCESSFULLY");
+            bll.InsertIntoAuditLog("USER-CREATION", "SYSTEMUSERS", "Lensh", txtClientNo.Text, "USER "+ clientDet.ClientNo + "CREATED SUCCESSFULLY");
             Response.Redirect("Default.aspx");
 
         }
@@ -105,6 +105,7 @@ public partial class RegisterClient : System.Web.UI.Page
         txtPhoneNo.Text = "";
         txtReferee.Text = "";
         txtRefereePhone.Text = "";
+        txtDOB.Text = "";
     }
 
     public InterConnect.LeshLaonApi.ClientDetails GetClientDetails()
@@ -118,6 +119,7 @@ public partial class RegisterClient : System.Web.UI.Page
         clients.IDPhoto = bll.GetImageUploadedInBase64String(IDPhoto);
         clients.Referee = txtReferee.Text;
         clients.RefrereePhoneNo = txtRefereePhone.Text;
+        clients.DOB = txtDOB.Text;
         clients.IDType = ddIDType.SelectedValue;
         clients.IDNumber = txtIDNo.Text;
         clients.Gender = ddGender.SelectedValue;
